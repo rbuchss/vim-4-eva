@@ -7,12 +7,12 @@ vim-4-eva
          |VVVVVV|++++++/VVVVV/'
         +|VVVVVV|++++/VVVVV/'+
       +++|VVVVVV|++/VVVVV/'+++++
-    +++++|VVVVVV|/VVV___++++++++++
-      +++|VVVVVVVVVV/##/ +_+_+_+_
-        +|VVVVVVVVV___ +/#_#,#_#,\
-         |VVVVVVV//##/+/#/+/#/'/#/
-         |VVVVV/'+/#/+/#/+/#/ /#/
-         |VVV/'++/#/+/#/ /#/ /#/
-         'V/'  /##//##//##//###/
+    +++++|VVVVVV|/VVVVV/'+++++++++
+      +++|VVVVVVVVVVV/'+++++++++
+        +|VVVVVVVVV/'+++++++++
+         |VVVVVVV/'+++++++++
+         |VVVVV/'+++++++++
+         |VVV/'+++++++++
+         'V/'   ++++++
                   ++
 nuff said
