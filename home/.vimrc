@@ -215,3 +215,13 @@ nmap ,gs :Gstatus<cr>
 nmap ,ge :Gedit<cr>
 nmap ,gw :Gwrite<cr>
 nmap ,gr :Gread<cr>
+
+"-----------------------------------------------------------------------------
+" haz vimdiff ignore whitespace 
+"-----------------------------------------------------------------------------
+"if &diff
+"    " diff mode
+"    set diffopt+=iwhite
+"endif
+
+au BufNewFile,BufRead *.rabl set filetype=ruby

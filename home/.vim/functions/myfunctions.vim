@@ -11,7 +11,7 @@ function! GetCommentChar()
   elseif &ft == "spice" || &ft == "spyce" || &ft == "spi" || &ft == "spf" || &ft == "dpf"
     let comchar = "*"
   elseif &ft == "vhdl" || &ft == "sql"
-    let comchar = "--"
+    let comchar = "-- "
   elseif &ft == "cpp" || &ft == "c" || &ft == "cs" || &ft == "java" || &ft == "javascript" || &ft == "php"
     let comchar = "//"
   else
