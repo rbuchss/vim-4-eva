@@ -151,7 +151,8 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 "statusline setup
 set statusline =%#identifier#
-set statusline+=[%t]    "tail of the filename
+"set statusline+=[%t]    "tail of the filename
+set statusline+=[%f]    "relative path is better
 set statusline+=%*
 
 "display a warning if fileformat isnt unix
