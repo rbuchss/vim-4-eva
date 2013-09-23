@@ -36,13 +36,11 @@ set shiftwidth=2              " let's be good ruby citizens
 "set diffopt+=iwhite           " Add ignorance of whitespace to diff
 "set wildmenu                  " Make the command-line completion better
 "set relativenumber            " not sure if i hate
+"set cursorline                " faster without
+set nrformats=                 " treat all numbers as base 10
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
 autocmd filetype html,xml set listchars-=tab:>.
-
-if exists("&cursorline")
-  set cursorline
-endif
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -125,6 +123,10 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
+" toggle spell check
+nmap <silent> <leader>ss :set spell<CR>
+nmap <silent> <leader>sn :set nospell<CR>
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -141,7 +143,7 @@ nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . 
 "----------------------------------------------------------
 " make cursor and status line purdy
 "----------------------------------------------------------
-colorscheme wombat256mod
+colorscheme Zombat256
 
 " change cursor shape between modes
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
