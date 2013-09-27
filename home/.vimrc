@@ -36,7 +36,7 @@ set shiftwidth=2              " let's be good ruby citizens
 "set diffopt+=iwhite           " Add ignorance of whitespace to diff
 "set wildmenu                  " Make the command-line completion better
 "set relativenumber            " not sure if i hate
-"set cursorline                " faster without
+set cursorline                " faster without
 set nrformats=                 " treat all numbers as base 10
 set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
@@ -227,4 +227,11 @@ nmap ,gr :Gread<cr>
 "    set diffopt+=iwhite
 "endif
 
+"-----------------------------------------------------------------------------
+" add syntax coloring for new filetypes
+"-----------------------------------------------------------------------------
 au BufNewFile,BufRead *.rabl set filetype=ruby
+au BufNewFile,BufRead *.pill set filetype=ruby
+
+au BufNewFile,BufRead *.kjb set filetype=xml
+au BufNewFile,BufRead *.ktr set filetype=xml
