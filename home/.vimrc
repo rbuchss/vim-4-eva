@@ -17,6 +17,7 @@ set history=1000              " remember more commands and search history
 set undolevels=1000           " use many muchos levels of undo
 set timeoutlen=500
 set ruler                     " show the cursor position all the time
+set spell
 set showcmd                   " display incomplete commands
 set incsearch                 " do incremental searching
 set title                     " change the terminal's title
@@ -235,3 +236,5 @@ au BufNewFile,BufRead *.pill set filetype=ruby
 
 au BufNewFile,BufRead *.kjb set filetype=xml
 au BufNewFile,BufRead *.ktr set filetype=xml
+
+"set ff=unix
