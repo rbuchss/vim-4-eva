@@ -43,6 +43,9 @@ set list
 set listchars=tab:>.,trail:.,extends:#,nbsp:.
 autocmd filetype html,xml set listchars-=tab:>.
 
+" for ctags
+set tags=tags;/
+
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
   set mouse=a
@@ -127,6 +130,9 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " toggle spell check
 nmap <silent> <leader>ss :set spell<CR>
 nmap <silent> <leader>sn :set nospell<CR>
+
+" for tagbar
+nmap <silent> <leader>b :TagbarToggle<CR>
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
