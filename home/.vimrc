@@ -5,6 +5,7 @@ set nocompatible
 " Use pathogen to modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
 execute pathogen#infect()
+execute pathogen#helptags()
 
 " home brewed functions
 source ~/.vim/functions/myfunctions.vim
@@ -45,6 +46,9 @@ autocmd filetype html,xml set listchars-=tab:>.
 
 " for ctags
 set tags=tags;/
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
