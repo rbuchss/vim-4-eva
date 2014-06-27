@@ -18,7 +18,7 @@ set history=1000              " remember more commands and search history
 set undolevels=1000           " use many muchos levels of undo
 set timeoutlen=500
 set ruler                     " show the cursor position all the time
-set spell
+set nospell
 set showcmd                   " display incomplete commands
 set incsearch                 " do incremental searching
 set title                     " change the terminal's title
@@ -27,7 +27,6 @@ set nobackup                  " no more stupid ~ files
 set dir=~/.swp,/tmp,/var/tmp  " don't polute swps
 set clipboard+=unnamed         " use windows/osx clipboard with yank and paste
 set nowrap                    " no line wrap
-set noincsearch               " no line wrap
 set noerrorbells              " don't beep
 set visualbell                " don't beep
 set number                    " always show line numbers
@@ -35,9 +34,7 @@ set showmatch                 " set show matching parenthesis
 set expandtab
 set softtabstop=2             " let's be good ruby citizens
 set shiftwidth=2              " let's be good ruby citizens
-"set diffopt+=iwhite           " Add ignorance of whitespace to diff
-"set wildmenu                  " Make the command-line completion better
-"set relativenumber            " not sure if i hate
+set wildmenu                  " Make the command-line completion better
 set cursorline                " faster without
 set nrformats=                 " treat all numbers as base 10
 set list
@@ -119,10 +116,8 @@ map <S-Down> :wincmd j<CR>
 map <S-Left> :wincmd h<CR>
 map <S-Right> :wincmd l<CR>
 
-set pastetoggle=<F2>
+set pastetoggle=<leader>pt
 map <F5> :buffers<CR>:b!
-map <silent> <F9> :set mouse=v<CR>:set nonumber<CR>
-map <silent> <F10> :set mouse=a<CR>:set number<CR>
 
 " reset search highlighting
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -132,14 +127,17 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " toggle spell check
-nmap <silent> <leader>ss :set spell<CR>
-nmap <silent> <leader>sn :set nospell<CR>
-
-" for tagbar
-nmap <silent> <leader>b :TagbarToggle<CR>
+map <silent> <leader>st :setlocal spell! spelllang=en_us<CR>
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
+
+"This allows for change paste motion cp{motion}
+nmap <silent> cp :set opfunc=ChangePaste<CR>g@
+function! ChangePaste(type, ...)
+    silent exe "normal! `[v`]\"_c"
+    silent exe "normal! p"
+endfunction
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -150,6 +148,29 @@ inoremap <C-U> <C-G>u<C-U>
 " belongs to -- very useful for figuring out what to change as far as 
 " syntax highlighting goes.
 nmap <silent> ,qq :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+"----------------------------------------------------------
+" mouse toggle
+"----------------------------------------------------------
+fun! s:ToggleMouse()
+    if !exists("s:old_mouse")
+        let s:old_mouse = "a"
+    endif
+
+    if &mouse == ""
+        let &mouse = s:old_mouse
+        set number
+        echo "Mouse is for Vim (" . &mouse . ")"
+    else
+        let s:old_mouse = &mouse
+        let &mouse=""
+        set nonumber
+        echo "Mouse is for terminal"
+    endif
+endfunction
+
+noremap <leader>mt :call <SID>ToggleMouse()<CR>
+inoremap <leader>mt <Esc>:call <SID>ToggleMouse()<CR>a
 
 "----------------------------------------------------------
 " make cursor and status line purdy
@@ -203,6 +224,7 @@ set laststatus=2
 let NERDTreeShowHidden=1 "Show hidden files in NerdTree
 let NERDTreeIgnore=['\.svn$','\.git$']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+map <silent> <leader>nt :NERDTreeTabsToggle<CR>
 map <silent> <C-n> :NERDTreeTabsToggle<CR>
 
 " NERDTress File highlighting
@@ -225,13 +247,23 @@ autocmd User fugitive
   \ endif
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
-nmap ,gs :Gstatus<cr>
-nmap ,ge :Gedit<cr>
-nmap ,gw :Gwrite<cr>
-nmap ,gr :Gread<cr>
+nmap <leader>gs :Gstatus<cr>
+nmap <leader>ge :Gedit<cr>
+nmap <leader>gw :Gwrite<cr>
+nmap <leader>gr :Gread<cr>
 
 "-----------------------------------------------------------------------------
-" haz vimdiff ignore whitespace 
+" Gundo stuff
+"-----------------------------------------------------------------------------
+nmap <silent> <leader>ut :GundoToggle<CR>
+
+"-----------------------------------------------------------------------------
+" for tagbar
+"-----------------------------------------------------------------------------
+nmap <silent> <leader>tt :TagbarToggle<CR>
+
+"-----------------------------------------------------------------------------
+" haz vimdiff ignore whitespace
 "-----------------------------------------------------------------------------
 "if &diff
 "    " diff mode
