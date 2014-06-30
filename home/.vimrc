@@ -248,6 +248,7 @@ autocmd User fugitive
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
 nmap <leader>gs :Gstatus<cr>
+nmap <leader>gd :Gdiff<cr>
 nmap <leader>ge :Gedit<cr>
 nmap <leader>gw :Gwrite<cr>
 nmap <leader>gr :Gread<cr>
