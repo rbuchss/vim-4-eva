@@ -286,4 +286,5 @@ au BufNewFile,BufRead *.pill set filetype=ruby
 au BufNewFile,BufRead *.kjb set filetype=xml
 au BufNewFile,BufRead *.ktr set filetype=xml
 
+au BufNewFile,BufRead .bash* set filetype=sh
 "set ff=unix
