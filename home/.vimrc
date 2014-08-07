@@ -298,7 +298,7 @@ fu! InitZession()
 endfunction
 
 fu! SaveZession()
-  if filereadable(getcwd() . '/.zession.vim')
+  if &ft != 'gitcommit' and filereadable(getcwd() . '/.zession.vim')
     call InitZession()
   endif
 endfunction
