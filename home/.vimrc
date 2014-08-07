@@ -215,13 +215,12 @@ set statusline+=%*
 
 set statusline+=%=      "left/right separator
 set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  "highlight
-"set statusline+=0x%-8B\ " current char
+set statusline+=\ [%b][0x%B]\               " ASCII and byte code under cu
 set statusline+=%c,     "cursor column
 set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P\    "percent through file
 set statusline+=%#identifier#
 set statusline+=%{fugitive#statusline()}
-"set statusline+=\ [%b][0x%B]\               " ASCII and byte code under cu
 set laststatus=2
 
 "----------------------------------------------------------
@@ -286,5 +285,38 @@ au BufNewFile,BufRead *.pill set filetype=ruby
 au BufNewFile,BufRead *.kjb set filetype=xml
 au BufNewFile,BufRead *.ktr set filetype=xml
 
-au BufNewFile,BufRead .bash* set filetype=sh
+au BufNewFile,BufRead *.bash* set filetype=sh
 "set ff=unix
+"
+"-----------------------------------------------------------------------------
+" autosave and autoload session if one exists
+"-----------------------------------------------------------------------------
+nmap <leader>zi :call InitZession()<CR>
+
+fu! InitZession()
+  execute 'mksession! ' . getcwd() . '/.zession.vim'
+endfunction
+
+fu! SaveZession()
+  if filereadable(getcwd() . '/.zession.vim')
+    call InitZession()
+  endif
+endfunction
+
+fu! RestoreZession()
+  if argc() == 0
+    if filereadable(getcwd() . '/.zession.vim')
+      execute 'so ' . getcwd() . '/.zession.vim'
+      if bufexists(1)
+        for l in range(1, bufnr('$'))
+          if bufwinnr(l) == -1
+            exec 'sbuffer ' . l
+          endif
+        endfor
+      endif
+    endif
+  endif
+endfunction
+
+autocmd VimLeave * call SaveZession()
+autocmd VimEnter * call RestoreZession()
