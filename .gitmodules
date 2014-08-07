@@ -1,57 +1,57 @@
-[submodule "home/.vim/bundle/nerdtree"]
-	path = home/.vim/bundle/nerdtree
+[submodule "vim/bundle/nerdtree"]
+	path = vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree.git
-[submodule "home/.vim/bundle/vim-nerdtree-tabs"]
-	path = home/.vim/bundle/vim-nerdtree-tabs
+[submodule "vim/bundle/vim-nerdtree-tabs"]
+	path = vim/bundle/vim-nerdtree-tabs
 	url = https://github.com/jistr/vim-nerdtree-tabs.git
-[submodule "home/.vim/bundle/matchit.zip"]
-	path = home/.vim/bundle/matchit.zip
+[submodule "vim/bundle/matchit.zip"]
+	path = vim/bundle/matchit.zip
 	url = https://github.com/vim-scripts/matchit.zip.git
-[submodule "home/.vim/bundle/vim-fugitive"]
-	path = home/.vim/bundle/vim-fugitive
+[submodule "vim/bundle/vim-fugitive"]
+	path = vim/bundle/vim-fugitive
 	url = https://github.com/rbuchss/vim-fugitive.git
-[submodule "home/.vim/bundle/nerdcommenter"]
-	path = home/.vim/bundle/nerdcommenter
+[submodule "vim/bundle/nerdcommenter"]
+	path = vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter.git
-[submodule "home/.vim/bundle/tagbar"]
-	path = home/.vim/bundle/tagbar
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
 	url = https://github.com/majutsushi/tagbar.git
-[submodule "home/.vim/bundle/vim-repeat"]
-	path = home/.vim/bundle/vim-repeat
+[submodule "vim/bundle/vim-repeat"]
+	path = vim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
-[submodule "home/.vim/bundle/vim-surround"]
-	path = home/.vim/bundle/vim-surround
+[submodule "vim/bundle/vim-surround"]
+	path = vim/bundle/vim-surround
 	url = https://github.com/tpope/vim-surround.git
-[submodule "home/.vim/bundle/vim-rails"]
-	path = home/.vim/bundle/vim-rails
+[submodule "vim/bundle/vim-rails"]
+	path = vim/bundle/vim-rails
 	url = https://github.com/tpope/vim-rails.git
-[submodule "home/.vim/bundle/ack.vim"]
-	path = home/.vim/bundle/ack.vim
+[submodule "vim/bundle/ack.vim"]
+	path = vim/bundle/ack.vim
 	url = https://github.com/mileszs/ack.vim.git
-[submodule "home/.vim/bundle/syntastic"]
-	path = home/.vim/bundle/syntastic
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-[submodule "home/.vim/bundle/gundo.vim"]
-	path = home/.vim/bundle/gundo.vim
+[submodule "vim/bundle/gundo.vim"]
+	path = vim/bundle/gundo.vim
 	url = https://github.com/sjl/gundo.vim.git
-[submodule "home/.vim/bundle/vim-bundler"]
-	path = home/.vim/bundle/vim-bundler
+[submodule "vim/bundle/vim-bundler"]
+	path = vim/bundle/vim-bundler
 	url = https://github.com/tpope/vim-bundler.git
-[submodule "home/.vim/bundle/vim-abolish"]
-	path = home/.vim/bundle/vim-abolish
+[submodule "vim/bundle/vim-abolish"]
+	path = vim/bundle/vim-abolish
 	url = https://github.com/tpope/vim-abolish.git
-[submodule "home/.vim/bundle/vim-signature"]
-	path = home/.vim/bundle/vim-signature
+[submodule "vim/bundle/vim-signature"]
+	path = vim/bundle/vim-signature
 	url = https://github.com/kshenoy/vim-signature.git
-[submodule "home/.vim/bundle/vim-snipmate"]
-	path = home/.vim/bundle/vim-snipmate
+[submodule "vim/bundle/vim-snipmate"]
+	path = vim/bundle/vim-snipmate
 	url = https://github.com/garbas/vim-snipmate.git
-[submodule "home/.vim/bundle/tlib_vim"]
-	path = home/.vim/bundle/tlib_vim
+[submodule "vim/bundle/tlib_vim"]
+	path = vim/bundle/tlib_vim
 	url = https://github.com/tomtom/tlib_vim.git
-[submodule "home/.vim/bundle/vim-addon-mw-utils"]
-	path = home/.vim/bundle/vim-addon-mw-utils
+[submodule "vim/bundle/vim-addon-mw-utils"]
+	path = vim/bundle/vim-addon-mw-utils
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "home/.vim/bundle/vim-snippets"]
-	path = home/.vim/bundle/vim-snippets
+[submodule "vim/bundle/vim-snippets"]
+	path = vim/bundle/vim-snippets
 	url = https://github.com/honza/vim-snippets.git
