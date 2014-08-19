@@ -119,7 +119,7 @@ set pastetoggle=<leader>pt
 map <F5> :buffers<CR>:b!
 
 " reset search highlighting
-nmap <silent> <leader> :nohlsearch<CR>
+nmap <silent> <leader>/ :nohlsearch<CR>
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
