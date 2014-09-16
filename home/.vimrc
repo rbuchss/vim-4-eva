@@ -229,7 +229,7 @@ set statusline+=%=
 "set statusline+=[%b][0x%B]   " ASCII and byte code under cursor
 set statusline+=%{StatuslineCurrentHighlight()}
 set statusline+=%#identifier#
-set statusline+=[%{&ft}]     "filetype
+set statusline+=%{&ft!=''?'['.&ft.']':''}     "filetype
 
 " display a warning if fileformat isnt unix
 set statusline+=%#warningmsg#
