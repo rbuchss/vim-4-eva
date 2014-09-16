@@ -18,7 +18,7 @@ set history=1000              " remember more commands and search history
 set undolevels=1000           " use many muchos levels of undo
 set timeoutlen=500
 set ruler                     " show the cursor position all the time
-set spell
+set nospell
 set showcmd                   " display incomplete commands
 set incsearch                 " do incremental searching
 set title                     " change the terminal's title
@@ -70,8 +70,12 @@ if has("autocmd")
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " For all files set 'textwidth' to 90 characters.
+  autocmd FileType * setlocal textwidth=90
+  autocmd FileType ruby setlocal textwidth=128
+  " only auto enable spelling for these few types
+  autocmd FileType svn,*commit* setlocal spell
+  autocmd FileType help setlocal nospell
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
@@ -136,6 +140,10 @@ endfunction
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
+
+" Mac OS X clipboard integration
+nmap <F3> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+vmap <F4> :w !pbcopy<CR><CR>
 
 "-----------------------------------------------------------------------------
 " mouse mode toggle
@@ -479,7 +487,7 @@ endfunction
 " read only flag setter
 "-----------------------------------------------------------------------------
 function! ReadOnlyFlag()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '[⭤]' : ''
+  return &ft !~? 'vimfiler\|gundo' && &readonly ? '[⭤]' : ''
 endfunction
 
 "-----------------------------------------------------------------------------
