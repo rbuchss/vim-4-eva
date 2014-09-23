@@ -28,6 +28,7 @@ set dir=~/.swp,/tmp,/var/tmp  " don't pollute swps
 set clipboard+=unnamed        " use windows/osx clipboard with yank and paste
 set nowrap                    " no line wrap
 set splitbelow
+set splitright
 set noerrorbells              " don't beep
 set visualbell                " don't beep
 set number                    " always show line numbers
@@ -37,10 +38,14 @@ set softtabstop=2             " let's be good ruby citizens
 set shiftwidth=2              " let's be good ruby citizens
 set wildmenu                  " Make the command-line completion better
 set cursorline                " faster without
+autocmd WinLeave * setlocal nocursorline
+autocmd WinEnter * setlocal cursorline
+set nofoldenable
 set nrformats=                " treat all numbers as base 10
 set list
 set listchars=tab:⮀∎,trail:∎,extends:▲,nbsp:⌧
 autocmd filetype html,xml set listchars-=tab:⮀∎
+
 " for ctags
 set tags=tags;/
 
@@ -105,8 +110,13 @@ let g:netrw_dirhistmax=0
 "-----------------------------------------------------------------------------
 nnoremap ; :
 let mapleader=","           " change the mapleader from \ to ,
+let g:mapleader = ","
 
+" tab shortcuts
 map <C-t> :tabnew<CR>
+map <leader>tn :tabnew<CR>
+map <leader>tc :tabclose<CR>
+
 map <T-Right> :tabn<CR>
 map <T-Left> :tabp<CR>
 map <S-Up> :wincmd k<CR>
@@ -127,6 +137,9 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " toggle spell check
 map <silent> <leader>st :setlocal spell! spelllang=en_us<CR>
 
+" removes all trailing whitespace
+nmap <leader>sw :call StripTrailingWhitespace()<CR>
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -144,6 +157,13 @@ inoremap <C-U> <C-G>u<C-U>
 " Mac OS X clipboard integration
 nmap <F3> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 vmap <F4> :w !pbcopy<CR><CR>
+
+" reselect visual block after indent
+vnoremap < <gv
+vnoremap > >gv
+
+" reselect last paste
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 "-----------------------------------------------------------------------------
 " mouse mode toggle
@@ -271,7 +291,7 @@ endfunction
 "call NERDTreeHighlightFile('css', 'green', 'black')
 
 "-----------------------------------------------------------------------------
-" Fugitive; vim + git
+" Fugitive; vim + git + gitv
 "-----------------------------------------------------------------------------
 autocmd User fugitive
   \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' |
@@ -281,9 +301,17 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 
 nmap <leader>gs :Gstatus<cr>
 nmap <leader>gd :Gdiff<cr>
+nmap <leader>gc :Gcommit<CR>
+nmap <leader>gl :Glog<CR>
 nmap <leader>ge :Gedit<cr>
 nmap <leader>gw :Gwrite<cr>
 nmap <leader>gr :Gread<cr>
+
+"-----------------------------------------------------------------------------
+" gitk implemented in vimscript (gitv)
+"-----------------------------------------------------------------------------
+nmap <leader>gv :Gitv<CR>
+nmap <leader>gV :Gitv!<CR>
 
 "-----------------------------------------------------------------------------
 " Gundo stuff
@@ -321,17 +349,19 @@ au BufNewFile,BufRead *.bash* set filetype=sh
 "-----------------------------------------------------------------------------
 nmap <leader>zi :call InitZession()<CR>
 
-fu! InitZession()
+function! InitZession()
   execute 'mksession! ' . getcwd() . '/.zession.vim'
 endfunction
 
-fu! SaveZession()
-  if &ft != 'gitcommit' && filereadable(getcwd() . '/.zession.vim')
-    call InitZession()
-  endif
-endfunction
+"autocmd VimLeave * call SaveZession()
+"function! SaveZession()
+"  if &ft != 'gitcommit' && filereadable(getcwd() . '/.zession.vim')
+"    call InitZession()
+"  endif
+"endfunction
 
-fu! RestoreZession()
+autocmd VimEnter * call RestoreZession()
+function! RestoreZession()
   if argc() == 0
     if filereadable(getcwd() . '/.zession.vim')
       execute 'so ' . getcwd() . '/.zession.vim'
@@ -346,8 +376,6 @@ fu! RestoreZession()
   endif
 endfunction
 
-autocmd VimLeave * call SaveZession()
-autocmd VimEnter * call RestoreZession()
 
 "-----------------------------------------------------------------------------
 " return the syntax highlight group under the cursor ''
@@ -501,4 +529,44 @@ function! SetCursorPosition()
       normal! zz
     endif
   end
+endfunction
+
+"-----------------------------------------------------------------------------
+" whitespace nuker
+"-----------------------------------------------------------------------------
+function! Preserve(command)
+  " preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " do the business:
+  execute a:command
+  " clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+function! StripTrailingWhitespace()
+  call Preserve("%s/\\s\\+$//e")
+endfunction
+
+"-----------------------------------------------------------------------------
+" syntastic styles
+"-----------------------------------------------------------------------------
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_style_error_symbol = '✠'
+let g:syntastic_warning_symbol = '∆'
+let g:syntastic_style_warning_symbol = '≈'
+
+"-----------------------------------------------------------------------------
+" eval vimscript by line or visual selection
+"-----------------------------------------------------------------------------
+nmap <silent> <leader>ve :call Source(line('.'), line('.'))<CR>
+vmap <silent> <leader>ve :call Source(line('v'), line('.'))<CR>
+
+function! Source(begin, end)
+  let lines = getline(a:begin, a:end)
+  for line in lines
+    execute line
+  endfor
 endfunction
