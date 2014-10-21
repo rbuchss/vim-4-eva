@@ -76,7 +76,7 @@ if has("autocmd")
   augroup vimrcEx
   au!
   " For all files set 'textwidth' to 90 characters.
-  autocmd FileType * setlocal textwidth=90
+  autocmd FileType * setlocal textwidth=128
   autocmd FileType ruby setlocal textwidth=128
   " only auto enable spelling for these few types
   autocmd FileType svn,*commit* setlocal spell
@@ -193,6 +193,16 @@ inoremap <leader>mt <Esc>:call <SID>ToggleMouse()<CR>a
 "-----------------------------------------------------------------------------
 colorscheme Zombat256
 
+"set statusline=
+"set statusline+=%1*  "switch to User1 highlight
+"set statusline+=%F   "full filename
+"set statusline+=%2*  "switch to User2 highlight
+"set statusline+=%y   "filetype
+"set statusline+=%3*  "switch to User3 highlight
+"set statusline+=%l   "line number
+"set statusline+=%*   "switch back to statusline highlight
+"set statusline+=%P   "percentage thru file
+
 " change cursor shape between modes
 if exists('$TMUX')
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -215,7 +225,7 @@ set statusline+=%{ReadOnlyFlag()}
 set statusline+=%*
 
 set statusline+=%#identifier#
-set statusline+=[%f]    "relative path is better than tail %t option
+set statusline+=[%-.100f]    "relative path is better than tail %t option
 set statusline+=%*
 
 set statusline+=%#warningmsg#
@@ -246,7 +256,7 @@ set statusline+=%*
 
 " left/right separator
 set statusline+=%=
-"set statusline+=[%b][0x%B]   " ASCII and byte code under cursor
+"set statusline+=[%03.b][0x%B] " ASCII and byte code under cursor
 set statusline+=%{StatuslineCurrentHighlight()}
 set statusline+=%#identifier#
 set statusline+=%{&ft!=''?'['.&ft.']':''}     "filetype
@@ -261,6 +271,9 @@ set statusline+=%#warningmsg#
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
 
+"set statusline+=%#identifier#
+"set statusline+=[%{FileSize()}]     " cursor column:line position
+
 set statusline+=%#identifier#
 set statusline+=[%c:%l\ %P]     " cursor column:line position
 
@@ -273,8 +286,11 @@ let NERDTreeShowHidden=1 "Show hidden files in NerdTree
 let NERDTreeIgnore=['\.svn$','\.git$']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&
       \ b:NERDTreeType == "primary") | q | endif
+
 map <silent> <leader>nt :NERDTreeTabsToggle<CR>
 map <silent> <C-n> :NERDTreeTabsToggle<CR>
+let g:NERDTreeMapOpenVSplit = 'v'
+let g:NERDTreeMapOpenSplit = 's'
 
 " NERDTress File highlighting
 function! NERDTreeHighlightFile(extension, fg, bg)
@@ -569,4 +585,20 @@ function! Source(begin, end)
   for line in lines
     execute line
   endfor
+endfunction
+
+"-----------------------------------------------------------------------------
+" fetch file size
+"-----------------------------------------------------------------------------
+nmap <silent> <leader>fs :echo 'filesize:' . FileSize()<CR>
+function! FileSize()
+  let bytes = getfsize(expand("%:p"))
+  if bytes <= 0
+    return ""
+  endif
+  if bytes < 1024
+    return bytes
+  else
+    return (bytes / 1024) . "K"
+  endif
 endfunction
