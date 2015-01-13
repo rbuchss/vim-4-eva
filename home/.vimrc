@@ -21,10 +21,15 @@ set ruler                     " show the cursor position all the time
 set nospell
 set showcmd                   " display incomplete commands
 set incsearch                 " do incremental searching
+set ignorecase               " case-insensitive search
+set smartcase                 " case-sensitive search if any caps
 set title                     " change the terminal's title
 set guifont=Courier\ New      " much nicer font
 set nobackup                  " no more stupid ~ files
+"set autoread                      " reload files when changed on disk, i.e. via `git checkout`
+"set backupcopy=yes                                           " see :help crontab
 set dir=~/.swp,/tmp,/var/tmp  " don't pollute swps
+"set directory-=.                                             " don't store swapfiles in the current directory
 set clipboard+=unnamed        " use windows/osx clipboard with yank and paste
 set nowrap                    " no line wrap
 set splitbelow
@@ -34,10 +39,14 @@ set visualbell                " don't beep
 set number                    " always show line numbers
 set showmatch                 " set show matching parenthesis
 set expandtab
+set scrolloff=3               " show context above/below cursorline
+set tabstop=8                 " actual tabs occupy 8 characters
 set softtabstop=2             " let's be good ruby citizens
 set shiftwidth=2              " let's be good ruby citizens
 set wildmenu                  " Make the command-line completion better
-set cursorline                " faster without
+set wildmode=full
+"set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set cursorline                " faster without; needs to be set when first opening a file to work
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
 set nofoldenable
@@ -47,7 +56,7 @@ set listchars=tab:⮀∎,trail:∎,extends:▲,nbsp:⌧
 autocmd filetype html,xml set listchars-=tab:⮀∎
 
 " for ctags
-set tags=tags;/
+set tags=tags,./tags
 
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
@@ -109,7 +118,7 @@ let g:netrw_dirhistmax=0
 " mapping goodness
 "-----------------------------------------------------------------------------
 nnoremap ; :
-let mapleader=","           " change the mapleader from \ to ,
+let mapleader = ","           " change the mapleader from \ to ,
 let g:mapleader = ","
 
 " tab shortcuts
@@ -143,7 +152,10 @@ nmap <leader>sw :call StripTrailingWhitespace()<CR>
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
-"This allows for change paste motion cp{motion}
+" This allows for change paste motion cp{motion}
+" so replace word with current buffer would be cpw
+" 3 words would be cp3w
+" rest of line would be cp$ and so on...
 nmap <silent> cp :set opfunc=ChangePaste<CR>g@
 function! ChangePaste(type, ...)
     silent exe "normal! `[v`]\"_c"
@@ -272,7 +284,7 @@ set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
 
 "set statusline+=%#identifier#
-"set statusline+=[%{FileSize()}]     " cursor column:line position
+"set statusline+=[%{FileSize()}]
 
 set statusline+=%#identifier#
 set statusline+=[%c:%l\ %P]     " cursor column:line position
@@ -602,3 +614,10 @@ function! FileSize()
     return (bytes / 1024) . "K"
   endif
 endfunction
+
+"-----------------------------------------------------------------------------
+" load local settings
+"-----------------------------------------------------------------------------
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
