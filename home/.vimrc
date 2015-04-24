@@ -226,7 +226,7 @@ endif
 
 " statusline setup
 set statusline=%#identifier#
-set statusline+=%{fugitive#statusline()}
+set statusline+=%{GitStatusline()}
 
 set statusline+=%#identifier#
 set statusline+=%h
@@ -408,6 +408,11 @@ endfunction
 "-----------------------------------------------------------------------------
 " return the syntax highlight group under the cursor ''
 "-----------------------------------------------------------------------------
+function! GitStatusline()
+  let status = fugitive#head(7)
+  return '[⭠ '.status.']'
+endfunction
+
 function! StatuslineCurrentHighlight()
   let name = synIDattr(synID(line('.'),col('.'),1),'name')
   if name == ''
