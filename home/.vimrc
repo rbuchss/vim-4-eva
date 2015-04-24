@@ -13,46 +13,57 @@ source ~/.vim/functions/myfunctions.vim
 "-----------------------------------------------------------------------------
 " settings
 "-----------------------------------------------------------------------------
-set backspace=indent,eol,start " allow backspacing over everything
-set history=1000              " remember more commands and search history
-set undolevels=1000           " use many muchos levels of undo
+set autoindent                  " always set autoindenting on
+"set complete-=i
+"set smarttab
+
+set modelines=0                 " blocks modelines from being executed
+set nomodeline                  " blocks modelines from being executed
+
+set backspace=indent,eol,start  " allow backspacing over everything
+set history=1000                " remember more commands and search history
+set undolevels=1000             " use many muchos levels of undo
 set timeoutlen=500
-set ruler                     " show the cursor position all the time
+"set ttimeout
+"set ttimeoutlen=100
+set lazyredraw
+set ruler                       " show the cursor position all the time
 set nospell
-set showcmd                   " display incomplete commands
-set incsearch                 " do incremental searching
-set ignorecase               " case-insensitive search
-set smartcase                 " case-sensitive search if any caps
-set title                     " change the terminal's title
-set guifont=Courier\ New      " much nicer font
-set nobackup                  " no more stupid ~ files
-"set autoread                      " reload files when changed on disk, i.e. via `git checkout`
+set showcmd                     " display incomplete commands
+set incsearch                   " do incremental searching
+set ignorecase                  " case-insensitive search
+set smartcase                   " case-sensitive search if any caps
+set title                       " change the terminal's title
+set guifont=Courier\ New        " much nicer font
+set nobackup                    " no more stupid ~ files
+"set autoread                   " reload files when changed on disk, i.e. via `git checkout`
 "set backupcopy=yes                                           " see :help crontab
-set dir=~/.swp,/tmp,/var/tmp  " don't pollute swps
-"set directory-=.                                             " don't store swapfiles in the current directory
-set clipboard+=unnamed        " use windows/osx clipboard with yank and paste
-set nowrap                    " no line wrap
+set dir=~/.swp,/tmp,/var/tmp    " don't pollute swps
+set clipboard+=unnamed          " use windows/osx clipboard with yank and paste
+set nowrap                      " no line wrap
 set splitbelow
 set splitright
-set noerrorbells              " don't beep
-set visualbell                " don't beep
-set number                    " always show line numbers
-set showmatch                 " set show matching parenthesis
+set noerrorbells                " don't beep
+set visualbell                  " don't beep
+set number                      " always show line numbers
+set showmatch                   " set show matching parenthesis
 set expandtab
-set scrolloff=3               " show context above/below cursorline
-set tabstop=8                 " actual tabs occupy 8 characters
-set softtabstop=2             " let's be good ruby citizens
-set shiftwidth=2              " let's be good ruby citizens
-set wildmenu                  " Make the command-line completion better
+set scrolloff=3                 " show context above/below cursorline
+set sidescrolloff=3
+set tabstop=8                   " actual tabs occupy 8 characters
+set softtabstop=2               " let's be good ruby citizens
+set shiftwidth=2                " let's be good ruby citizens
+set wildmenu                    " Make the command-line completion better
 set wildmode=full
 "set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
-set cursorline                " faster without; needs to be set when first opening a file to work
+set cursorline                  " faster without; needs to be set when first opening a file to work
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
 set nofoldenable
-set nrformats=                " treat all numbers as base 10
+set nrformats=                  " treat all numbers as base 10
+"set nrformats-=octal
 set list
-set listchars=tab:⮀∎,trail:∎,extends:▲,nbsp:⌧
+set listchars=tab:⮀∎,trail:∎,extends:▲,precedes:▲,nbsp:⌧
 autocmd filetype html,xml set listchars-=tab:⮀∎
 
 " for ctags
@@ -145,6 +156,9 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " toggle spell check
 map <silent> <leader>st :setlocal spell! spelllang=en_us<CR>
+
+" toggle line wrap
+map <silent> <leader>wt :setlocal wrap!<CR>
 
 " removes all trailing whitespace
 nmap <leader>sw :call StripTrailingWhitespace()<CR>
