@@ -14,6 +14,7 @@ source ~/.vim/functions/myfunctions.vim
 " settings
 "-----------------------------------------------------------------------------
 set autoindent                  " always set autoindenting on
+set formatoptions-=t            " disable auto adding linebreaks
 "set complete-=i
 "set smarttab
 
@@ -53,6 +54,7 @@ set sidescrolloff=3
 set tabstop=8                   " actual tabs occupy 8 characters
 set softtabstop=2               " let's be good ruby citizens
 set shiftwidth=2                " let's be good ruby citizens
+set tabpagemax=100
 set wildmenu                    " Make the command-line completion better
 set wildmode=full
 "set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
@@ -424,7 +426,11 @@ endfunction
 "-----------------------------------------------------------------------------
 function! GitStatusline()
   let status = fugitive#head(7)
-  return '[⭠ '.status.']'
+  if empty(status)
+    return '[]'
+  else
+    return '[⭠ '.status.']'
+  endif
 endfunction
 
 function! StatuslineCurrentHighlight()
