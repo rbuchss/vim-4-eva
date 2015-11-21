@@ -380,6 +380,7 @@ nmap <silent> <leader>tt :TagbarToggle<CR>
 "-----------------------------------------------------------------------------
 au BufNewFile,BufRead *.rabl set filetype=ruby
 au BufNewFile,BufRead *.pill set filetype=ruby
+au BufNewFile,BufRead *.pp set filetype=ruby
 
 au BufNewFile,BufRead *.kjb set filetype=xml
 au BufNewFile,BufRead *.ktr set filetype=xml
