@@ -156,6 +156,7 @@ nmap <silent> <leader>/ :nohlsearch<CR>
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
+" TODO make lang switchable
 " toggle spell check
 map <silent> <leader>st :setlocal spell! spelllang=en_us<CR>
 
@@ -189,6 +190,7 @@ vmap <F4> :w !pbcopy<CR><CR>
 " reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
+vnoremap = =gv
 
 " reselect last paste
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
@@ -428,7 +430,7 @@ endfunction
 function! GitStatusline()
   let status = fugitive#head(7)
   if empty(status)
-    return '[]'
+    return ''
   else
     return '[⭠ '.status.']'
   endif
