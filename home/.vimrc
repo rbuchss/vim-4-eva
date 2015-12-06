@@ -141,6 +141,10 @@ map <leader>tc :tabclose<CR>
 
 map <T-Right> :tabn<CR>
 map <T-Left> :tabp<CR>
+" fix for osx option-command chord in tmux 2.1
+" used `sed -n l` to find the chord key code
+map <ESC>[1;3D :tabn<CR>
+map <ESC>[1;3C :tabp<CR>
 map <S-Up> :wincmd k<CR>
 map <S-Down> :wincmd j<CR>
 map <S-Left> :wincmd h<CR>
