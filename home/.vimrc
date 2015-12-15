@@ -395,6 +395,8 @@ au BufNewFile,BufRead *.hql set filetype=sql
 
 au BufNewFile,BufRead *.bash* set filetype=sh
 
+au BufNewFile,BufRead *config set filetype=config
+
 "-----------------------------------------------------------------------------
 " autosave and autoload session if one exists
 "-----------------------------------------------------------------------------
