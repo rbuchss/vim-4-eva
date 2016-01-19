@@ -143,8 +143,8 @@ map <T-Right> :tabn<CR>
 map <T-Left> :tabp<CR>
 " fix for osx option-command chord in tmux 2.1
 " used `sed -n l` to find the chord key code
-map <ESC>[1;3D :tabn<CR>
-map <ESC>[1;3C :tabp<CR>
+map <ESC>[1;3C :tabn<CR>
+map <ESC>[1;3D :tabp<CR>
 map <S-Up> :wincmd k<CR>
 map <S-Down> :wincmd j<CR>
 map <S-Left> :wincmd h<CR>
@@ -652,7 +652,7 @@ endfunction
 "-----------------------------------------------------------------------------
 " hub helper
 "-----------------------------------------------------------------------------
-nmap <leader>hb :call HubBrowseFile()<CR>
+nmap <leader>gb :call HubBrowseFile()<CR>
 let g:hub_executable = 'hub'
 
 function! Strip(input_string)
@@ -666,14 +666,15 @@ endfunction
 function! HubBrowseFile()
   let l:branch = fugitive#head(7)
   if empty(l:branch)
-    return ''
+    echo 'ERROR file not in a git repo'
   else
     let l:github_sub_url = 'blob/' . l:branch
     let l:repo_top = Chomp(system('git rev-parse --show-toplevel'))
     let l:file_path = expand('%:p')
-    let l:repo_path = substitute(l:file_path, l:repo_top, l:github_sub_url, "")
+    let l:line=line('.')
+    let l:repo_path = substitute(l:file_path, l:repo_top, l:github_sub_url, "") . "#L" . l:line
     let l:hub_command = g:hub_executable . ' browse -- ' . l:repo_path
-    "return l:hub_command
+    echo l:hub_command
     let l:browse = system(l:hub_command)
   endif
 endfunction
