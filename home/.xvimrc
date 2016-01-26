@@ -1,1 +1,51 @@
-.vimrc
+"-----------------------------------------------------------------------------
+" load vimrc settings
+"-----------------------------------------------------------------------------
+if filereadable(expand("~/.vimrc"))
+  source ~/.vimrc
+endif
+
+"-----------------------------------------------------------------------------
+" xcode vim settings
+"-----------------------------------------------------------------------------
+"" from https://github.com/ajh17/dotfiles/blob/master/.xvimrc
+"" ~/.xvimrc - Read by the XVim plugin for Xcode.
+"" General settings {{{1
+"set clipboard=unnamed
+"set relativenumber
+"set number
+"set ignorecase
+"set smartcase
+"set nowrap
+"set wrapscan
+"set laststatus=0
+
+"" Mappings {{{1
+"" Vim Mappings {{{2
+"nmap Y y$
+"nmap S i<CR><ESC>^m`gk:s/ +$//<CR>``
+
+" Windows
+"nmap <C-h> <C-w>h
+"nmap <C-j> <C-w>j
+"nmap <C-k> <C-w>k
+"nmap <C-l> <C-w>l
+
+" Xcode Mappings {{{2
+nmap gcc :xccmd commentAndUncommentCurrentLines<CR>
+vmap gc :xccmd commentAndUncommentCurrentLines<CR>
+
+" Navigation
+nmap <space>f :xcmenucmd Open Quickly...<CR>
+nmap <space>n :nissue<CR>
+nmap <space>p :pissue<CR>
+
+" Show
+nmap <space>F :xccmd showInFinder<CR>
+nmap <space>D :xccmd showDeveloperDocumentation<CR>
+nmap <space>d :xcmenucmd Quick Help for Selected Item<CR>
+
+" Toggle Toolbars
+nmap <space>h :xccmd toggleNavigatorsVisibility<CR>
+nmap <space>j :xccmd toggleDebuggerVisibility<CR>
+nmap <space>l :xccmd toggleUtilitiesVisibility<CR>
