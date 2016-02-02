@@ -1,8 +1,5 @@
 " statusline setup
 set statusline=%#identifier#
-set statusline+=%{GitStatusline()}
-
-set statusline+=%#identifier#
 set statusline+=%h
 
 " read only flag
@@ -11,7 +8,10 @@ set statusline+=%{ReadOnlyFlag()}
 set statusline+=%*
 
 set statusline+=%#identifier#
-set statusline+=[%-.100f]    "relative path is better than tail %t option
+set statusline+=[
+set statusline+=%{GitStatusline()}
+set statusline+=%-.100f                   " relative path is better than tail %t option
+set statusline+=]
 set statusline+=%*
 
 set statusline+=%#warningmsg#
@@ -42,10 +42,9 @@ set statusline+=%*
 
 " left/right separator
 set statusline+=%=
-"set statusline+=[%03.b][0x%B] " ASCII and byte code under cursor
-set statusline+=%{StatuslineCurrentHighlight()}
 set statusline+=%#identifier#
-set statusline+=%{&ft!=''?'['.&ft.']':''}     "filetype
+"set statusline+=[%03.b][0x%B] " ASCII and byte code under cursor
+"set statusline+=%{StatuslineCurrentHighlight()}
 
 " display a warning if fileformat isnt unix
 set statusline+=%#warningmsg#
@@ -57,11 +56,12 @@ set statusline+=%#warningmsg#
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
 
-"set statusline+=%#identifier#
-"set statusline+=[%{FileSize()}]
-
 set statusline+=%#identifier#
-set statusline+=[%c:%l\ %P]     " cursor column:line position
+set statusline+=[
+set statusline+=%l:%c\ %P                 " cursor column:line position
+set statusline+=:%{FileSize()}
+set statusline+=%{&ft!=''?':'.&ft:''}     " filetype
+set statusline+=]
 
 set laststatus=2
 
