@@ -7,7 +7,8 @@ set nocompatible
 execute pathogen#infect()
 execute pathogen#helptags()
 
-colorscheme Zombat256           " make cursor and status line purdy
+nnoremap ; :
+let g:mapleader = ","         " change the mapleader from \ to ,
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -60,3 +61,4 @@ set list
 set listchars=tab:⮀∎,trail:∎,extends:▲,precedes:▲,nbsp:⌧
 set tags=tags,./tags            " for ctags
 set omnifunc=syntaxcomplete#Complete
+colorscheme Zombat256           " make cursor and status line purdy

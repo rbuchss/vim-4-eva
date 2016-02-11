@@ -1,1 +1,1 @@
-nmap <silent> <leader>tt :TagbarToggle<CR>
+nmap <leader>tt :TagbarToggle<CR>

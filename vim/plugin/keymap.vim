@@ -1,7 +1,3 @@
-nnoremap ; :
-let mapleader = ","           " change the mapleader from \ to ,
-let g:mapleader = ","
-
 " tab shortcuts
 map <C-t> :tabnew<CR>
 map <leader>tn :tabnew<CR>
@@ -22,18 +18,18 @@ set pastetoggle=<leader>pt
 map <F5> :buffers<CR>:b!
 
 " reset search highlighting
-nmap <silent> <leader>/ :nohlsearch<CR>
+nmap <leader>/ :nohlsearch<CR>
 
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <leader>ev :e $MYVIMRC<CR>
+nmap <leader>sv :so $MYVIMRC<CR>
 
 " TODO make lang switchable
 " toggle spell check
-map <silent> <leader>st :setlocal spell! spelllang=en_us<CR>
+map <leader>st :setlocal spell! spelllang=en_us<CR>
 
 " toggle line wrap
-map <silent> <leader>wt :setlocal wrap!<CR>
+map <leader>wt :setlocal wrap!<CR>
 
 " removes all trailing whitespace
 nmap <leader>sw :call StripTrailingWhitespace()<CR>

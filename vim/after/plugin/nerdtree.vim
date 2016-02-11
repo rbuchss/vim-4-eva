@@ -1,2 +1,2 @@
-map <silent> <leader>nt :NERDTreeTabsToggle<CR>
-map <silent> <C-n> :NERDTreeTabsToggle<CR>
+map <leader>nt :NERDTreeTabsToggle<CR>
+map <C-n> :NERDTreeTabsToggle<CR>

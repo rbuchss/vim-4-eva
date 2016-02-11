@@ -1,1 +1,1 @@
-nmap <silent> <leader>ut :GundoToggle<CR>
+nmap <leader>ut :GundoToggle<CR>
