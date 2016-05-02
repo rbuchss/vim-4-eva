@@ -48,3 +48,14 @@ function! s:Median(nums)
     return (nums[l/2] + nums[(l/2)-1]) / 2
   endif
 endfunction
+
+function! NextLongLine()
+  let threshold = (&tw ? &tw : 80)
+  let spaces = repeat(" ", &ts)
+  " needs to start on current line pretty sure that is .
+  let current_line = line('.')
+  let line_lens = map(getline(1,'$'),
+        \ 'len(substitute(v:val, "\\t", spaces,  "g"))')
+
+endfunction
+

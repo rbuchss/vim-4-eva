@@ -58,6 +58,7 @@ set cursorline                  " faster without; needs to be set when first ope
 set nofoldenable
 set nrformats=                  " treat all numbers as base 10
 set list
+" �
 set listchars=tab:⮀∎,trail:∎,extends:▲,precedes:▲,nbsp:⌧
 set tags=tags,./tags            " for ctags
 set omnifunc=syntaxcomplete#Complete
