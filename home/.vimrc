@@ -40,7 +40,7 @@ set dir=~/.swp,/tmp,/var/tmp    " don't pollute swps
 set clipboard+=unnamed          " use windows/osx clipboard with yank and paste
 set nowrap                      " no line wrap
 set splitbelow
-set splitright
+" set splitright
 set noerrorbells                " don't beep
 set visualbell                  " don't beep
 set number                      " always show line numbers
