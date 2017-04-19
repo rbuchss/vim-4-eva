@@ -18,6 +18,7 @@ if &t_Co > 2 || has("gui_running")
 endif
 
 filetype plugin on
+set encoding=utf-8
 set autoindent                  " always set autoindenting on
 set formatoptions-=t            " disable auto adding linebreaks
 set modelines=0                 " blocks modelines from being executed
