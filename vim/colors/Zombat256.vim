@@ -45,8 +45,8 @@ hi DiffChange                   ctermbg=237                               guibg=
 "hi Directory
 "hi IncSearch
 "hi Menu
-"hi ModeMsg
-"hi MoreMsg
+hi ModeMsg        ctermfg=83
+hi MoreMsg        ctermfg=103
 "hi PmenuSbar
 "hi PmenuThumb
 "hi Question
@@ -82,7 +82,6 @@ hi Special    ctermfg=229    cterm=none    guifg=#eadead  gui=none
 hi String     ctermfg=113    cterm=none    guifg=#95e454  gui=italic
 hi Comment    ctermfg=246    cterm=none    guifg=#9c998e  gui=italic
 hi Todo       ctermfg=101    cterm=none    guifg=#857b6f  gui=italic
-
 
 " Links
 hi! link FoldColumn    Folded
