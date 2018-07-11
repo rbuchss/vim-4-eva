@@ -88,3 +88,6 @@
 [submodule "vim/bundle/vim-fswitch"]
 	path = vim/bundle/vim-fswitch
 	url = git@github.com:derekwyatt/vim-fswitch.git
+[submodule "vim/bundle/vim-gitgutter"]
+	path = vim/bundle/vim-gitgutter
+	url = git@github.com:airblade/vim-gitgutter.git

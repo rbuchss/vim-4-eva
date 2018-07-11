@@ -58,6 +58,7 @@ set wildmode=full
 set cursorline                  " faster without; needs to be set when first opening a file to work
 set nofoldenable
 set nrformats=                  " treat all numbers as base 10
+set updatetime=100
 set list
 set listchars=tab:⮀∎,trail:∎,extends:▲,precedes:▲,nbsp:⌧
 set tags=tags,./tags            " for ctags
