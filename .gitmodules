@@ -85,3 +85,6 @@
 [submodule "vim/bundle/nginx.vim"]
 	path = vim/bundle/nginx.vim
 	url = git@github.com:chr4/nginx.vim.git
+[submodule "vim/bundle/vim-fswitch"]
+	path = vim/bundle/vim-fswitch
+	url = git@github.com:derekwyatt/vim-fswitch.git
