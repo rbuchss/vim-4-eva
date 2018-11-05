@@ -94,3 +94,9 @@
 [submodule "vim/bundle/file-line"]
 	path = vim/bundle/file-line
 	url = git@github.com:bogado/file-line.git
+[submodule "vim/bundle/vim-misc"]
+	path = vim/bundle/vim-misc
+	url = git@github.com:xolox/vim-misc.git
+[submodule "vim/bundle/vim-session"]
+	path = vim/bundle/vim-session
+	url = git@github.com:xolox/vim-session.git

@@ -1,5 +1,5 @@
-let NERDTreeShowHidden=1 "Show hidden files in NerdTree
-let NERDTreeIgnore=['\.svn$','\.git$']
+let NERDTreeShowHidden = 1 " Show hidden files in NerdTree
+let NERDTreeIgnore = ['\.svn$', '\.git$', '\.vim-sessions$']
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&
       \ b:NERDTreeType == "primary") | q | endif
 
