@@ -27,6 +27,8 @@ set backspace=indent,eol,start  " allow backspacing over everything
 set history=1000                " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
 set timeoutlen=500
+set ttyfast                     " smoother changes for a fast terminal
+set ttyscroll=3
 set lazyredraw
 set ruler                       " show the cursor position all the time
 set nospell
