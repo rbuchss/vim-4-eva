@@ -4,6 +4,7 @@
 nmap <leader>zi :call InitZession()<CR>
 
 function! InitZession()
+  set sessionoptions-=options
   execute 'mksession! ' . getcwd() . '/.zession.vim'
 endfunction
 
@@ -14,7 +15,7 @@ endfunction
 "  endif
 "endfunction
 
-autocmd VimEnter * call RestoreZession()
+autocmd VimEnter * nested call RestoreZession()
 function! RestoreZession()
   if argc() == 0
     if filereadable(getcwd() . '/.zession.vim')
