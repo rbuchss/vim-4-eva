@@ -6,21 +6,18 @@ autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
 " return a warning for "long lines" where
 " long" is either &textwidth or 80 (if no &textwidth is set)
 " return '' if no long lines
-" return '[#x,my,$z] if long lines are found, were x is the number of long
-" lines, y is the median length of the long lines and z is the length of the
-" longest line
+" return '[Ł➤x] if long lines are found, were x is the number of long lines
 function! StatuslineLongLineWarning()
   if !exists("b:statusline_long_line_warning")
     if !&modifiable
       let b:statusline_long_line_warning = ''
       return b:statusline_long_line_warning
     endif
-    let long_line_lens = s:LongLines()
-    if len(long_line_lens) > 0
+    let long_lines = s:LongLines()
+    if len(long_lines) > 0
+      call s:LongLineColorColumn()
       let b:statusline_long_line_warning = "[" .
-            \ '#' . len(long_line_lens) . "," .
-            \ 'm' . s:Median(long_line_lens) . "," .
-            \ '$' . max(long_line_lens) . "]"
+            \ 'Ł➤' . len(long_lines) . "]"
     else
       let b:statusline_long_line_warning = ""
     endif
@@ -32,19 +29,70 @@ endfunction
 function! s:LongLines()
   let threshold = (&tw ? &tw : 80)
   let spaces = repeat(" ", &ts)
-  let line_lens = map(getline(1,'$'),
-        \ 'len(substitute(v:val, "\\t", spaces,  "g"))')
-  return filter(line_lens, 'v:val > threshold')
+  let line_report = map(getline(1,'$'),
+        \ "{ 'filename': @%,
+        \ 'lnum': v:key+1,
+        \ 'col': len(substitute(v:val, '\\t', spaces, 'g')),
+        \ 'is_comment': s:IsCommentLine(v:key+1),
+        \ 'type': 'W',
+        \ 'nr': s:IsCommentLine(v:key+1)+1,
+        \ 'text': v:val }")
+  return filter(line_report, 'v:val.col > threshold')
 endfunction
 
-" return the median of the given array of numbers
-function! s:Median(nums)
-  let nums = sort(a:nums)
-  let l = len(nums)
-  if l % 2 == 1
-    let i = (l-1) / 2
-    return nums[i]
+function s:IsCommentLine(line_num)
+  let hg = synIDattr(synID(a:line_num, 1, 0), "name")
+  return hg =~? 'comment' ? 1 : 0
+endfunction
+
+function s:LongLineColorColumn()
+  let threshold = (&tw ? &tw : 80)
+  call matchadd('ColorColumn', '\%' . (threshold+1) . 'v.')
+endfunction
+
+function s:CodeLongLines()
+  let l:report = s:LongLines()
+  return filter(l:report, '!v:val.is_comment')
+endfunction
+
+function s:CommentLongLines()
+  let l:report = s:LongLines()
+  return filter(l:report, 'v:val.is_comment')
+endfunction
+
+function LongLineReport()
+  let l:report = s:LongLines()
+  call setqflist(l:report, 'r')
+  copen
+  let w:quickfix_title = 'LongLineReport'
+endfunction
+
+function LongLineCodeReport()
+  let l:code_report = s:CodeLongLines()
+  call setqflist(l:code_report, 'r')
+  copen
+  let w:quickfix_title = 'LongLineCodeReport'
+endfunction
+
+function LongLineCommentReport()
+  let l:comment_report = s:CommentLongLines()
+  call setqflist(l:comment_report, 'r')
+  copen
+  let w:quickfix_title = 'LongLineCommentReport'
+endfunction
+
+function s:IsLongLineReportOpen()
+  let l:result = filter(getwininfo(),
+        \ 'v:val.quickfix && !v:val.loclist && v:val.variables.quickfix_title =~ "LongLine.*Report"')
+  return len(l:result)
+endfunction
+
+function ToggleLongLineReport()
+  if s:IsLongLineReportOpen()
+    cclose
   else
-    return (nums[l/2] + nums[(l/2)-1]) / 2
+    call LongLineReport()
   endif
 endfunction
+
+nmap <leader>ll :call ToggleLongLineReport()<CR>
