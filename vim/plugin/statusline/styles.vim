@@ -10,7 +10,7 @@ set statusline+=%*
 set statusline+=%#identifier#
 set statusline+=[
 set statusline+=%{GitStatusline()}
-set statusline+=%-.100f                   " relative path is better than tail %t option
+set statusline+=%{StatusLineFileName()}
 set statusline+=]
 set statusline+=%*
 

@@ -17,3 +17,21 @@ function! FileSize()
     return printf('%.2fG', (bytes / pow(1024.0, 3)))
   endif
 endfunction
+
+function! StatusLineFileName()
+  let pre = ''
+  let pat = '://'
+  let name = expand('%:~:.')
+  if name =~# pat
+    let pre = name[:stridx(name, pat) + len(pat)-1] . '...'
+    let name = name[stridx(name, pat) + len(pat):]
+  endif
+  let name = simplify(name)
+  let ratio = (1.0 * winwidth(0)) / len(name)
+  if ratio <= 2 && ratio > 1.5
+    let name = pathshorten(name)
+  elseif ratio <= 1.5
+    let name = fnamemodify(name, ':t')
+  endif
+  return pre . name
+endfunction
