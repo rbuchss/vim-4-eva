@@ -82,3 +82,6 @@
 [submodule "vim/bundle/vim-session"]
 	path = vim/bundle/vim-session
 	url = git@github.com:xolox/vim-session.git
+[submodule "vim/bundle/vim-polyglot"]
+	path = vim/bundle/vim-polyglot
+	url = git@github.com:sheerun/vim-polyglot.git
