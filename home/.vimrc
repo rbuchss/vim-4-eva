@@ -45,7 +45,7 @@ set nowrap                      " no line wrap
 set splitbelow
 " set splitright
 set noerrorbells                " don't beep
-set visualbell                  " don't beep
+set novisualbell                " don't beep
 set number                      " always show line numbers
 set showmatch                   " set show matching parenthesis
 set expandtab
@@ -57,10 +57,13 @@ set shiftwidth=2                " let's be good ruby citizens
 set tabpagemax=100
 set wildmenu                    " Make the command-line completion better
 set wildmode=full
-set cursorline                  " faster without; needs to be set when first opening a file to work
+set nocursorline                " faster without; needs to be set when first opening a file to work
+" set synmaxcol=3000
+set synmaxcol=256
+syntax sync minlines=256
 set nofoldenable
 set nrformats=                  " treat all numbers as base 10
-set updatetime=100
+" set updatetime=100
 set list
 set listchars=tab:⮀∎,trail:∎,extends:▲,precedes:▲,nbsp:⌧
 set tags=tags,./tags            " for ctags
