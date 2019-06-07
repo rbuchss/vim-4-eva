@@ -1,5 +1,5 @@
-autocmd WinLeave * setlocal nocursorline
-autocmd WinEnter * setlocal cursorline
+" autocmd WinLeave * setlocal nocursorline
+" autocmd WinEnter * setlocal cursorline
 "
 " change cursor shape between modes
 if exists('$TMUX')
