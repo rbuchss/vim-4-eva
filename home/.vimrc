@@ -4,6 +4,7 @@ set nocompatible
 
 " Use pathogen to modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
+execute before_pathogen#infect()
 execute pathogen#infect()
 execute pathogen#helptags()
 
