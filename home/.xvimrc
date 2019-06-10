@@ -1,49 +1,54 @@
 "-----------------------------------------------------------------------------
-" load vimrc settings
-"-----------------------------------------------------------------------------
-if filereadable(expand("~/.vimrc"))
-  source ~/.vimrc
-endif
-
-"-----------------------------------------------------------------------------
 " xcode vim settings
 "-----------------------------------------------------------------------------
 "" from https://github.com/ajh17/dotfiles/blob/master/.xvimrc
 "" ~/.xvimrc - Read by the XVim plugin for Xcode.
 "" General settings {{{1
-"set clipboard=unnamed
-"set relativenumber
-"set number
-"set ignorecase
-"set smartcase
-"set nowrap
-"set wrapscan
-"set laststatus=0
+" https://github.com/XVimProject/XVim2/blob/master/Documents/FeatureList.md#options
+set clipboard=unnamed
+set number
+set hlsearch
+" set ignorecase
+" set smartcase
+" set nowrap
+" set wrapscan
+" set laststatus=1
 
 "" Mappings {{{1
 "" Vim Mappings {{{2
 "nmap Y y$
 "nmap S i<CR><ESC>^m`gk:s/ +$//<CR>``
 
-" Windows
-"nmap <C-h> <C-w>h
-"nmap <C-j> <C-w>j
-"nmap <C-k> <C-w>k
-"nmap <C-l> <C-w>l
+" " Whitespace removal
+" nmap :w<CR> :%s/^\s+$//g<CR>:w<CR>:echo "Written and trimmed whitespace"<CR>
 
+" " Poor man's surround.vim
+" nmap <space>` gewi`<ESC>ea`<ESC>
+" nmap <space>' gewi'<ESC>ea'<ESC>
+" nmap <space>" gewi"<ESC>ea"<ESC>
+
+" Windows
+nmap <S-Left> <C-w>h
+nmap <S-Down> <C-w>j
+nmap <S-Up> <C-w>k
+nmap <S-Right> <C-w>l
+
+" " https://github.com/XVimProject/XVim/blob/master/Documents/Developers/MenuActionList.txt
 " Xcode Mappings {{{2
-nmap gcc :xccmd commentAndUncommentCurrentLines<CR>
-vmap gc :xccmd commentAndUncommentCurrentLines<CR>
+" nmap gcc :xccmd commentAndUncommentCurrentLines<CR>
+" vmap gc :xccmd commentAndUncommentCurrentLines<CR>
 
 " Navigation
 nmap <space>f :xcmenucmd Open Quickly...<CR>
 nmap <space>n :nissue<CR>
 nmap <space>p :pissue<CR>
+nmap <space>i :xcmenucmd Jump to Generated Interface<CR>
 
 " Show
+nmap <space>g :xcmenucmd History...<CR>
 nmap <space>F :xccmd showInFinder<CR>
 nmap <space>D :xccmd showDeveloperDocumentation<CR>
-nmap <space>d :xcmenucmd Quick Help for Selected Item<CR>
+nmap <space>d :xcmenucmd Show Quick Help Inspector<CR>
 
 " Toggle Toolbars
 nmap <space>h :xccmd toggleNavigatorsVisibility<CR>
