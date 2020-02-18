@@ -9,3 +9,5 @@ set belloff=all
 
 set shell=pwsh
 set shellcmdflag=-command
+
+set guifont=Consolas
