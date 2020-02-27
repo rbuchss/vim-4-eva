@@ -3,18 +3,15 @@ if exists("g:loaded_mutagen") || &cp
 endif
 let g:loaded_mutagen = 1
 
-function! mutagen#infect(...) abort " {{{1
-  call mutagen#set_os()
-  call mutagen#set_vim_home()
+function! mutagen#infect(...) abort
   return ''
-endfunction " }}}1
+endfunction
 
-function! mutagen#mutate(...) abort " {{{1
-  call mutagen#load_os_settings()
-  return ''
-endfunction " }}}1
+function! mutagen#mutate() abort
+  return mutagen#load_os_settings()
+endfunction
 
-function! mutagen#get_os(...) abort " {{{1
+function! mutagen#derive_os() abort
   if has('win16') || has('win32') || has('win64') || has('win32unix')
     return 'windows'
   else
@@ -30,28 +27,40 @@ function! mutagen#get_os(...) abort " {{{1
   endif
 
   return ''
-endfunction " }}}1
+endfunction
 
-function! mutagen#set_os(...) abort " {{{1
-  let g:mutagen_os = mutagen#get_os()
-  return ''
-endfunction " }}}1
+function! mutagen#os() abort
+  if exists("g:mutagen_os")
+    return g:mutagen_os
+  endif
 
-function! mutagen#get_vim_home(...) abort " {{{1
-  if g:mutagen_os == 'windows'
+  let g:mutagen_os = mutagen#derive_os()
+  return g:mutagen_os
+endfunction
+
+function! mutagen#is_os(name) abort
+  return mutagen#os() == a:name
+endfunction
+
+function! mutagen#derive_vim_home() abort
+  if mutagen#is_os('windows')
     return $HOME . '/vimfiles'
-  else
+  elseif mutagen#is_os('darwin') || mutagen#is_os('linux')
     return $HOME . '/.vim'
   endif
   return ''
-endfunction " }}}1
+endfunction
 
-function! mutagen#set_vim_home(...) abort " {{{1
-  let g:mutagen_os_vim_home = mutagen#get_vim_home()
-  return ''
-endfunction " }}}1
+function! mutagen#vim_home() abort
+  if exists("g:mutagen_vim_home")
+    return g:mutagen_vim_home
+  endif
 
-function! mutagen#load_os_settings(...) abort " {{{1
-  execute 'source' g:mutagen_os_vim_home . '/os/' . g:mutagen_os . '/settings.vim'
+  let g:mutagen_vim_home = mutagen#derive_vim_home()
+  return g:mutagen_vim_home
+endfunction
+
+function! mutagen#load_os_settings() abort
+  execute 'source' mutagen#vim_home() . '/os/' . mutagen#os() . '/settings.vim'
   return ''
-endfunction " }}}1
+endfunction
