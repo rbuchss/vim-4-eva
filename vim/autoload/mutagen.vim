@@ -64,3 +64,12 @@ function! mutagen#load_os_settings() abort
   execute 'source' mutagen#vim_home() . '/os/' . mutagen#os() . '/settings.vim'
   return ''
 endfunction
+
+function! mutagen#getcwd() abort
+  if mutagen#is_os('darwin') || mutagen#is_os('linux')
+    return getcwd()
+  endif
+
+  let l:cwd = substitute(getcwd(), '\\', '/', 'g')
+  return substitute(l:cwd, '\v^([a-zA-Z]:)', '', '')
+endfunction
