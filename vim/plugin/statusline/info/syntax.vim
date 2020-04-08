@@ -2,7 +2,8 @@
 " return the syntax highlight group under the cursor ''
 "-----------------------------------------------------------------------------
 " Returns syntax highlighting group the current "thing" under the cursor
-nmap <silent> ,qq :echo 'hi' . StatuslineCurrentHighlight() .
+nmap <silent> ,qq :echo 'stack' . StatuslineCurrentSynStack() .
+      \ ' hi' . StatuslineCurrentHighlight() .
       \ ' trans' . StatuslineCurrentTrans() .
       \ ' lo' . StatuslineCurrentLo() <CR>
 
@@ -32,3 +33,11 @@ function! StatuslineCurrentLo()
     return '[' . name . ']'
   endif
 endfunction
+
+function! StatuslineCurrentSynStack()
+  if !exists("*synstack")
+    return
+  endif
+  let stack = map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+  return '[' . join(stack, ', ') . ']'
+endfunc
