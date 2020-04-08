@@ -13,3 +13,9 @@ set shellcmdflag=-command
 set guifont=Consolas
 
 set t_Co=256  " defaults to t_Co=16 for some reason ... which does not support better color schemes
+
+" https://superuser.com/questions/1045290/copy-paste-in-gvim-broken-after-creating-personal-vimrc
+if has('gui_running')
+  source $VIMRUNTIME/mswin.vim
+  behave mswin
+endif
