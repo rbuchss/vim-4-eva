@@ -66,7 +66,7 @@ set nofoldenable
 set nrformats=                  " treat all numbers as base 10
 " set updatetime=100
 set list
-set listchars=tab:⮀∎,trail:∎,extends:▲,precedes:▲,nbsp:⌧
+set listchars=tab:>\ ,trail:∎,extends:»,precedes:«,nbsp:⌧
 set tags=tags,./tags            " for ctags
 set omnifunc=syntaxcomplete#Complete
 colorscheme Zombat256           " make cursor and status line purdy
