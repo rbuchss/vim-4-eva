@@ -24,6 +24,8 @@ filetype plugin on
 set encoding=utf-8
 set autoindent                  " always set autoindenting on
 set formatoptions-=t            " disable auto adding linebreaks
+set fileformat=unix
+set fileformats=unix,dos
 set modelines=0                 " blocks modelines from being executed
 set nomodeline                  " blocks modelines from being executed
 set backspace=indent,eol,start  " allow backspacing over everything
