@@ -9,7 +9,7 @@ if has("autocmd")
   augroup vimrcEx
   au!
   " For all files set 'textwidth' to 128 characters.
-  autocmd FileType * setlocal textwidth=128
+  autocmd FileType * setlocal textwidth=80
   " only auto enable spelling for these few types
   autocmd FileType svn,*commit* setlocal spell
   autocmd FileType help setlocal nospell
