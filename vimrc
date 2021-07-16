@@ -24,6 +24,8 @@ filetype plugin on
 set encoding=utf-8
 set autoindent                  " always set autoindenting on
 set formatoptions-=t            " disable auto adding linebreaks
+set formatoptions+=w            " useful to split long lines with 'gq' cmd
+                                " witout nuking existing line breaks
 set fileformat=unix
 set fileformats=unix,dos
 set modelines=0                 " blocks modelines from being executed
@@ -57,7 +59,7 @@ set sidescrolloff=3
 set tabstop=8                   " actual tabs occupy 8 characters
 set softtabstop=2               " let's be good ruby citizens
 set shiftwidth=2                " let's be good ruby citizens
-set tabpagemax=100
+set tabpagemax=200
 set wildmenu                    " Make the command-line completion better
 set wildmode=full
 set nocursorline                " faster without; needs to be set when first opening a file to work
