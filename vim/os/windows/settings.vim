@@ -19,3 +19,10 @@ if has('gui_running')
   source $VIMRUNTIME/mswin.vim
   behave mswin
 endif
+
+" Hotfix to avoid nvim issue with ctrl-Z on windows
+" see:
+"   https://github.com/neovim/neovim/issues/6660
+if has('nvim')
+  nmap <C-z> <Nop>
+endif
