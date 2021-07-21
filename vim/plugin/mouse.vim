@@ -4,7 +4,7 @@ if has('mouse')
   "set ttymouse=xterm2
 endif
 
-if has('mouse_sgr')
+if has('mouse_sgr') && !has('nvim')
   set ttymouse=sgr
 endif
 

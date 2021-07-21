@@ -34,8 +34,13 @@ set backspace=indent,eol,start  " allow backspacing over everything
 set history=1000                " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
 set timeoutlen=500
+
+if !has('nvim')
 set ttyfast                     " smoother changes for a fast terminal
+                                " for nvim is always set and option is removed
 set ttyscroll=3
+endif
+
 set lazyredraw
 set ruler                       " show the cursor position all the time
 set nospell
