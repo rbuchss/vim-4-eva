@@ -16,9 +16,10 @@ if mutagen#is_os('windows')
   " " Ps = 5  -> blinking bar (xterm).
   " " Ps = 6  -> steady bar (xterm).
   " NOTE this works but insert <tab> glitches out for some reason ...
-  " let &t_SI .= "\<CSI>5 q"
-  " let &t_SR .= "\<CSI>4 q"
-  " let &t_EI .= "\<CSI>0 q"
+  " NOTE this is caused by vim-snipmate/vim-snippets
+  let &t_SI .= "\<CSI>5 q"
+  let &t_SR .= "\<CSI>4 q"
+  let &t_EI .= "\<CSI>0 q"
   " autocmd VimLeave * let &t_me="\<CSI>0 q"
   " NOTE this does not work
   " let &t_SI = "\<Esc>[6 q"
