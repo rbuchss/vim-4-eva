@@ -26,7 +26,7 @@
 	path = vim/bundle/ack.vim
 	url = ../../mileszs/ack.vim.git
 [submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
+	path = vim/pack/vendor/start/syntastic
 	url = ../../scrooloose/syntastic.git
 [submodule "vim/bundle/gundo.vim"]
 	path = vim/pack/vendor/start/gundo.vim
