@@ -8,7 +8,7 @@
 	path = vim/bundle/vim-fugitive
 	url = ../../tpope/vim-fugitive.git
 [submodule "vim/bundle/nerdcommenter"]
-	path = vim/bundle/nerdcommenter
+	path = vim/pack/vendor/start/nerdcommenter
 	url = ../../scrooloose/nerdcommenter.git
 [submodule "vim/bundle/tagbar"]
 	path = vim/bundle/tagbar
