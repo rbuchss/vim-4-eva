@@ -17,7 +17,7 @@
 	path = vim/bundle/vim-repeat
 	url = ../../tpope/vim-repeat.git
 [submodule "vim/bundle/vim-surround"]
-	path = vim/bundle/vim-surround
+	path = vim/pack/vendor/start/vim-surround
 	url = ../../tpope/vim-surround.git
 [submodule "vim/bundle/vim-rails"]
 	path = vim/bundle/vim-rails
