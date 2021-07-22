@@ -74,7 +74,7 @@
 	path = vim/bundle/vim-gitgutter
 	url = ../../airblade/vim-gitgutter.git
 [submodule "vim/bundle/file-line"]
-	path = vim/bundle/file-line
+	path = vim/pack/vendor/start/file-line
 	url = ../../bogado/file-line.git
 [submodule "vim/bundle/vim-misc"]
 	path = vim/pack/vendor/start/vim-misc
