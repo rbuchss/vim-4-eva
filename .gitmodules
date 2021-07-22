@@ -5,7 +5,7 @@
 	path = vim/bundle/matchit.zip
 	url = ../../vim-scripts/matchit.zip.git
 [submodule "vim/bundle/vim-fugitive"]
-	path = vim/bundle/vim-fugitive
+	path = vim/pack/vendor/start/vim-fugitive
 	url = ../../tpope/vim-fugitive.git
 [submodule "vim/bundle/nerdcommenter"]
 	path = vim/pack/vendor/start/nerdcommenter
