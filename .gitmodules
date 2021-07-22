@@ -29,7 +29,7 @@
 	path = vim/bundle/syntastic
 	url = ../../scrooloose/syntastic.git
 [submodule "vim/bundle/gundo.vim"]
-	path = vim/bundle/gundo.vim
+	path = vim/pack/vendor/start/gundo.vim
 	url = ../../sjl/gundo.vim.git
 [submodule "vim/bundle/vim-bundler"]
 	path = vim/bundle/vim-bundler
