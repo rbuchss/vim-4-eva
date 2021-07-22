@@ -80,7 +80,7 @@
 	path = vim/bundle/vim-misc
 	url = ../../xolox/vim-misc.git
 [submodule "vim/bundle/vim-session"]
-	path = vim/bundle/vim-session
+	path = vim/pack/vendor/start/vim-session
 	url = ../../xolox/vim-session.git
 [submodule "vim/bundle/vim-polyglot"]
 	path = vim/bundle/vim-polyglot
