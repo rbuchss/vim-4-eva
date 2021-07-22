@@ -3,10 +3,6 @@ if exists("g:loaded_mutagen") || &cp
 endif
 let g:loaded_mutagen = 1
 
-function! mutagen#infect(...) abort
-  return ''
-endfunction
-
 function! mutagen#mutate() abort
   return mutagen#load_os_settings()
 endfunction

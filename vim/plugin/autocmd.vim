@@ -8,7 +8,7 @@ if has("autocmd")
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
-  " For all files set 'textwidth' to 128 characters.
+  " For all files set 'textwidth' to 80 characters.
   autocmd FileType * setlocal textwidth=80
   " only auto enable spelling for these few types
   autocmd FileType svn,*commit* setlocal spell

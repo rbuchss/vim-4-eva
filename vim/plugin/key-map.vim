@@ -80,6 +80,3 @@ nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 map <M-]>t :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
 map <M-]>v :vsplit <CR>:exec("tag ".expand("<cword>"))<CR>
 map <M-]>s :split <CR>:exec("tag ".expand("<cword>"))<CR>
-
-" dash helpers
-nmap <silent> <leader>d <Plug>DashSearch

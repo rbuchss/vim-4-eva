@@ -2,14 +2,6 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-execute mutagen#infect()
-
-" Use pathogen to modify the runtime path to include all
-" plugins under the ~/.vim/bundle directory
-execute before_pathogen#infect()
-execute pathogen#infect()
-execute pathogen#helptags()
-
 nnoremap ; :
 let g:mapleader = ","         " change the mapleader from \ to ,
 
@@ -84,4 +76,5 @@ set guioptions-=m               " menu bar
 set guioptions-=T               " toolbar
 set guioptions-=r               " scrollbar
 
+" Use mutagen to load OS specific settings
 execute mutagen#mutate()
