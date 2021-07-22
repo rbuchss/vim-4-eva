@@ -38,7 +38,7 @@
 	path = vim/pack/vendor/start/vim-abolish
 	url = ../../tpope/vim-abolish.git
 [submodule "vim/bundle/vim-signature"]
-	path = vim/bundle/vim-signature
+	path = vim/pack/vendor/start/vim-signature
 	url = ../../kshenoy/vim-signature.git
 [submodule "vim/bundle/vim-snipmate"]
 	path = vim/bundle/vim-snipmate
