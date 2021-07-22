@@ -35,7 +35,7 @@
 	path = vim/bundle/vim-bundler
 	url = ../../tpope/vim-bundler.git
 [submodule "vim/bundle/vim-abolish"]
-	path = vim/bundle/vim-abolish
+	path = vim/pack/vendor/start/vim-abolish
 	url = ../../tpope/vim-abolish.git
 [submodule "vim/bundle/vim-signature"]
 	path = vim/bundle/vim-signature
