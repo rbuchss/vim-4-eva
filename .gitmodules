@@ -65,7 +65,7 @@
 	path = vim/bundle/nerdtree-git-plugin
 	url = ../../Xuyuanp/nerdtree-git-plugin.git
 [submodule "vim/bundle/vim-startify"]
-	path = vim/bundle/vim-startify
+	path = vim/pack/vendor/start/vim-startify
 	url = ../../mhinz/vim-startify.git
 [submodule "vim/bundle/vim-fswitch"]
 	path = vim/bundle/vim-fswitch
