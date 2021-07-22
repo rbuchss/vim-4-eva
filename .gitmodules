@@ -77,7 +77,7 @@
 	path = vim/bundle/file-line
 	url = ../../bogado/file-line.git
 [submodule "vim/bundle/vim-misc"]
-	path = vim/bundle/vim-misc
+	path = vim/pack/vendor/start/vim-misc
 	url = ../../xolox/vim-misc.git
 [submodule "vim/bundle/vim-session"]
 	path = vim/pack/vendor/start/vim-session
