@@ -53,7 +53,7 @@
 	path = vim/bundle/vim-snippets
 	url = ../../honza/vim-snippets.git
 [submodule "vim/bundle/vim-windowswap"]
-	path = vim/bundle/vim-windowswap
+	path = vim/pack/vendor/start/vim-windowswap
 	url = ../../wesQ3/vim-windowswap.git
 [submodule "vim/bundle/gitv"]
 	path = vim/bundle/gitv
