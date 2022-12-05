@@ -3,6 +3,6 @@ function! GitStatusline()
   if empty(status)
     return ''
   else
-    return '⭠ '.status.':'
+    return '  '.status.':'
   endif
 endfunction

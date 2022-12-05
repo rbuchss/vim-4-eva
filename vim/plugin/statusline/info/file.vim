@@ -4,7 +4,8 @@
 nmap <silent> <leader>fs :echo 'filesize:' . FileSize()<CR>
 
 function! FileSize()
-  let bytes = getfsize(expand("%:p"))
+  let fn = expand("%:p")
+  let bytes = getfsize(fn)
   if bytes <= 0
     return "empty"
   elseif bytes > 0 && bytes < 1024
@@ -21,6 +22,8 @@ endfunction
 function! StatusLineFileName()
   let pre = ''
   let pat = '://'
+" NOTE: execute 'let start = reltime() | echo expand("%:~:.") | echo "time: "reltimestr(reltime(start)) '
+"  is there a way to cache this???
   let name = expand('%:~:.')
   if name =~# pat
     let pre = name[:stridx(name, pat) + len(pat)-1] . '...'

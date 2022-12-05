@@ -76,5 +76,7 @@ set guioptions-=m               " menu bar
 set guioptions-=T               " toolbar
 set guioptions-=r               " scrollbar
 
+let g:syntastic_python_checkers = ['python']
+let g:syntastic_python_python_exec = 'python3'
 " Use mutagen to load OS specific settings
 execute mutagen#mutate()
