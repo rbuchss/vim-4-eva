@@ -1,6 +1,6 @@
 vim-4-eva
 =========
-![](https://github.com/rbuchss/vim-4-eva/blob/master/vim_logo.jpg)
+![](https://github.com/rbuchss/vim-4-eva/blob/main/vim_logo.jpg)
 >my vim config
 
 works best with vim compiled from source
