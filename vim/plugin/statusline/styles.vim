@@ -18,9 +18,10 @@ set statusline+=%#warningmsg#
 set statusline+=%{StatuslineTabWarning()}
 set statusline+=%*
 
-set statusline+=%#warningmsg#
-set statusline+=%{StatuslineLongLineWarning()}
-set statusline+=%*
+" NOTE: The current StatuslineLongLineWarning implementation is very slow so disabling for now
+" set statusline+=%#warningmsg#
+" set statusline+=%{StatuslineLongLineWarning()}
+" set statusline+=%*
 
 set statusline+=%#warningmsg#
 set statusline+=%{StatuslineTrailingSpaceWarning()}
