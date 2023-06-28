@@ -31,9 +31,6 @@
 [submodule "vim/bundle/vim-startify"]
 	path = vim/pack/vendor/start/vim-startify
 	url = ../../mhinz/vim-startify.git
-[submodule "vim/bundle/file-line"]
-	path = vim/pack/vendor/start/file-line
-	url = ../../bogado/file-line.git
 [submodule "vim/bundle/vim-misc"]
 	path = vim/pack/vendor/start/vim-misc
 	url = ../../xolox/vim-misc.git
