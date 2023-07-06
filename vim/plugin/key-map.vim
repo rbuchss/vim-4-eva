@@ -1,3 +1,9 @@
+" NOTE: How to find keystroke sent to vim/nvim
+" 1. switch to normal mode
+" 2. press :
+" 3. press <C-k>
+" 4. press chord you want to map and nvim/vim will display the keystroke it received
+
 " lazy shift key helpers
 " https://superuser.com/questions/1060424/how-can-i-permanently-map-the-vim-command-w-to-w
 command WQ wq
@@ -13,8 +19,13 @@ command -bang Qa qa
 map <leader>tn :tabnew<CR>
 map <leader>tc :tabclose<CR>
 
-map <T-Right> :tabn<CR>
-map <T-Left> :tabp<CR>
+if has('nvim')
+    map <M-Right> :tabn<CR>
+    map <M-Left> :tabp<CR>
+else
+    map <T-Right> :tabn<CR>
+    map <T-Left> :tabp<CR>
+endif
 " fix for osx option-command chord in tmux 2.1
 " used `sed -n l` to find the chord key code
 map <ESC>[1;3C :tabn<CR>
