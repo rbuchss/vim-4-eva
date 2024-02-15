@@ -28,7 +28,7 @@ set statusline+=%{StatuslineTrailingSpaceWarning()}
 set statusline+=%*
 
 set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%{LinterStatus()}
 set statusline+=%*
 
 " display a warning if &paste is set

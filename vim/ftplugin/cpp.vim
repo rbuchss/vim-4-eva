@@ -1,11 +1,3 @@
-" https://stackoverflow.com/questions/18158772/how-to-add-c11-support-to-syntastic-vim-plugin
-"
-" see: vim/bundle/syntastic/syntax_checkers/cpp/gcc.vim
-"
-" let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_check_header = 1
-" let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
-
 " comments default: s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,fb:-"
 set comments=sl:/**,mb:\ *,elx:\ */
 
