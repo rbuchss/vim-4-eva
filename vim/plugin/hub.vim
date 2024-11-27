@@ -22,7 +22,8 @@ function! HubBrowseFile()
     let l:file_path = expand('%:p')
     let l:line=line('.')
     let l:repo_path = substitute(l:file_path, l:repo_top, l:github_sub_url, "") . "#L" . l:line
-    let l:hub_command = g:hub_executable . ' browse -- ' . l:repo_path
+    " We need to quote the file repo_path to avoid issues with spaces in the path.
+    let l:hub_command = g:hub_executable . ' browse -- ' . "'" . l:repo_path . "'"
     echo l:hub_command
     let l:browse = system(l:hub_command)
   endif
