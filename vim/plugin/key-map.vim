@@ -35,7 +35,12 @@ map <S-Down> :wincmd j<CR>
 map <S-Left> :wincmd h<CR>
 map <S-Right> :wincmd l<CR>
 
-set pastetoggle=<leader>pt
+" neovim removed support for pastetoggle
+" so don't load this unless running in normal vim
+if !has('nvim')
+    set pastetoggle=<leader>pt
+endif
+
 map <F5> :buffers<CR>:b!
 
 " reset search highlighting
