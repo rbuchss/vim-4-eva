@@ -40,3 +40,11 @@
 [submodule "vim/pack/vendor/start/ale"]
 	path = vim/pack/vendor/start/ale
 	url = ../../dense-analysis/ale.git
+[submodule "vim/pack/vendor/opt/plenary.nvim"]
+	path = vim/pack/vendor/opt/plenary.nvim
+	url = ../../nvim-lua/plenary.nvim.git
+	branch = master
+[submodule "vim/pack/vendor/opt/telescope.nvim"]
+	path = vim/pack/vendor/opt/telescope.nvim
+	url = ../../nvim-telescope/telescope.nvim.git
+	branch = master
