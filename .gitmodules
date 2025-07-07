@@ -1,50 +1,50 @@
-[submodule "vim/bundle/nerdtree"]
-	path = vim/pack/vendor/start/nerdtree
+[submodule "vim/pack/common/start/nerdtree"]
+	path = vim/pack/common/start/nerdtree
 	url = ../../scrooloose/nerdtree.git
-[submodule "vim/bundle/vim-fugitive"]
-	path = vim/pack/vendor/start/vim-fugitive
+[submodule "vim/pack/common/start/vim-fugitive"]
+	path = vim/pack/common/start/vim-fugitive
 	url = ../../tpope/vim-fugitive.git
-[submodule "vim/bundle/nerdcommenter"]
-	path = vim/pack/vendor/start/nerdcommenter
+[submodule "vim/pack/common/start/nerdcommenter"]
+	path = vim/pack/common/start/nerdcommenter
 	url = ../../scrooloose/nerdcommenter.git
-[submodule "vim/bundle/vim-repeat"]
-	path = vim/pack/vendor/start/vim-repeat
+[submodule "vim/pack/common/start/vim-repeat"]
+	path = vim/pack/common/start/vim-repeat
 	url = ../../tpope/vim-repeat.git
-[submodule "vim/bundle/vim-surround"]
-	path = vim/pack/vendor/start/vim-surround
+[submodule "vim/pack/common/start/vim-surround"]
+	path = vim/pack/common/start/vim-surround
 	url = ../../tpope/vim-surround.git
-[submodule "vim/bundle/gundo.vim"]
-	path = vim/pack/vendor/start/gundo.vim
+[submodule "vim/pack/common/start/gundo.vim"]
+	path = vim/pack/common/start/gundo.vim
 	url = ../../sjl/gundo.vim.git
-[submodule "vim/bundle/vim-abolish"]
-	path = vim/pack/vendor/start/vim-abolish
+[submodule "vim/pack/common/start/vim-abolish"]
+	path = vim/pack/common/start/vim-abolish
 	url = ../../tpope/vim-abolish.git
-[submodule "vim/bundle/vim-signature"]
-	path = vim/pack/vendor/start/vim-signature
+[submodule "vim/pack/common/start/vim-signature"]
+	path = vim/pack/common/start/vim-signature
 	url = ../../kshenoy/vim-signature.git
-[submodule "vim/bundle/vim-windowswap"]
-	path = vim/pack/vendor/start/vim-windowswap
+[submodule "vim/pack/common/start/vim-windowswap"]
+	path = vim/pack/common/start/vim-windowswap
 	url = ../../wesQ3/vim-windowswap.git
-[submodule "vim/bundle/vim-startify"]
-	path = vim/pack/vendor/start/vim-startify
+[submodule "vim/pack/common/start/vim-startify"]
+	path = vim/pack/common/start/vim-startify
 	url = ../../mhinz/vim-startify.git
-[submodule "vim/bundle/vim-misc"]
-	path = vim/pack/vendor/start/vim-misc
+[submodule "vim/pack/common/start/vim-misc"]
+	path = vim/pack/common/start/vim-misc
 	url = ../../xolox/vim-misc.git
-[submodule "vim/bundle/vim-session"]
-	path = vim/pack/vendor/start/vim-session
+[submodule "vim/pack/common/start/vim-session"]
+	path = vim/pack/common/start/vim-session
 	url = ../../xolox/vim-session.git
-[submodule "vim/bundle/vim-polyglot"]
-	path = vim/pack/vendor/start/vim-polyglot
+[submodule "vim/pack/common/start/vim-polyglot"]
+	path = vim/pack/common/start/vim-polyglot
 	url = ../../sheerun/vim-polyglot.git
-[submodule "vim/pack/vendor/start/ale"]
-	path = vim/pack/vendor/start/ale
+[submodule "vim/pack/common/start/ale"]
+	path = vim/pack/common/start/ale
 	url = ../../dense-analysis/ale.git
-[submodule "vim/pack/vendor/opt/plenary.nvim"]
-	path = vim/pack/vendor/opt/plenary.nvim
+[submodule "vim/pack/nvim/opt/plenary.nvim"]
+	path = vim/pack/nvim/opt/plenary.nvim
 	url = ../../nvim-lua/plenary.nvim.git
 	branch = master
-[submodule "vim/pack/vendor/opt/telescope.nvim"]
-	path = vim/pack/vendor/opt/telescope.nvim
+[submodule "vim/pack/nvim/opt/telescope.nvim"]
+	path = vim/pack/nvim/opt/telescope.nvim
 	url = ../../nvim-telescope/telescope.nvim.git
 	branch = master
