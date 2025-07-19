@@ -76,5 +76,12 @@ set guioptions-=m               " menu bar
 set guioptions-=T               " toolbar
 set guioptions-=r               " scrollbar
 
+" Add vim specific plugins here from vim/pack/{label}/opt.
+" This is necessary to avoid autolaoding these in neovim.
+" Which would happen in the vim/pack/{label}/start directory.
+if !has('nvim')
+  packadd vim-polyglot
+endif
+
 " Use mutagen to load OS specific settings
 execute mutagen#mutate()

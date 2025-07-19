@@ -34,9 +34,6 @@
 [submodule "vim/pack/common/start/vim-session"]
 	path = vim/pack/common/start/vim-session
 	url = ../../xolox/vim-session.git
-[submodule "vim/pack/common/start/vim-polyglot"]
-	path = vim/pack/common/start/vim-polyglot
-	url = ../../sheerun/vim-polyglot.git
 [submodule "vim/pack/common/start/ale"]
 	path = vim/pack/common/start/ale
 	url = ../../dense-analysis/ale.git
@@ -48,3 +45,10 @@
 	path = vim/pack/nvim/opt/telescope.nvim
 	url = ../../nvim-telescope/telescope.nvim.git
 	branch = master
+[submodule "vim/pack/nvim/opt/nvim-treesitter"]
+	path = vim/pack/nvim/opt/nvim-treesitter
+	url = ../../nvim-treesitter/nvim-treesitter.git
+	branch = master
+[submodule "vim/pack/vim/opt/vim-polyglot"]
+	path = vim/pack/vim/opt/vim-polyglot
+	url = ../../sheerun/vim-polyglot.git
