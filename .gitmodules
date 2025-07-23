@@ -52,3 +52,6 @@
 [submodule "vim/pack/vim/opt/vim-polyglot"]
 	path = vim/pack/vim/opt/vim-polyglot
 	url = ../../sheerun/vim-polyglot.git
+[submodule "vim/pack/nvim/opt/lush.nvim"]
+	path = vim/pack/nvim/opt/lush.nvim
+	url = ../../rktjmp/lush.nvim.git
