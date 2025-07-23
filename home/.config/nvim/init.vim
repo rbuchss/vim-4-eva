@@ -18,6 +18,7 @@ source ~/.vimrc
 packadd plenary.nvim
 packadd telescope.nvim
 packadd nvim-treesitter
+packadd lush.nvim
 
 " make sure that all installed parsers are updated to the latest version via :TSUpdate
 " TODO: make this not happen every load
