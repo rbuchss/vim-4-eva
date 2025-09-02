@@ -10,6 +10,10 @@ let &packpath = &runtimepath
 " Ref: https://neovim.io/doc/user/provider.html#g%3Apython3_host_prog
 let g:loaded_python3_provider = 0
 
+let g:loaded_node_provider = 0
+let g:loaded_perl_provider = 0
+let g:loaded_ruby_provider = 0
+
 source ~/.vimrc
 
 " Add neovim specific plugins here from vim/pack/{label}/opt.
