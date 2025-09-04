@@ -55,3 +55,6 @@
 [submodule "vim/pack/nvim/opt/lush.nvim"]
 	path = vim/pack/nvim/opt/lush.nvim
 	url = ../../rktjmp/lush.nvim.git
+[submodule "vim/pack/nvim/opt/blink.cmp"]
+	path = vim/pack/nvim/opt/blink.cmp
+	url = ../../Saghen/blink.cmp.git
