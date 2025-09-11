@@ -24,6 +24,7 @@ packadd telescope.nvim
 packadd nvim-treesitter
 packadd blink.cmp
 packadd lush.nvim
+packadd windsurf.nvim
 
 " make sure that all installed parsers are updated to the latest version via :TSUpdate
 " TODO: make this not happen every load
@@ -78,7 +79,75 @@ lua << EOF
     end,
   })
 
-  require('blink.cmp').setup({
+  local blink_cmp = {
+    _sources = { 'lsp', 'path', 'snippets', 'buffer' },
+    _providers = {
+      codeium = {
+        name = 'Codeium',
+        module = 'codeium.blink',
+        async = true,
+        _enabled = false,
+      },
+    },
+  }
+
+  function blink_cmp.sources()
+    return blink_cmp._sources
+  end
+
+  function blink_cmp:add_source(source)
+    table.insert(self._sources, source)
+  end
+
+  function blink_cmp:remove_source(source)
+    self._sources = vim.tbl_filter(
+      function(s) return s ~= source end,
+      self._sources
+    )
+  end
+
+  function blink_cmp:enable_provider(provider)
+    self._providers[provider]._enabled = true
+    self:add_source(provider)
+  end
+
+  function blink_cmp:disable_provider(provider)
+    self._providers[provider]._enabled = false
+    self:remove_source(provider)
+  end
+
+  function blink_cmp:provider_enabled_fn(provider)
+    return function()
+      return self._providers[provider]._enabled
+    end
+  end
+
+  function blink_cmp:provider(provider)
+    local public_config = {}
+    local source = self._providers[provider]
+
+    for key, value in pairs(source) do
+      if not key:match('^_') then
+        public_config[key] = value
+      end
+    end
+
+    public_config.enabled = self:provider_enabled_fn(provider)
+
+    return public_config
+  end
+
+  function blink_cmp:providers()
+    local providers = {}
+
+    for key, value in pairs(self._providers) do
+      providers[key] = self:provider(key)
+    end
+
+    return providers
+  end
+
+  blink_cmp.config = {
     keymap = {
       -- 'default' (recommended) for mappings similar to built-in completions
       --   <c-y> to accept ([y]es) the completion.
@@ -110,7 +179,7 @@ lua << EOF
     appearance = {
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
-      nerd_font_variant = 'mono',
+      nerd_font_variant = 'normal',
     },
 
     completion = {
@@ -123,7 +192,6 @@ lua << EOF
 
       ghost_text = {
         enabled = true,
-        -- you may want to set the following options
         show_with_menu = false, -- only show when menu is closed
       },
     },
@@ -131,7 +199,8 @@ lua << EOF
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      default = blink_cmp.sources,
+      providers = blink_cmp:providers(),
     },
 
     -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -143,5 +212,202 @@ lua << EOF
 
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
+  }
+
+  require('blink.cmp').setup(blink_cmp.config)
+
+  AI = {
+    providers = {},
+  }
+
+  function AI.set_provider(provider)
+    if not AI.providers[provider] and provider ~= 'disabled' then
+      print(string.format('Unsupported provider: %s', provider))
+      return
+    end
+
+    local current_provider = vim.g.ai_provider or 'disabled'
+
+    if current_provider == 'disabled' and provider == 'disabled' then
+      print('Already disabled')
+      return
+    end
+
+    if current_provider == provider then
+      print(string.format('Already using provider: %s', provider))
+      return
+    end
+
+    if current_provider and AI.providers[current_provider] then
+      AI.providers[current_provider]:teardown()
+    end
+
+    if provider == 'disabled' then
+      vim.g.ai_provider = nil
+    elseif AI.providers[provider] then
+      vim.g.ai_provider = provider
+      AI.providers[provider]:setup()
+    end
+  end
+
+  function AI.register_provider(provider)
+    AI.providers[provider.name] = provider
+  end
+
+  local codeium_provider = {
+    name = 'codeium',
+    configured = false,
+  }
+
+  function codeium_provider:setup()
+    if not self.configured then
+      require('codeium').setup({
+         -- We disable auto registering the cmp source since we are using blink.cmp.
+         enable_cmp_source = false,
+         virtual_text = {
+           -- We use blink.cmp to show virtual text so we disable it here.
+           -- Disabling this means that we also get less info with the statusline.
+           -- Such as the number of completions available, waiting for the api response, etc.
+           -- However, basic server status such as auth are still shown in the statusline.
+           -- This also means that the keybindings for accepting completions
+           -- is handled by blink.cmp.
+           --
+           enabled = false,
+         }
+      })
+
+      -- For the custom status line to work we need to set using_status_line = true
+      -- and set the callback for redrawstatus
+      -- See: https://github.com/Exafunction/windsurf.nvim/blob/821b570b526dbb05b57aa4ded578b709a704a38a/lua/codeium/virtual_text.lua#L543-L552
+      --
+      require('codeium.virtual_text').set_statusbar_refresh(function()
+        vim.cmd("redrawstatus")
+      end)
+
+      self.configured = true
+    end
+
+    require('codeium').enable()
+
+    blink_cmp:enable_provider('codeium')
+
+    vim.keymap.set('n', '<leader>aa', function() vim.cmd('Codeium Chat') end)
+  end
+
+  function codeium_provider:teardown()
+    vim.keymap.del('n', '<leader>aa')
+
+    blink_cmp:disable_provider('codeium')
+
+    require('codeium').disable()
+  end
+
+  function codeium_provider:status()
+    local server = require('codeium').s
+    local server_status = server.check_status()
+
+    if not server.enabled then
+      return {
+        state = 'disabled',
+        text = '',
+      }
+    end
+
+    if server_status.api_key_error ~= nil then
+      return {
+        state = 'logged_out',
+        text = server_status.api_key_error,
+      }
+    end
+
+    -- NOTE: that this will always be idle if the server is enabled and authenticated, but virtual text is disabled.
+    --
+    -- This is a custom version of the status line based on:
+    -- https://github.com/Exafunction/windsurf.nvim/blob/821b570b526dbb05b57aa4ded578b709a704a38a/lua/codeium/virtual_text.lua#L520-L537
+    --
+    local status = require('codeium.virtual_text').status()
+
+    if status.state == 'completions' then
+      if status.total > 0 then
+        return {
+          state = 'enabled',
+          text = string.format('%d/%d', status.current, status.total),
+        }
+      end
+
+      return {
+        state = 'enabled',
+        text = '0',
+      }
+    elseif status.state == 'waiting' then
+      return {
+        state = 'enabled',
+        text = '*',
+      }
+    elseif status.state == 'idle' then
+      return {
+        state = 'enabled',
+        text = '',
+      }
+    else
+      return {
+        state = 'enabled',
+        text = '?',
+      }
+    end
+  end
+
+  AI.register_provider(codeium_provider)
+
+  vim.api.nvim_create_user_command('AI', function(opts)
+    local args = opts.fargs
+    AI.set_provider(args[1])
+  end, {
+    nargs = 1,
+    complete = function()
+      local providers = { 'disabled' }
+
+      for provider, _ in pairs(AI.providers) do
+        table.insert(providers, provider)
+      end
+
+      return providers
+    end,
   })
+
+  CustomStatus = {}
+
+  function CustomStatus.ai_status()
+    local status_symbols = {
+      error = '❌',
+      disabled = '🙈',
+      logged_out = '🚫',
+      enabled = '🤖',
+    }
+
+    local provider = vim.g.ai_provider
+
+    if not provider then
+      return string.format(
+        '[%s]',
+        status_symbols.disabled
+      )
+    end
+
+    if not AI.providers[provider] then
+      return string.format(
+        '[%s%s]',
+        status_symbols.error,
+        string.format('Unsupported provider: %s', provider)
+      )
+    end
+
+    local status = AI.providers[provider]:status()
+
+    return string.format(
+      '[%s%s]',
+      status_symbols[status.state],
+      status.text
+    )
+  end
 EOF
