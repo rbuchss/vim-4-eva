@@ -79,6 +79,39 @@ lua << EOF
     end,
   })
 
+  local kind_icons = {
+    -- LLM Provider icons
+    claude = '󰋦',
+    openai = '󱢆',
+    codestral = '󱎥',
+    gemini = '',
+    Groq = '',
+    Openrouter = '󱂇',
+    Ollama = '󰳆',
+    ['Llama.cpp'] = '󰳆',
+    Deepseek = ''
+  }
+
+  local source_icons = {
+    minuet = '󱗻',
+    orgmode = '',
+    otter = '󰼁',
+    nvim_lsp = '',
+    lsp = '',
+    buffer = '',
+    luasnip = '',
+    snippets = '',
+    path = '',
+    git = '',
+    tags = '',
+    cmdline = '󰘳',
+    latex_symbols = '',
+    cmp_nvim_r = '󰟔',
+    codeium = '󰩂',
+    -- FALLBACK
+    fallback = '󰜚',
+  }
+
   local blink_cmp = {
     _sources = { 'lsp', 'path', 'snippets', 'buffer' },
     _providers = {
@@ -177,14 +210,37 @@ lua << EOF
     },
 
     appearance = {
+      highlight_ns = vim.api.nvim_create_namespace('blink_cmp'),
       -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- Adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'normal',
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      kind_icons = kind_icons,
     },
 
     completion = {
       -- only show menu on manual <C-space>
-      menu = { auto_show = false },
+      menu = {
+        auto_show = false,
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind_icon', 'kind' },
+            { 'source_icon' },
+          },
+          components = {
+            source_icon = {
+              -- don't truncate source_icon
+              ellipsis = false,
+              text = function(ctx)
+                return source_icons[ctx.source_name:lower()] or source_icons.fallback
+              end,
+              highlight = 'BlinkCmpSource',
+            },
+          },
+        },
+      },
 
       -- By default, you may press `<c-space>` to show the documentation.
       -- Optionally, set `auto_show = true` to show the documentation after a delay.
