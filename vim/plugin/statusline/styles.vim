@@ -57,6 +57,12 @@ set statusline+=%#warningmsg#
 set statusline+=%{(&fenc!='utf-8'&&&fenc!='')?'['.&fenc.']':''}
 set statusline+=%*
 
+if has('nvim')
+  set statusline+=%#identifier#
+  set statusline+=%{v:lua.CustomStatus.ai_status()}
+  set statusline+=%*
+endif
+
 set statusline+=%#identifier#
 set statusline+=[
 set statusline+=%l:%c\ %P                 " cursor column:line position
