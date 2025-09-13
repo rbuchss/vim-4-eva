@@ -23,6 +23,7 @@ let g:lightline = {
       \         'linter_warnings',
       \         'linter_infos',
       \         'linter_ok',
+      \         'linter_no_linters',
       \       ],
       \     ],
       \     'right': [
@@ -83,6 +84,7 @@ let g:lightline = {
       \     'linter_warnings': 'lightline#ale#warnings',
       \     'linter_errors': 'lightline#ale#errors',
       \     'linter_ok': 'lightline#ale#ok',
+      \     'linter_no_linters': 'lightline#ale#no_linters',
       \
       \     'fileformat': 'statusline#styles#file_format',
       \     'fileencoding': 'statusline#styles#file_encoding',
@@ -96,6 +98,7 @@ let g:lightline = {
       \     'linter_warnings': 'warning',
       \     'linter_errors': 'error',
       \     'linter_ok': 'info',
+      \     'linter_no_linters': 'info',
       \   },
       \ }
 
@@ -155,6 +158,7 @@ let g:lightline#ale#indicator_warnings = get(g:, 'vim_4_eva_sign_warning', ''
 let g:lightline#ale#indicator_errors = get(g:, 'vim_4_eva_sign_error', '')
 let g:lightline#ale#indicator_ok = get(g:, 'vim_4_eva_sign_ok', '')
 let g:lightline#ale#indicator_checking = get(g:, 'vim_4_eva_sign_checking', '')
+let g:lightline#ale#indicator_no_linters = get(g:, 'vim_4_eva_sign_no_linters', '󰢤')
 
 " Add right padding to avoid overlapping characters with indicator and numbers.
 "
@@ -345,16 +349,23 @@ function! statusline#styles#file_size()
   return FileSize()
 endfunction
 
-" Note with lightline-ale we no longer need these autocmds.
-" This is since it already includes these.
-" "
-" " Note with component_expand we need these autocmds to
-" " run to refesh the stattusline state. Otherwise, the
-" " components will become stale.
-" "
-" augroup statusline#styles
-"   autocmd!
-"   autocmd User ALEJobStarted call lightline#update()
-"   autocmd User ALELintPost call lightline#update()
-"   autocmd User ALEFixPost call lightline#update()
-" augroup END
+" Note with component_expand we need these autocmds to
+" run to refesh the stattusline state. Otherwise, the
+" components will become stale.
+"
+augroup statusline#styles
+  autocmd!
+  " Note with lightline-ale we no longer need these autocmds.
+  " This is since it already includes these.
+  "
+  "   autocmd User ALEJobStarted call lightline#update()
+  "   autocmd User ALELintPost call lightline#update()
+  "   autocmd User ALEFixPost call lightline#update()
+  "
+  " But we do need one for BufferWritePost to cover the case
+  " when no linters exist for a given filetype.
+  " TODO: consider moving this to a job queue with debouncing.
+  " Same with the commands above ^^^.
+  "
+  autocmd BufWritePost * call lightline#update()
+augroup END
