@@ -7,8 +7,8 @@ if len(s:_buffers) >= 100
 endif
 
 let g:vim_4_eva_sign_error = '✗'
-let g:vim_4_eva_sign_warning = '∆'
-let g:vim_4_eva_sign_info = 'ℹ'
+let g:vim_4_eva_sign_warning = ''
+let g:vim_4_eva_sign_info = ''
 
 if !has('nvim')
   let g:ale_sign_error = g:vim_4_eva_sign_error
