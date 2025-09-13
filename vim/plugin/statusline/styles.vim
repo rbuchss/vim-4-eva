@@ -156,6 +156,12 @@ let g:lightline#ale#indicator_errors = get(g:, 'vim_4_eva_sign_error', '')
 let g:lightline#ale#indicator_ok = get(g:, 'vim_4_eva_sign_ok', '')
 let g:lightline#ale#indicator_checking = get(g:, 'vim_4_eva_sign_checking', '')
 
+" Add right padding to avoid overlapping characters with indicator and numbers.
+"
+let g:lightline#ale#indicator_right_pad_infos = ' '
+let g:lightline#ale#indicator_right_pad_warnings = ' '
+let g:lightline#ale#indicator_right_pad_errors = ' '
+
 " Custom functions for lightline component_function and component_expand
 "
 let s:filetypes_with_no_lightline = '\v(nerdtree|netrw)'
