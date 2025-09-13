@@ -61,3 +61,6 @@
 [submodule "vim/pack/nvim/opt/windsurf.nvim"]
 	path = vim/pack/nvim/opt/windsurf.nvim
 	url = ../../Exafunction/windsurf.nvim.git
+[submodule "vim/pack/common/start/lightline.vim"]
+	path = vim/pack/common/start/lightline.vim
+	url = ../../itchyny/lightline.vim.git

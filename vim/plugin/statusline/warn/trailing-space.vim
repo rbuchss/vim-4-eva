@@ -12,7 +12,7 @@ function! StatuslineTrailingSpaceWarning()
       return b:statusline_trailing_space_warning
     endif
     if search('\s\+$', 'nw') != 0
-      let b:statusline_trailing_space_warning = '[\s]'
+      let b:statusline_trailing_space_warning = '󱁐'
     else
       let b:statusline_trailing_space_warning = ''
     endif

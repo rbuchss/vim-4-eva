@@ -455,14 +455,14 @@ function CustomStatus.ai_status()
 
   if not provider then
     return string.format(
-      '[%s]',
+      '%s',
       status_symbols.disabled
     )
   end
 
   if not AI.providers[provider] then
     return string.format(
-      '[%s%s]',
+      '%s%s',
       status_symbols.error,
       string.format('Unsupported provider: %s', provider)
     )
@@ -471,7 +471,7 @@ function CustomStatus.ai_status()
   local status = AI.providers[provider]:status()
 
   return string.format(
-    '[%s%s]',
+    '%s%s',
     status_symbols[status.state],
     status.text
   )
