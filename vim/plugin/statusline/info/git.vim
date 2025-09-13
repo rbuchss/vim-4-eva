@@ -5,8 +5,8 @@ function! GitStatusline(len = 7)
     return ''
   elseif head =~# '^\x\{40,\}$'
     let content = a:len < 0 ? head : strpart(head, 0, a:len).'...'
-    return '👻 ('.content.'):'
+    return '  ('.content.')'
   else
-    return '👾 '.head.':'
+    return ' '.head
   endif
 endfunction
