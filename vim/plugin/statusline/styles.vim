@@ -18,7 +18,11 @@ let g:lightline = {
       \       [
       \         'indentation',
       \         'trailing_whitespace',
-      \         'linter_status',
+      \         'linter_checking',
+      \         'linter_errors',
+      \         'linter_warnings',
+      \         'linter_infos',
+      \         'linter_ok',
       \       ],
       \     ],
       \     'right': [
@@ -74,7 +78,11 @@ let g:lightline = {
       \     'readonly': 'statusline#styles#readonly',
       \     'indentation': 'statusline#styles#indentation',
       \     'trailing_whitespace': 'statusline#styles#trailing_whitespace',
-      \     'linter_status': 'statusline#styles#linter_status',
+      \     'linter_checking': 'lightline#ale#checking',
+      \     'linter_infos': 'lightline#ale#infos',
+      \     'linter_warnings': 'lightline#ale#warnings',
+      \     'linter_errors': 'lightline#ale#errors',
+      \     'linter_ok': 'lightline#ale#ok',
       \
       \     'fileformat': 'statusline#styles#file_format',
       \     'fileencoding': 'statusline#styles#file_encoding',
@@ -83,7 +91,11 @@ let g:lightline = {
       \     'readonly': 'readonly',
       \     'indentation': 'error',
       \     'trailing_whitespace': 'warning',
-      \     'linter_status': 'error',
+      \     'linter_checking': 'info',
+      \     'linter_infos': 'info',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'info',
       \   },
       \ }
 
@@ -327,13 +339,16 @@ function! statusline#styles#file_size()
   return FileSize()
 endfunction
 
-" Note with component_expand we need these autocmds to
-" run to refesh the stattusline state. Otherwise, the
-" components will become stale.
-"
-augroup statusline#styles
-  autocmd!
-  autocmd User ALEJobStarted call lightline#update()
-  autocmd User ALELintPost call lightline#update()
-  autocmd User ALEFixPost call lightline#update()
-augroup END
+" Note with lightline-ale we no longer need these autocmds.
+" This is since it already includes these.
+" "
+" " Note with component_expand we need these autocmds to
+" " run to refesh the stattusline state. Otherwise, the
+" " components will become stale.
+" "
+" augroup statusline#styles
+"   autocmd!
+"   autocmd User ALEJobStarted call lightline#update()
+"   autocmd User ALELintPost call lightline#update()
+"   autocmd User ALEFixPost call lightline#update()
+" augroup END

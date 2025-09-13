@@ -64,3 +64,6 @@
 [submodule "vim/pack/common/start/lightline.vim"]
 	path = vim/pack/common/start/lightline.vim
 	url = ../../itchyny/lightline.vim.git
+[submodule "vim/pack/common/start/lightline-ale"]
+	path = vim/pack/common/start/lightline-ale
+	url = ../../rbuchss/lightline-ale.git
