@@ -17,6 +17,7 @@ let g:lightline = {
       \       ],
       \       [
       \         'indentation',
+      \         'long_line',
       \         'trailing_whitespace',
       \         'linter_checking',
       \         'linter_errors',
@@ -78,6 +79,7 @@ let g:lightline = {
       \   'component_expand': {
       \     'readonly': 'statusline#styles#readonly',
       \     'indentation': 'statusline#styles#indentation',
+      \     'long_line': 'statusline#styles#long_line',
       \     'trailing_whitespace': 'statusline#styles#trailing_whitespace',
       \     'linter_checking': 'lightline#ale#checking',
       \     'linter_infos': 'lightline#ale#infos',
@@ -92,6 +94,7 @@ let g:lightline = {
       \   'component_type': {
       \     'readonly': 'readonly',
       \     'indentation': 'error',
+      \     'long_line': 'warning',
       \     'trailing_whitespace': 'warning',
       \     'linter_checking': 'info',
       \     'linter_infos': 'info',
@@ -108,7 +111,8 @@ set laststatus=2
 set noshowmode
 
 " Custom theme derived from: autoload/lightline/colorscheme/wombat.vim
-" See: https://github.com/itchyny/lightline.vim/blob/master/autoload/lightline/colorscheme/wombat.vim
+" See:
+"   https://github.com/itchyny/lightline.vim/blob/master/autoload/lightline/colorscheme/wombat.vim
 "
 let s:base03 = [ '#242424', 235 ]
 let s:base023 = [ '#353535', 236 ]
@@ -127,7 +131,15 @@ let s:blue = [ '#8ac6f2', 117 ]
 let s:cyan = s:blue
 let s:green = [ '#95e454', 119 ]
 
-let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+let s:p = {
+      \   'normal': {},
+      \   'inactive': {},
+      \   'insert': {},
+      \   'replace': {},
+      \   'visual': {},
+      \   'tabline': {}
+      \ }
+
 let s:p.normal.left     = [ [ s:base02, s:blue ], [ s:base3, s:base01 ] ]
 let s:p.normal.middle   = [ [ s:base2, s:base02 ] ]
 let s:p.normal.right    = [ [ s:base02, s:base0 ], [ s:base1, s:base01 ] ]
@@ -158,7 +170,10 @@ let g:lightline#ale#indicator_warnings = get(g:, 'vim_4_eva_sign_warning', ''
 let g:lightline#ale#indicator_errors = get(g:, 'vim_4_eva_sign_error', '')
 let g:lightline#ale#indicator_ok = get(g:, 'vim_4_eva_sign_ok', '')
 let g:lightline#ale#indicator_checking = get(g:, 'vim_4_eva_sign_checking', '')
-let g:lightline#ale#indicator_no_linters = get(g:, 'vim_4_eva_sign_no_linters', '󰢤')
+let g:lightline#ale#indicator_no_linters = get(g:,
+      \   'vim_4_eva_sign_no_linters',
+      \   '󰢤'
+      \ )
 
 " Add right padding to avoid overlapping characters with indicator and numbers.
 "
@@ -242,14 +257,13 @@ function! statusline#styles#indentation()
   return StatuslineTabWarning()
 endfunction
 
-" NOTE: The current StatuslineLongLineWarning implementation is very slow
-" so disabling for now in the statusline.
+" NOTE: This gets updated async with ale
 function! statusline#styles#long_line()
   if &filetype =~# s:filetypes_with_no_lightline
     return ''
   endif
 
-  return StatuslineLongLineWarning()
+  return ext#ale#handlers#long_line#statusline()
 endfunction
 
 function! statusline#styles#trailing_whitespace()
