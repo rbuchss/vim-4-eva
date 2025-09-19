@@ -3,6 +3,13 @@
 "-----------------------------------------------------------------------------
 " Recalculate the long line warning when idle and after saving
 autocmd cursorhold,bufwritepost * unlet! b:statusline_long_line_warning
+
+" NOTE: The current StatuslineLongLineWarning implementation is very slow
+" so deprecating this for use in the statusline.
+"
+" Instead we'll be using the ale extension linter going forward since it is
+" asynchronous and more feature rich - e.g. sign support, etc.
+"
 " return a warning for "long lines" where
 " long" is either &textwidth or 80 (if no &textwidth is set)
 " return '' if no long lines
