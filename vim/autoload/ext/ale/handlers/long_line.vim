@@ -65,6 +65,16 @@ function! ext#ale#handlers#long_line#Handle(buffer, lines) abort
                   \   . l:json.data.submatches[0].end
                   \   . ' > max length: ' . l:max_length . ')'
 
+            if ext#ale#syntax#IsLineCommented(
+            \   a:buffer,
+            \   getbufvar(a:buffer, '&filetype'),
+            \   l:json.data.line_number - 1,
+            \   l:max_length
+            \)
+                let l:lint_type = 'I'
+                let l:lint_text = 'Comment ' . l:lint_text
+            endif
+
             call add(l:output, {
             \   'lnum': l:json.data.line_number,
             \   'col': l:max_length + 1,

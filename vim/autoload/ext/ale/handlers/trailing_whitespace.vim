@@ -52,6 +52,16 @@ function! ext#ale#handlers#trailing_whitespace#Handle(buffer, lines) abort
             let l:lint_type = 'W'
             let l:lint_text = 'Trailing whitespace'
 
+            if ext#ale#syntax#IsLineCommented(
+            \   a:buffer,
+            \   getbufvar(a:buffer, '&filetype'),
+            \   l:json.data.line_number - 1,
+            \   l:json.data.submatches[0].start
+            \)
+                let l:lint_type = 'I'
+                let l:lint_text = 'Comment ' . l:lint_text
+            endif
+
             call add(l:output, {
             \   'lnum': l:json.data.line_number,
             \   'col': l:json.data.submatches[0].start + 1,
