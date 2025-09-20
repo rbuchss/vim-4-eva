@@ -271,7 +271,7 @@ function! statusline#styles#trailing_whitespace()
     return ''
   endif
 
-  return StatuslineTrailingSpaceWarning()
+  return ext#ale#handlers#trailing_whitespace#statusline()
 endfunction
 
 function! statusline#styles#linter_status()
