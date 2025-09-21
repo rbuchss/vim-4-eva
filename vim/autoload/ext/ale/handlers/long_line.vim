@@ -65,7 +65,7 @@ function! ext#ale#handlers#long_line#Handle(buffer, lines) abort
                   \   . l:json.data.submatches[0].end
                   \   . ' > max length: ' . l:max_length . ')'
 
-            if ext#ale#syntax#IsLineCommented(
+            if ext#ale#syntax#IsPositionCommented(
             \   a:buffer,
             \   getbufvar(a:buffer, '&filetype'),
             \   l:json.data.line_number - 1,
