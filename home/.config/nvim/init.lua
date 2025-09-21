@@ -21,6 +21,15 @@ vim.g.loaded_ruby_provider = 0
 -- Source the existing vimrc file
 vim.cmd.source('~/.vimrc')
 
+-- Make signcolumn bigger to support ale and gitsigns.
+--
+-- TODO: consider making dedicated signcolums.
+--
+-- See:
+--  https://github.com/luukvbaal/statuscol.nvim
+--
+vim.opt.signcolumn = "yes:2"
+
 -- Add neovim specific plugins here from vim/pack/{label}/opt.
 -- This is necessary to avoid autolaoding these in standard vim.
 -- Which would happen in the vim/pack/{label}/start directory.
@@ -31,6 +40,7 @@ local plugins = {
   'blink.cmp',
   'lush.nvim',
   'windsurf.nvim',
+  'gitsigns.nvim',
 }
 
 for _, plugin in ipairs(plugins) do
@@ -476,3 +486,5 @@ function CustomStatus.ai_status()
     status.text
   )
 end
+
+require('gitsigns').setup({})

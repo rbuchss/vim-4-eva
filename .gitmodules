@@ -67,3 +67,6 @@
 [submodule "vim/pack/common/start/lightline-ale"]
 	path = vim/pack/common/start/lightline-ale
 	url = ../../rbuchss/lightline-ale.git
+[submodule "vim/pack/nvim/opt/gitsigns.nvim"]
+	path = vim/pack/nvim/opt/gitsigns.nvim
+	url = ../../lewis6991/gitsigns.nvim.git
