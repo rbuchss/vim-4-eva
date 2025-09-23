@@ -21,15 +21,6 @@ vim.g.loaded_ruby_provider = 0
 -- Source the existing vimrc file
 vim.cmd.source('~/.vimrc')
 
--- Make signcolumn bigger to support ale and gitsigns.
---
--- TODO: consider making dedicated signcolums.
---
--- See:
---  https://github.com/luukvbaal/statuscol.nvim
---
-vim.opt.signcolumn = "yes:2"
-
 -- Add neovim specific plugins here from vim/pack/{label}/opt.
 -- This is necessary to avoid autolaoding these in standard vim.
 -- Which would happen in the vim/pack/{label}/start directory.
@@ -41,6 +32,7 @@ local plugins = {
   'lush.nvim',
   'windsurf.nvim',
   'gitsigns.nvim',
+  'statuscol.nvim',
 }
 
 for _, plugin in ipairs(plugins) do
@@ -488,3 +480,68 @@ function CustomStatus.ai_status()
 end
 
 require('gitsigns').setup({})
+
+local builtin = require("statuscol.builtin")
+require('statuscol').setup({
+  setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
+                         -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
+                         -- Although I recommend just using the segments field below to build your
+                         -- statuscolumn to benefit from the performance optimizations in this plugin.
+  -- builtin.lnumfunc number string options
+  thousands = false,     -- or line number thousands separator string ("." / ",")
+  relculright = false,   -- whether to right-align the cursor line number with 'relativenumber' set
+  -- Builtin 'statuscolumn' options
+  -- Lua table with 'filetype' values for which 'statuscolumn' will be unset
+  ft_ignore = { 'netrw', 'nerdtree' },
+  -- Lua table with 'buftype' values for which 'statuscolumn' will be unset
+  bt_ignore = { 'help', 'quickfix', 'nofile', 'nowrite', 'terminal', 'prompt' },
+  segments = {
+    { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+    -- Diagnostics signs config.
+    -- Uses ale namespace to allow ale signs to render here as well:
+    --
+    -- See:
+    --  https://github.com/dense-analysis/ale/blob/c88bddfa83dbb96c2f57426794ed98a0e181ea7e/lua/ale/diagnostics.lua#L72
+    --
+    {
+      sign = {
+        namespace = { 'diagnostic/signs', 'ale' },
+        maxwidth = 2,
+        -- colwidth = 1,
+        auto = true,
+      },
+      click = "v:lua.ScSa"
+    },
+    -- { text = { "%s" }, click = "v:lua.ScSa" },
+    {
+      text = { builtin.lnumfunc },
+      click = "v:lua.ScLa",
+    },
+    {
+      sign = {
+        namespace = { 'gitsigns' },
+        maxwidth = 1,
+        colwidth = 1,
+      },
+      -- condition = { true, builtin.not_empty },
+      click = "v:lua.ScSa",
+    },
+    -- Visual separator.
+    {
+      text = { ' ' },
+    },
+  },
+  clickmod = "c",         -- modifier used for certain actions in the builtin clickhandlers:
+                          -- "a" for Alt, "c" for Ctrl and "m" for Meta.
+  clickhandlers = {       -- builtin click handlers, keys are pattern matched
+    Lnum                    = builtin.lnum_click,
+    FoldClose               = builtin.foldclose_click,
+    FoldOpen                = builtin.foldopen_click,
+    FoldOther               = builtin.foldother_click,
+    DapBreakpointRejected   = builtin.toggle_breakpoint,
+    DapBreakpoint           = builtin.toggle_breakpoint,
+    DapBreakpointCondition  = builtin.toggle_breakpoint,
+    ["diagnostic/signs"]    = builtin.diagnostic_click,
+    gitsigns                = builtin.gitsigns_click,
+  },
+})
