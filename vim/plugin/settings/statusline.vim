@@ -64,23 +64,23 @@ let g:lightline = {
       \     ],
       \   },
       \   'component_function': {
-      \     'mode': 'statusline#styles#mode',
-      \     'paste': 'statusline#styles#paste',
-      \     'gitbranch': 'statusline#styles#git_branch',
-      \     'filename': 'statusline#styles#filename',
-      \     'modified': 'statusline#styles#modified',
+      \     'mode': 'vim_4_eva#statusline#Mode',
+      \     'paste': 'vim_4_eva#statusline#Paste',
+      \     'gitbranch': 'vim_4_eva#statusline#GitBranch',
+      \     'filename': 'vim_4_eva#statusline#Filename',
+      \     'modified': 'vim_4_eva#statusline#Modified',
       \
-      \     'lineinfo': 'statusline#styles#line_info',
-      \     'percent': 'statusline#styles#percent',
-      \     'filetype': 'statusline#styles#file_type',
-      \     'file_size': 'statusline#styles#file_size',
-      \     'ai_status': 'statusline#styles#ai_status',
+      \     'lineinfo': 'vim_4_eva#statusline#LineInfo',
+      \     'percent': 'vim_4_eva#statusline#Percent',
+      \     'filetype': 'vim_4_eva#statusline#FileType',
+      \     'file_size': 'vim_4_eva#statusline#FileSize',
+      \     'ai_status': 'vim_4_eva#statusline#AIStatus',
       \   },
       \   'component_expand': {
-      \     'readonly': 'statusline#styles#readonly',
-      \     'indentation': 'statusline#styles#indentation',
-      \     'long_line': 'statusline#styles#long_line',
-      \     'trailing_whitespace': 'statusline#styles#trailing_whitespace',
+      \     'readonly': 'vim_4_eva#statusline#Readonly',
+      \     'indentation': 'vim_4_eva#statusline#Indentation',
+      \     'long_line': 'vim_4_eva#statusline#LongLine',
+      \     'trailing_whitespace': 'vim_4_eva#statusline#TrailingWhitespace',
       \     'linter_checking': 'lightline#ale#checking',
       \     'linter_infos': 'lightline#ale#infos',
       \     'linter_warnings': 'lightline#ale#warnings',
@@ -88,8 +88,8 @@ let g:lightline = {
       \     'linter_ok': 'lightline#ale#ok',
       \     'linter_no_linters': 'lightline#ale#no_linters',
       \
-      \     'fileformat': 'statusline#styles#file_format',
-      \     'fileencoding': 'statusline#styles#file_encoding',
+      \     'fileformat': 'vim_4_eva#statusline#FileFormat',
+      \     'fileencoding': 'vim_4_eva#statusline#FileEncoding',
       \   },
       \   'component_type': {
       \     'readonly': 'readonly',
@@ -180,206 +180,3 @@ let g:lightline#ale#indicator_no_linters = get(g:,
 let g:lightline#ale#indicator_right_pad_infos = ' '
 let g:lightline#ale#indicator_right_pad_warnings = ' '
 let g:lightline#ale#indicator_right_pad_errors = ' '
-
-" Custom functions for lightline component_function and component_expand
-"
-let s:filetypes_with_no_lightline = '\v(nerdtree|netrw)'
-
-function! statusline#styles#mode()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  if &readonly && &filetype ==# 'help'
-    return ''
-  endif
-
-  return lightline#mode()
-endfunction
-
-function! statusline#styles#paste()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return &paste ? 'PASTE' : ''
-endfunction
-
-function! statusline#styles#readonly()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return ReadOnlyFlag()
-endfunction
-
-function! statusline#styles#git_branch()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  if &readonly && &filetype ==# 'help'
-    return ''
-  endif
-
-  return GitStatusline()
-endfunction
-
-function! statusline#styles#filename()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return StatusLineFileName()
-endfunction
-
-function! statusline#styles#modified()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  if &modified
-    return '+'
-  endif
-
-  if !&modifiable
-    return '-'
-  endif
-
-  return ''
-endfunction
-
-function! statusline#styles#indentation()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return StatuslineTabWarning()
-endfunction
-
-" NOTE: This gets updated async with ale
-function! statusline#styles#long_line()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return ext#ale#handlers#long_line#statusline()
-endfunction
-
-function! statusline#styles#trailing_whitespace()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return ext#ale#handlers#trailing_whitespace#statusline()
-endfunction
-
-function! statusline#styles#linter_status()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return LinterStatus()
-endfunction
-
-" Useful for debugging syntax highlighting.
-function! statusline#styles#current_highlight()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  return StatuslineCurrentHighlight()
-endfunction
-
-function! statusline#styles#line_info()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  " statusline equivalent of '%3l:%-2c'
-  return printf('%3d:%-2d', line('.'), col('.'))
-endfunction
-
-function! statusline#styles#percent()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  " statusline equivalent of '%3p%%'
-  return printf('%3d%%', 100 * line('.') / line('$'))
-endfunction
-
-function! statusline#styles#file_format()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  " display a warning if fileformat is not unix
-  return &ff !=# 'unix' ? &ff : ''
-endfunction
-
-function! statusline#styles#file_encoding()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  " display a warning if file encoding is not utf-8
-  return &fenc !=# 'utf-8' && &fenc !=# '' ? &fenc : ''
-endfunction
-
-function! statusline#styles#ai_status()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  if !has('nvim')
-    return ''
-  endif
-
-  return v:lua.CustomStatus.ai_status()
-endfunction
-
-function! statusline#styles#file_type()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  if winwidth(0) < 80
-    return ''
-  endif
-
-  return &filetype !=# '' ? &filetype : 'no ft'
-endfunction
-
-function! statusline#styles#file_size()
-  if &filetype =~# s:filetypes_with_no_lightline
-    return ''
-  endif
-
-  if winwidth(0) < 120
-    return ''
-  endif
-
-  return FileSize()
-endfunction
-
-" Note with component_expand we need these autocmds to
-" run to refesh the stattusline state. Otherwise, the
-" components will become stale.
-"
-augroup statusline#styles
-  autocmd!
-  " Note with lightline-ale we no longer need these autocmds.
-  " This is since it already includes these.
-  "
-  "   autocmd User ALEJobStarted call lightline#update()
-  "   autocmd User ALELintPost call lightline#update()
-  "   autocmd User ALEFixPost call lightline#update()
-  "
-  " But we do need one for BufferWritePost to cover the case
-  " when no linters exist for a given filetype.
-  " TODO: consider moving this to a job queue with debouncing.
-  " Same with the commands above ^^^.
-  "
-  autocmd BufWritePost * call lightline#update()
-augroup END

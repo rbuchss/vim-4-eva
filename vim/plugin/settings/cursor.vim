@@ -1,6 +1,3 @@
-" autocmd WinLeave * setlocal nocursorline
-" autocmd WinEnter * setlocal cursorline
-"
 " change cursor shape between modes
 if mutagen#is_os('windows')
   " " TODO revert cursor on exit
@@ -34,35 +31,3 @@ elseif mutagen#is_os('darwin') || mutagen#is_os('linux')
     let &t_EI = "\<Esc>]50;CursorShape=0\x7"
   endif
 endif
-
-"-----------------------------------------------------------------------------
-" jump to last cursor position when opening a file
-" do not do it when writing a commit
-"-----------------------------------------------------------------------------
-function! SetCursorPosition()
-  if &filetype !~ 'svn\|commit\c'
-    if line("'\"") > 0 && line("'\"") <= line("$")
-      exe "normal! g`\""
-      normal! zz
-    endif
-  end
-endfunction
-
-"-----------------------------------------------------------------------------
-" whitespace nuker
-"-----------------------------------------------------------------------------
-function! Preserve(command)
-  " preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " do the business:
-  execute a:command
-  " clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-
-function! StripTrailingWhitespace()
-  call Preserve("%s/\\s\\+$//e")
-endfunction

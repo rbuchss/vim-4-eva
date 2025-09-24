@@ -1,6 +1,6 @@
 "-----------------------------------------------------------------------------
-" read only flag setter
+" whitespace nuker
 "-----------------------------------------------------------------------------
-function! ReadOnlyFlag()
-  return &ft !~? 'vimfiler\|gundo' && &readonly ? '' : ''
+function! vim_4_eva#format#StripTrailingWhitespace() abort
+  call vim_4_eva#util#Preserve("%s/\\s\\+$//e")
 endfunction
