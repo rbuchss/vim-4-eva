@@ -496,7 +496,10 @@ require('statuscol').setup({
   -- Lua table with 'buftype' values for which 'statuscolumn' will be unset
   bt_ignore = { 'help', 'quickfix', 'nofile', 'nowrite', 'terminal', 'prompt' },
   segments = {
-    { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+    {
+      text = { builtin.foldfunc },
+      click = "v:lua.ScFa",
+    },
     -- Diagnostics signs config.
     -- Uses ale namespace to allow ale signs to render here as well:
     --
@@ -507,12 +510,17 @@ require('statuscol').setup({
       sign = {
         namespace = { 'diagnostic/signs', 'ale' },
         maxwidth = 2,
-        -- colwidth = 1,
         auto = true,
       },
       click = "v:lua.ScSa"
     },
-    -- { text = { "%s" }, click = "v:lua.ScSa" },
+    {
+      sign = {
+        name = { 'Signature_*', },
+        maxwidth = 1,
+        auto = true,
+      },
+    },
     {
       text = { builtin.lnumfunc },
       click = "v:lua.ScLa",
@@ -523,7 +531,6 @@ require('statuscol').setup({
         maxwidth = 1,
         colwidth = 1,
       },
-      -- condition = { true, builtin.not_empty },
       click = "v:lua.ScSa",
     },
     -- Visual separator.
