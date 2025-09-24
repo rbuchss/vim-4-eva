@@ -1,17 +1,7 @@
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-  "set ttymouse=xterm2
-endif
-
-if has('mouse_sgr') && !has('nvim')
-  set ttymouse=sgr
-endif
-
 "-----------------------------------------------------------------------------
 " mouse mode toggle
 "-----------------------------------------------------------------------------
-fun! s:ToggleMouse()
+function! vim_4_eva#mouse#ToggleMode() abort
     if !exists("s:old_mouse")
         let s:old_mouse = "a"
     endif
@@ -27,6 +17,3 @@ fun! s:ToggleMouse()
         echo "Mouse is for terminal"
     endif
 endfunction
-
-noremap <leader>mt :call <SID>ToggleMouse()<CR>
-inoremap <leader>mt <Esc>:call <SID>ToggleMouse()<CR>a

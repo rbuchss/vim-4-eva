@@ -1,9 +1,10 @@
+" TODO: convert this into an ale linter
 "-----------------------------------------------------------------------------
 " mixed indentation warning setter
 "-----------------------------------------------------------------------------
 " Recalculate the tab warning flag when idle and after writing
 autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-" return if &et is set wrong
+" return if &expandtab is set wrong
 " return if spaces and tabs are used to indent
 " return an empty string if everything is fine
 function! StatuslineTabWarning()
@@ -14,14 +15,14 @@ function! StatuslineTabWarning()
     endif
     let tabs = search('^\t', 'nw') != 0
     "find spaces that arent used as alignment in the first indent column
-    let spaces = search('^ \{' . &ts . ',}[^\t]', 'nw') != 0
+    let spaces = search('^ \{' . &tabstop . ',}[^\t]', 'nw') != 0
     if tabs && spaces
       " Warning for mixed-indenting.
       " If spaces and tabs are used to indent
       let b:statusline_tab_warning = ''
-    elseif (spaces && !&et) || (tabs && &et)
-      " Warning for invalid indentation relative to &et setting.
-      " If &et is set wrong.
+    elseif (spaces && !&expandtab) || (tabs && &expandtab)
+      " Warning for invalid indentation relative to &expandtab setting.
+      " If &expandtab is set wrong.
       let b:statusline_tab_warning = ''
     endif
   endif

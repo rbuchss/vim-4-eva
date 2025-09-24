@@ -1,24 +1,10 @@
-"-----------------------------------------------------------------------------
-" hub helper
-"-----------------------------------------------------------------------------
-nmap <leader>gb :call HubBrowseFile()<CR>
-let g:hub_executable = 'hub'
-
-function! Strip(input_string)
-  return substitute(a:input_string, '^\s*\(.\{-}\)\s*$', '\1', '')
-endfunction
-
-function! Chomp(string)
-  return substitute(a:string, '\n\+$', '', '')
-endfunction
-
-function! HubBrowseFile()
+function! vim_4_eva#hub#BrowseFile() abort
   let l:branch = fugitive#head(7)
   if empty(l:branch)
     echo 'ERROR file not in a git repo'
   else
     let l:github_sub_url = 'blob/' . l:branch
-    let l:repo_top = Chomp(system('git rev-parse --show-toplevel'))
+    let l:repo_top = vim_4_eva#util#Chomp(system('git rev-parse --show-toplevel'))
     let l:file_path = expand('%:p')
     let l:line=line('.')
     let l:repo_path = substitute(l:file_path, l:repo_top, l:github_sub_url, "") . "#L" . l:line
