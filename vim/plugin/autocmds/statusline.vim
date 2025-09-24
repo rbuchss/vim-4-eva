@@ -2,7 +2,7 @@
 " run to refesh the stattusline state. Otherwise, the
 " components will become stale.
 "
-augroup vim_4_eva#statusline
+augroup vim_4_eva#plugin#statusline
   autocmd!
   " Note with lightline-ale we no longer need these autocmds.
   " This is since it already includes these.
