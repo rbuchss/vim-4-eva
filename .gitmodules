@@ -73,3 +73,18 @@
 [submodule "vim/pack/nvim/opt/statuscol.nvim"]
 	path = vim/pack/nvim/opt/statuscol.nvim
 	url = ../../luukvbaal/statuscol.nvim.git
+[submodule "vim/pack/nvim/opt/mason.nvim"]
+	path = vim/pack/nvim/opt/mason.nvim
+	url = ../../mason-org/mason.nvim.git
+[submodule "vim/pack/nvim/opt/mason-lspconfig.nvim"]
+	path = vim/pack/nvim/opt/mason-lspconfig.nvim
+	url = ../../mason-org/mason-lspconfig.nvim.git
+[submodule "vim/pack/nvim/opt/nvim-lspconfig"]
+	path = vim/pack/nvim/opt/nvim-lspconfig
+	url = ../../neovim/nvim-lspconfig.git
+[submodule "vim/pack/nvim/opt/mason-tool-installer.nvim"]
+	path = vim/pack/nvim/opt/mason-tool-installer.nvim
+	url = ../../WhoIsSethDaniel/mason-tool-installer.nvim.git
+[submodule "vim/pack/nvim/opt/fidget.nvim"]
+	path = vim/pack/nvim/opt/fidget.nvim
+	url = ../../j-hui/fidget.nvim.git
