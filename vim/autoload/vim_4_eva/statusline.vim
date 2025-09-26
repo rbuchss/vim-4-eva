@@ -213,7 +213,7 @@ function! vim_4_eva#statusline#AIStatus()
     return ''
   endif
 
-  return v:lua.CustomStatus.ai_status()
+  return v:lua.require('vim_4_eva.plugin.settings.statusline').ai_status()
 endfunction
 
 function! vim_4_eva#statusline#FileType()
