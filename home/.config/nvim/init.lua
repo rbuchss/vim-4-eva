@@ -15,6 +15,7 @@ require('vim_4_eva.pack').setup({
   'plenary.nvim',
   'telescope.nvim',
   'nvim-treesitter',
+  'lazydev.nvim',
   'mason.nvim',
   'mason-lspconfig.nvim',
   'mason-tool-installer.nvim',

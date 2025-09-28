@@ -1,7 +1,12 @@
 local M = {
-  _sources = { 'lsp', 'path', 'snippets', 'buffer' },
+  _sources = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
   -- TODO: allow providers to add be added out of this module to decouple this.
   _providers = {
+    lazydev = {
+      module = 'lazydev.integrations.blink',
+      score_offset = 100,
+      _enabled = true,
+    },
     codeium = {
       name = 'Codeium',
       module = 'codeium.blink',
