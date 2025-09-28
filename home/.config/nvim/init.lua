@@ -29,3 +29,4 @@ require('vim_4_eva.pack').setup({
 })
 
 require('vim_4_eva.plugin').setup({})
+require('vim_4_eva.ftplugin').setup({})
