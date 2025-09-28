@@ -76,6 +76,12 @@ set guioptions-=m               " menu bar
 set guioptions-=T               " toolbar
 set guioptions-=r               " scrollbar
 
+let g:use_diagnotic_nerd_font_signs = 1
+let g:vim_4_eva_diagnostic_sign_error = '✗'
+let g:vim_4_eva_diagnostic_sign_warning = ''
+let g:vim_4_eva_diagnostic_sign_info = ''
+let g:vim_4_eva_diagnostic_sign_hint = ''
+
 " Add vim specific plugins here from vim/pack/{label}/opt.
 " This is necessary to avoid autolaoding these in neovim.
 " Which would happen in the vim/pack/{label}/start directory.

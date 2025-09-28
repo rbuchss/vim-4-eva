@@ -29,7 +29,7 @@ function M.setup(config)
       {
         sign = {
           namespace = { 'diagnostic/signs', 'ale' },
-          maxwidth = 2,
+          maxwidth = 1,
           auto = true,
         },
         click = "v:lua.ScSa"

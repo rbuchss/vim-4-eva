@@ -165,13 +165,33 @@ let g:lightline#colorscheme#zombat#palette = lightline#colorscheme#flatten(s:p)
 
 " Custom icons for lightline-ale
 "
-let g:lightline#ale#indicator_infos = get(g:, 'vim_4_eva_sign_info', '')
-let g:lightline#ale#indicator_warnings = get(g:, 'vim_4_eva_sign_warning', '')
-let g:lightline#ale#indicator_errors = get(g:, 'vim_4_eva_sign_error', '')
-let g:lightline#ale#indicator_ok = get(g:, 'vim_4_eva_sign_ok', '')
-let g:lightline#ale#indicator_checking = get(g:, 'vim_4_eva_sign_checking', '')
+let g:lightline#ale#indicator_infos = get(g:,
+      \   'vim_4_eva_diagnostic_sign_info',
+      \   ''
+      \ )
+
+let g:lightline#ale#indicator_warnings = get(g:,
+      \   'vim_4_eva_diagnostic_sign_warning',
+      \   ''
+      \ )
+
+let g:lightline#ale#indicator_errors = get(g:,
+      \   'vim_4_eva_diagnostic_sign_error',
+      \   ''
+      \ )
+
+let g:lightline#ale#indicator_ok = get(g:,
+      \   'vim_4_eva_diagnostic_sign_ok',
+      \   ''
+      \ )
+
+let g:lightline#ale#indicator_checking = get(g:,
+      \   'vim_4_eva_diagnostic_sign_checking',
+      \   ''
+      \ )
+
 let g:lightline#ale#indicator_no_linters = get(g:,
-      \   'vim_4_eva_sign_no_linters',
+      \   'vim_4_eva_diagnostic_sign_no_linters',
       \   '󰢤'
       \ )
 
