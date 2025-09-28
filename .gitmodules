@@ -88,3 +88,6 @@
 [submodule "vim/pack/nvim/opt/fidget.nvim"]
 	path = vim/pack/nvim/opt/fidget.nvim
 	url = ../../j-hui/fidget.nvim.git
+[submodule "vim/pack/nvim/opt/lazydev.nvim"]
+	path = vim/pack/nvim/opt/lazydev.nvim
+	url = ../../folke/lazydev.nvim.git
