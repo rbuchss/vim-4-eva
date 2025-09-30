@@ -27,6 +27,7 @@ require('vim_4_eva.pack').setup({
   'gitsigns.nvim',
   'statuscol.nvim',
   'which-key.nvim',
+  'todo-comments.nvim',
 })
 
 require('vim_4_eva.plugin').setup({})
