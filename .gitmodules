@@ -91,3 +91,6 @@
 [submodule "vim/pack/nvim/opt/lazydev.nvim"]
 	path = vim/pack/nvim/opt/lazydev.nvim
 	url = ../../folke/lazydev.nvim.git
+[submodule "vim/pack/nvim/opt/which-key.nvim"]
+	path = vim/pack/nvim/opt/which-key.nvim
+	url = ../../folke/which-key.nvim.git
