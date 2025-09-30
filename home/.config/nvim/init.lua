@@ -9,25 +9,7 @@ vim.opt.packpath = vim.opt.runtimepath:get()
 vim.cmd.source('~/.vimrc')
 
 require('vim_4_eva.pack').setup({
-  -- Add neovim specific plugins here from vim/pack/{label}/opt.
-  -- This is necessary to avoid autolaoding these in standard vim.
-  -- Which would happen in the vim/pack/{label}/start directory.
-  'plenary.nvim',
-  'telescope.nvim',
-  'nvim-treesitter',
-  'lazydev.nvim',
-  'mason.nvim',
-  'mason-lspconfig.nvim',
-  'mason-tool-installer.nvim',
-  'nvim-lspconfig',
-  'fidget.nvim',
-  'blink.cmp',
-  'lush.nvim',
-  'windsurf.nvim',
-  'gitsigns.nvim',
-  'statuscol.nvim',
-  'which-key.nvim',
-  'todo-comments.nvim',
+  packages = 'all',
 })
 
 require('vim_4_eva.plugin').setup({})
