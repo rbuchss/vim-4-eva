@@ -15,6 +15,7 @@ function M.setup(config)
   require('vim_4_eva.plugin.settings.statuscol').setup(config)
   require('vim_4_eva.plugin.settings.statusline').setup(config)
   require('vim_4_eva.plugin.settings.treesitter').setup(config)
+  require('vim_4_eva.plugin.settings.todo-comments').setup(config)
   require('vim_4_eva.plugin.settings.which-key').setup(config)
 end
 
