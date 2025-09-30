@@ -26,6 +26,7 @@ require('vim_4_eva.pack').setup({
   'windsurf.nvim',
   'gitsigns.nvim',
   'statuscol.nvim',
+  'which-key.nvim',
 })
 
 require('vim_4_eva.plugin').setup({})
