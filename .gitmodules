@@ -100,3 +100,15 @@
 [submodule "vim/pack/nvim/opt/zombat.nvim"]
 	path = vim/pack/nvim/opt/zombat.nvim
 	url = ../../rbuchss/zombat.nvim.git
+[submodule "vim/pack/nvim/opt/nvim-dap"]
+	path = vim/pack/nvim/opt/nvim-dap
+	url = ../../mfussenegger/nvim-dap.git
+[submodule "vim/pack/nvim/opt/nvim-nio"]
+	path = vim/pack/nvim/opt/nvim-nio
+	url = ../../nvim-neotest/nvim-nio.git
+[submodule "vim/pack/nvim/opt/nvim-dap-ui"]
+	path = vim/pack/nvim/opt/nvim-dap-ui
+	url = ../../rcarriga/nvim-dap-ui.git
+[submodule "vim/pack/nvim/opt/mason-nvim-dap.nvim"]
+	path = vim/pack/nvim/opt/mason-nvim-dap.nvim
+	url = ../../jay-babu/mason-nvim-dap.nvim.git
