@@ -15,6 +15,7 @@ local M = {
       'fidget.nvim',
       'blink.cmp',
       'lush.nvim',
+      'zombat.nvim',
       'windsurf.nvim',
       'gitsigns.nvim',
       'statuscol.nvim',
