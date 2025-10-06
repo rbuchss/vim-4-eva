@@ -97,3 +97,6 @@
 [submodule "vim/pack/nvim/opt/todo-comments.nvim"]
 	path = vim/pack/nvim/opt/todo-comments.nvim
 	url = ../../folke/todo-comments.nvim.git
+[submodule "vim/pack/nvim/opt/zombat.nvim"]
+	path = vim/pack/nvim/opt/zombat.nvim
+	url = ../../rbuchss/zombat.nvim.git
