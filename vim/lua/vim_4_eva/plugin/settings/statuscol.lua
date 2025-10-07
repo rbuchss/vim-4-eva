@@ -42,6 +42,14 @@ function M.setup(config)
         },
       },
       {
+        sign = {
+          name = { 'Dap*', },
+          maxwidth = 1,
+          auto = true,
+        },
+        click = "v:lua.ScSa",
+      },
+      {
         text = { builtin.lnumfunc },
         click = "v:lua.ScLa",
       },
