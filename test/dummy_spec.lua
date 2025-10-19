@@ -1,0 +1,5 @@
+describe("dummy_specs", function()
+  it("should assert", function()
+    assert.equals(true, true)
+  end)
+end)
