@@ -1,11 +1,11 @@
 local M = {
-  _sources = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
+  _sources = { 'lsp', 'path', 'snippets', 'buffer' }, -- lazydev will be added when it loads
   -- TODO: allow providers to add be added out of this module to decouple this.
   _providers = {
     lazydev = {
       module = 'lazydev.integrations.blink',
       score_offset = 100,
-      _enabled = true,
+      _enabled = false, -- Disabled by default, will be enabled when lazydev loads
     },
     codeium = {
       name = 'Codeium',
@@ -51,8 +51,16 @@ local source_icons = {
   fallback = '󰜚',
 }
 
-function M.setup(config)
-  require('blink.cmp').setup(M.config)
+function M.setup(_)
+  require('vim_4_eva.pack').lazy.register({
+    {
+      'blink.cmp',
+      event = 'DeferredUIEnter',
+      after = function()
+        require('blink.cmp').setup(M.config)
+      end,
+    },
+  })
 end
 
 function M.sources()
@@ -191,11 +199,11 @@ M.config = {
   },
 
   -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-  -- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-  -- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+  -- You may use a lua implementation instead by using `implementation = 'lua'` or fallback to the lua implementation,
+  -- when the Rust fuzzy matcher is not available, by using `implementation = 'prefer_rust'`
   --
   -- See the fuzzy documentation for more information
-  fuzzy = { implementation = "prefer_rust_with_warning" },
+  fuzzy = { implementation = 'prefer_rust_with_warning' },
 
   -- Shows a signature help window while you type arguments for a function
   signature = { enabled = true },

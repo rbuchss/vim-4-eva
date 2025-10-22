@@ -5,12 +5,14 @@ local M = {
   },
 }
 
-function M.setup(config)
+function M.setup(_)
   require('vim_4_eva.plugin.settings.ai').register_provider(M.codeium_provider)
 end
 
 function M.codeium_provider:setup()
   if not self.configured then
+    vim.cmd.packadd('windsurf.nvim')
+
     require('codeium').setup({
        -- We disable auto registering the cmp source since we are using blink.cmp.
        enable_cmp_source = false,
@@ -31,7 +33,7 @@ function M.codeium_provider:setup()
     -- See: https://github.com/Exafunction/windsurf.nvim/blob/821b570b526dbb05b57aa4ded578b709a704a38a/lua/codeium/virtual_text.lua#L543-L552
     --
     require('codeium.virtual_text').set_statusbar_refresh(function()
-      vim.cmd("redrawstatus")
+      vim.cmd('redrawstatus')
     end)
 
     self.configured = true

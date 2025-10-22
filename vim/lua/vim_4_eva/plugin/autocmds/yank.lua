@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup(config)
+function M.setup(_)
   -- Highlight when yanking (copying) text
   --  Try it with `yap` in normal mode
   --  See `:help vim.hl.on_yank()`

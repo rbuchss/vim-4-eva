@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup(config)
+function M.setup(_)
   -- Disables neovim python integration to speed up loading python files.
   -- Otherwise it takes forever to load these files.
   --
