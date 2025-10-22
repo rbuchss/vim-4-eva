@@ -30,6 +30,7 @@ lua_modules: $(LUAROCKS_INIT_FILES) $(ROCKSPEC)
 deps: $(LUAROCKS_INIT_FILES)
 	$(LUAROCKS_INSTALL_DEPS)
 
+.DEFAULT_GOAL := test
 .PHONY: test
 test: lua_modules
 	luarocks test
