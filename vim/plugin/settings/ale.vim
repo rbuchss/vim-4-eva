@@ -1,6 +1,6 @@
 let s:_buffers = getbufinfo({'buflisted':1})
 
-if len(s:_buffers) >= 100
+if len(s:_buffers) >= 50
   " Disable running linters when opening too many files to avoid OS maxfiles limit issue
   " Ref: https://github.com/dense-analysis/ale?tab=readme-ov-file#how-can-i-run-linters-only-when-i-save-files
   let g:ale_lint_on_enter = 0
