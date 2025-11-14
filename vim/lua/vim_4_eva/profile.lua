@@ -1,6 +1,26 @@
-local M = {}
+local M = {
+  before = {},
+  after = {},
+}
 
-function M.setup(_)
+function M.setup(callback)
+  M.before.setup()
+
+  if callback ~= nil and type(callback) ~= 'function' then
+    error('callback must be a function, got ' .. type(callback))
+  end
+
+  local _callback = callback or function() end
+  _callback()
+
+  M.after.setup()
+end
+
+function M.before.setup()
+  require('vim_4_eva.before.plugin').setup({})
+end
+
+function M.after.setup()
   require('vim_4_eva.pack').eager.load()
   require('vim_4_eva.plugin').setup({})
   require('vim_4_eva.ftplugin').setup({})

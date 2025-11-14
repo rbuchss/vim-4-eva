@@ -5,7 +5,9 @@ vim.opt.runtimepath:append('~/.vim/after')
 -- Set packpath to match runtimepath
 vim.opt.packpath = vim.opt.runtimepath:get()
 
--- Source the existing vimrc file
-vim.cmd.source('~/.vimrc')
-
-require('vim_4_eva.profile').setup({})
+require('vim_4_eva.profile').setup(
+  function()
+    -- Source the existing vimrc file
+    vim.cmd.source('~/.vimrc')
+  end
+)
