@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup(config)
+function M.setup(_)
   vim.g.loaded_perl_provider = 0
 end
 

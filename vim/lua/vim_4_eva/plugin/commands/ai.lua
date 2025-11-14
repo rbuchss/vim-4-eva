@@ -1,10 +1,9 @@
 local M = {}
 
 -- TODO: allow this to configure/register providers
-function M.setup(config)
+function M.setup(_)
   local ai = require('vim_4_eva.plugin.settings.ai')
 
-  -- TODO: move this to autocmds or commands?
   vim.api.nvim_create_user_command('AI', function(opts)
     local args = opts.fargs
     ai.set_provider(args[1])

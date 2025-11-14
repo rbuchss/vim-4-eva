@@ -1,6 +1,6 @@
 local M = {}
 
-function M.setup(config)
+function M.setup(_)
   -- Diagnostic Config
   -- See :help vim.diagnostic.Opts
   vim.diagnostic.config {

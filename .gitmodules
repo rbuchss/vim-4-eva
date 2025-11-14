@@ -112,3 +112,6 @@
 [submodule "vim/pack/nvim/opt/mason-nvim-dap.nvim"]
 	path = vim/pack/nvim/opt/mason-nvim-dap.nvim
 	url = ../../jay-babu/mason-nvim-dap.nvim.git
+[submodule "vim/pack/nvim/opt/lz.n"]
+	path = vim/pack/nvim/opt/lz.n
+	url = ../../lumen-oss/lz.n.git

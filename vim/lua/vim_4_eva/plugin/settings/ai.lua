@@ -3,7 +3,7 @@ local M = {
 }
 
 -- TODO: allow this to configure/register providers
-function M.setup(config)
+function M.setup(_)
 end
 
 function M.set_provider(provider)

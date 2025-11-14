@@ -3,7 +3,7 @@ local M = {}
 -- TODO: allow configs to be used here.
 -- For example status_symbols, etc.
 --
-function M.setup(config)
+function M.setup(_)
 end
 
 function M.ai_status()
