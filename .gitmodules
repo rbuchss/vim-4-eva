@@ -115,3 +115,6 @@
 [submodule "vim/pack/nvim/opt/lz.n"]
 	path = vim/pack/nvim/opt/lz.n
 	url = ../../lumen-oss/lz.n.git
+[submodule "vim/pack/nvim/opt/claude-code.nvim"]
+	path = vim/pack/nvim/opt/claude-code.nvim
+	url = ../../greggh/claude-code.nvim.git

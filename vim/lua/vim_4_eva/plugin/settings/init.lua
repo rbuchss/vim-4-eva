@@ -3,6 +3,7 @@ local M = {}
 function M.setup(config)
   require('vim_4_eva.plugin.settings.ai').setup(config)
   require('vim_4_eva.plugin.settings.blink').setup(config)
+  require('vim_4_eva.plugin.settings.claude').setup(config)
   require('vim_4_eva.plugin.settings.codeium').setup(config)
   require('vim_4_eva.plugin.settings.colors').setup(config)
   require('vim_4_eva.plugin.settings.debugger').setup(config)

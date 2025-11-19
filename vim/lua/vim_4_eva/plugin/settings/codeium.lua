@@ -43,11 +43,14 @@ function M.codeium_provider:setup()
 
   require('vim_4_eva.plugin.settings.blink'):enable_provider('codeium')
 
-  vim.keymap.set('n', '<leader>aa', function() vim.cmd('Codeium Chat') end)
+  vim.keymap.set('n', '<leader>aW',
+    function()
+      vim.cmd('Codeium Chat')
+    end, { desc = 'Codeium Chat' })
 end
 
 function M.codeium_provider:teardown()
-  vim.keymap.del('n', '<leader>aa')
+  vim.keymap.del('n', '<leader>aW')
 
   require('vim_4_eva.plugin.settings.blink'):disable_provider('codeium')
 
