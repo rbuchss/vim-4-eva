@@ -1,1 +1,1 @@
-map <F5> :buffers<CR>:b!
+map <leader>bb :buffers<CR>:b!

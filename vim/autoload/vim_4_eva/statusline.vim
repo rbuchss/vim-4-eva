@@ -1,6 +1,6 @@
 " Custom functions for lightline component_function and component_expand
 "
-let s:filetypes_with_no_lightline = '\v(nerdtree|netrw)'
+let s:filetypes_with_no_lightline = '\v(nerdtree|netrw|dapui_|dap-repl)'
 
 function! vim_4_eva#statusline#Mode()
   if &filetype =~# s:filetypes_with_no_lightline
