@@ -198,25 +198,34 @@ function M.setup(_)
 
         -- Dap UI setup
         -- For more information, see |:help nvim-dap-ui|
-        dapui.setup {
-          -- Set icons to characters that are more likely to work in every terminal.
-          --    Feel free to remove or use ones that you like more! :)
-          --    Don't feel like these are good choices.
-          icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-          controls = {
-            icons = {
-              pause = '⏸',
-              play = '▶',
-              step_into = '⏎',
-              step_over = '⏭',
-              step_out = '⏮',
-              step_back = 'b',
-              run_last = '▶▶',
-              terminate = '⏹',
-              disconnect = '⏏',
+        dapui.setup({
+          expand_lines = true,
+          controls = { enabled = true },
+          floating = { border = 'rounded' },
+
+          -- Set dapui window
+          render = {
+            max_type_length = 60,
+            max_value_lines = 200,
+          },
+
+          layouts = {
+            {
+              elements = {
+                { id = 'console', size = 1.0 },
+              },
+              size = 5,                        -- height in lines (adjust to taste)
+              position = 'bottom',             -- "left", "right", "top", "bottom"
+            },
+            {
+              elements = {
+                { id = 'scopes', size = 1.0 }, -- other options: repl, console
+              },
+              size = 15,                       -- height in lines (adjust to taste)
+              position = 'bottom',             -- "left", "right", "top", "bottom"
             },
           },
-        }
+        })
 
         -- Change breakpoint icons
         vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
