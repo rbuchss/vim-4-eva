@@ -118,3 +118,6 @@
 [submodule "vim/pack/nvim/opt/claude-code.nvim"]
 	path = vim/pack/nvim/opt/claude-code.nvim
 	url = ../../greggh/claude-code.nvim.git
+[submodule "vim/pack/nvim/opt/nvim-dap-python"]
+	path = vim/pack/nvim/opt/nvim-dap-python
+	url = ../../mfussenegger/nvim-dap-python.git
