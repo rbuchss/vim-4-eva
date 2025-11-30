@@ -121,3 +121,12 @@
 [submodule "vim/pack/nvim/opt/nvim-dap-python"]
 	path = vim/pack/nvim/opt/nvim-dap-python
 	url = ../../mfussenegger/nvim-dap-python.git
+[submodule "vim/pack/nvim/opt/catppuccin.nvim"]
+	path = vim/pack/nvim/opt/catppuccin.nvim
+	url = ../../catppuccin/nvim.git
+[submodule "vim/pack/nvim/opt/kanagawa.nvim"]
+	path = vim/pack/nvim/opt/kanagawa.nvim
+	url = ../../rebelot/kanagawa.nvim.git
+[submodule "vim/pack/nvim/opt/tokyonight.nvim"]
+	path = vim/pack/nvim/opt/tokyonight.nvim
+	url = ../../folke/tokyonight.nvim.git

@@ -26,7 +26,23 @@ function M.after.setup()
   require('vim_4_eva.ftplugin').setup({})
   require('vim_4_eva.pack').lazy.load()
 
-  vim.cmd.colorscheme 'zombat'
+  vim.cmd.colorscheme(
+    require('vim_4_eva.plugin.settings.colors').random_color({
+      colors = {
+        'catppuccin',
+        'catppuccin-frappe',
+        'catppuccin-macchiato',
+        'catppuccin-mocha',
+        'kanagawa',
+        'kanagawa-dragon',
+        'kanagawa-wave',
+        'tokyonight',
+        'tokyonight-moon',
+        'tokyonight-night',
+        'tokyonight-storm',
+      },
+    })
+  )
 end
 
 return M
