@@ -1,2 +1,3 @@
 " reset search highlighting
-nmap <leader>/ :nohlsearch<CR>
+"
+nmap <Esc> :nohlsearch<CR>
