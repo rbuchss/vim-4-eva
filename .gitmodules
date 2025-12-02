@@ -196,3 +196,6 @@
 [submodule "vim/pack/nvim/opt/edge"]
 	path = vim/pack/nvim/opt/edge
 	url = ../../sainnhe/edge.git
+[submodule "vim/pack/nvim/opt/telescope-ui-select.nvim"]
+	path = vim/pack/nvim/opt/telescope-ui-select.nvim
+	url = ../../nvim-telescope/telescope-ui-select.nvim.git
