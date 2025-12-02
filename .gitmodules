@@ -133,3 +133,6 @@
 [submodule "vim/pack/nvim/opt/trouble.nvim"]
 	path = vim/pack/nvim/opt/trouble.nvim
 	url = ../../folke/trouble.nvim.git
+[submodule "vim/pack/nvim/opt/obsidian.nvim"]
+	path = vim/pack/nvim/opt/obsidian.nvim
+	url = ../../obsidian-nvim/obsidian.nvim.git
