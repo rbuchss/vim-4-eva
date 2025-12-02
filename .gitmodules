@@ -130,3 +130,6 @@
 [submodule "vim/pack/nvim/opt/tokyonight.nvim"]
 	path = vim/pack/nvim/opt/tokyonight.nvim
 	url = ../../folke/tokyonight.nvim.git
+[submodule "vim/pack/nvim/opt/trouble.nvim"]
+	path = vim/pack/nvim/opt/trouble.nvim
+	url = ../../folke/trouble.nvim.git
