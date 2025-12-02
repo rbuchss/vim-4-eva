@@ -17,6 +17,7 @@ function M.setup(config)
   require('vim_4_eva.plugin.settings.telescope').setup(config)
   require('vim_4_eva.plugin.settings.todo-comments').setup(config)
   require('vim_4_eva.plugin.settings.treesitter').setup(config)
+  require('vim_4_eva.plugin.settings.trouble').setup(config)
   require('vim_4_eva.plugin.settings.which-key').setup(config)
 end
 
