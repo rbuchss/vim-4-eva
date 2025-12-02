@@ -3,7 +3,7 @@
 set nocompatible
 
 nnoremap ; :
-let g:mapleader = ","         " change the mapleader from \ to ,
+let g:mapleader = " "         " change the mapleader from \ to <space>
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
