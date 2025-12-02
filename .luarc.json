@@ -10,5 +10,6 @@
   "workspace.checkThirdParty": false,
   "workspace.library": [
     "$VIMRUNTIME"
-  ]
+  ],
+    "workspace.maxPreload": 10000
 }
