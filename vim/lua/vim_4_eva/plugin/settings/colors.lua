@@ -47,6 +47,154 @@ function M.setup(_)
         'tokyonight-storm',
       },
     },
+    {
+      'rose-pine.nvim',
+      colorscheme = {
+        'rose-pine',
+        'rose-pine-dawn',
+        'rose-pine-main',
+        'rose-pine-moon',
+      },
+    },
+    {
+      'nightfox.nvim',
+      colorscheme = {
+        'carbonfox',
+        'dawnfox',
+        'dayfox',
+        'duskfox',
+        'nightfox',
+        'nordfox',
+        'terafox',
+      },
+    },
+    {
+      'nordic.nvim',
+      colorscheme = {
+        'nordic',
+      },
+    },
+    {
+      'everforest.nvim',
+      colorscheme = {
+        'everforest',
+      },
+    },
+    {
+      'vscode.nvim',
+      colorscheme = {
+        'vscode',
+      },
+    },
+    {
+      'sonokai.nvim',
+      colorscheme = {
+        'sonokai',
+      },
+    },
+    {
+      'cyberdream.nvim',
+      colorscheme = {
+        'cyberdream',
+        'cyberdream-light',
+      },
+    },
+    {
+      'vim-moonfly-colors',
+      colorscheme = {
+        'moonfly',
+      },
+    },
+    {
+      'dracula.nvim',
+      colorscheme = {
+        'dracula',
+        'dracula-soft',
+      },
+    },
+    {
+      'nord.nvim',
+      colorscheme = {
+        'nord',
+      },
+    },
+    {
+      'gruvbox-material',
+      colorscheme = {
+        'gruvbox-material',
+      },
+    },
+    {
+      'material.nvim',
+      colorscheme = {
+        'material',
+        'material-darker',
+        'material-deep-ocean',
+        'material-lighter',
+        'material-oceanic',
+        'material-palenight',
+      },
+    },
+    {
+      'solarized-osaka.nvim',
+      colorscheme = {
+        'solarized-osaka',
+        'solarized-osaka-day',
+      },
+    },
+    {
+      'onedarkpro.nvim',
+      colorscheme = {
+        'onedark',
+        'onedark_dark',
+        'onedark_vivid',
+        'onelight',
+        'vaporwave',
+      },
+    },
+    {
+      'github-nvim-theme',
+      colorscheme = {
+        'github_dark',
+        'github_dark_colorblind',
+        'github_dark_default',
+        'github_dark_dimmed',
+        'github_dark_high_contrast',
+        'github_dark_tritanopia',
+        'github_light',
+        'github_light_colorblind',
+        'github_light_default',
+        'github_light_high_contrast',
+        'github_light_tritanopia'
+      },
+    },
+    {
+      'oxocarbon.nvim',
+      colorscheme = {
+        'oxocarbon',
+      },
+    },
+    {
+      'melange-nvim',
+      colorscheme = {
+        'melange',
+      },
+    },
+    {
+      'bamboo.nvim',
+      colorscheme = {
+        'bamboo',
+        'bamboo-light',
+        'bamboo-multiplex',
+        'bamboo-vulgaris',
+      },
+    },
+    {
+      'edge',
+      colorscheme = {
+        'edge',
+      },
+    },
   })
 
   vim.keymap.set('n', '<leader>nn', M.custom_cycle_next, { desc = 'Next colorscheme' })

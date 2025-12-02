@@ -136,3 +136,63 @@
 [submodule "vim/pack/nvim/opt/obsidian.nvim"]
 	path = vim/pack/nvim/opt/obsidian.nvim
 	url = ../../obsidian-nvim/obsidian.nvim.git
+[submodule "vim/pack/nvim/opt/rose-pine.nvim"]
+	path = vim/pack/nvim/opt/rose-pine.nvim
+	url = ../../rose-pine/neovim.git
+[submodule "vim/pack/nvim/opt/nightfox.nvim"]
+	path = vim/pack/nvim/opt/nightfox.nvim
+	url = ../../EdenEast/nightfox.nvim.git
+[submodule "vim/pack/nvim/opt/nordic.nvim"]
+	path = vim/pack/nvim/opt/nordic.nvim
+	url = ../../AlexvZyl/nordic.nvim.git
+[submodule "vim/pack/nvim/opt/everforest.nvim"]
+	path = vim/pack/nvim/opt/everforest.nvim
+	url = ../../sainnhe/everforest.git
+[submodule "vim/pack/nvim/opt/vscode.nvim"]
+	path = vim/pack/nvim/opt/vscode.nvim
+	url = ../../Mofiqul/vscode.nvim.git
+[submodule "vim/pack/nvim/opt/sonokai.nvim"]
+	path = vim/pack/nvim/opt/sonokai.nvim
+	url = ../../sainnhe/sonokai.git
+[submodule "vim/pack/nvim/opt/cyberdream.nvim"]
+	path = vim/pack/nvim/opt/cyberdream.nvim
+	url = ../../scottmckendry/cyberdream.nvim.git
+[submodule "vim/pack/nvim/opt/vim-moonfly-colors"]
+	path = vim/pack/nvim/opt/vim-moonfly-colors
+	url = ../../bluz71/vim-moonfly-colors.git
+[submodule "vim/pack/nvim/opt/dracula.nvim"]
+	path = vim/pack/nvim/opt/dracula.nvim
+	url = ../../Mofiqul/dracula.nvim.git
+[submodule "vim/pack/nvim/opt/nord.nvim"]
+	path = vim/pack/nvim/opt/nord.nvim
+	url = ../../shaunsingh/nord.nvim.git
+[submodule "vim/pack/nvim/opt/gruvbox-material"]
+	path = vim/pack/nvim/opt/gruvbox-material
+	url = ../../sainnhe/gruvbox-material.git
+[submodule "vim/pack/nvim/opt/onedark.nvim"]
+	path = vim/pack/nvim/opt/onedark.nvim
+	url = ../../navarasu/onedark.nvim.git
+[submodule "vim/pack/nvim/opt/material.nvim"]
+	path = vim/pack/nvim/opt/material.nvim
+	url = ../../marko-cerovac/material.nvim.git
+[submodule "vim/pack/nvim/opt/solarized-osaka.nvim"]
+	path = vim/pack/nvim/opt/solarized-osaka.nvim
+	url = ../../craftzdog/solarized-osaka.nvim.git
+[submodule "vim/pack/nvim/opt/onedarkpro.nvim"]
+	path = vim/pack/nvim/opt/onedarkpro.nvim
+	url = ../../olimorris/onedarkpro.nvim.git
+[submodule "vim/pack/nvim/opt/github-nvim-theme"]
+	path = vim/pack/nvim/opt/github-nvim-theme
+	url = ../../projekt0n/github-nvim-theme.git
+[submodule "vim/pack/nvim/opt/oxocarbon.nvim"]
+	path = vim/pack/nvim/opt/oxocarbon.nvim
+	url = ../../nyoom-engineering/oxocarbon.nvim.git
+[submodule "vim/pack/nvim/opt/melange-nvim"]
+	path = vim/pack/nvim/opt/melange-nvim
+	url = ../../savq/melange-nvim.git
+[submodule "vim/pack/nvim/opt/bamboo.nvim"]
+	path = vim/pack/nvim/opt/bamboo.nvim
+	url = ../../ribru17/bamboo.nvim.git
+[submodule "vim/pack/nvim/opt/edge"]
+	path = vim/pack/nvim/opt/edge
+	url = ../../sainnhe/edge.git
