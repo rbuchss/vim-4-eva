@@ -4,6 +4,9 @@ function M.setup(_)
   require('vim_4_eva.pack').lazy.register({
     'todo-comments.nvim',
     event = 'DeferredUIEnter',
+    before = function()
+      require('lz.n').trigger_load('plenary.nvim')
+    end,
     after = function()
       require('todo-comments').setup({})
 

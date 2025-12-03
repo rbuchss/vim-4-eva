@@ -33,7 +33,15 @@ function M.setup(_)
           --
           {
             sign = {
-              namespace = { 'diagnostic/signs', 'ale' },
+              namespace = { '.*diagnostic.*signs' },
+              maxwidth = 1,
+              auto = true,
+            },
+            click = 'v:lua.ScSa'
+          },
+          {
+            sign = {
+              name = { 'todo*' },
               maxwidth = 1,
               auto = true,
             },
@@ -81,7 +89,8 @@ function M.setup(_)
           DapBreakpointRejected   = builtin.toggle_breakpoint,
           DapBreakpoint           = builtin.toggle_breakpoint,
           DapBreakpointCondition  = builtin.toggle_breakpoint,
-          ['diagnostic/signs']    = builtin.diagnostic_click,
+          ['diagnostic.*signs']   = builtin.diagnostic_click,
+          ['todo*']               = builtin.diagnostic_click,
           gitsigns                = builtin.gitsigns_click,
         },
       })
