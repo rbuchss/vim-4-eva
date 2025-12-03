@@ -273,7 +273,16 @@ function M.notify(name)
     end
   end
 
-  vim.notify(message, vim.log.levels.INFO)
+  local level = vim.log.levels.INFO
+  local opts = { title = 'colors' }
+
+  local ok, fidget = pcall(require, 'fidget')
+
+  if ok and fidget.notify then
+    fidget.notify(message, level, opts)
+  else
+    vim.notify(message, level, opts)
+  end
 end
 
 function M.custom_cycle_next()
