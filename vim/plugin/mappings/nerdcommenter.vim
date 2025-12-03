@@ -38,23 +38,24 @@ function! s:CreateMaps(modes, target, desc, combo)
     endfor
 endfunction
 
-" Recreate standard NERDCommenter mappings except with the / char as a prefix
+" Recreate standard NERDCommenter mappings with the c char as a prefix
+" Doing this here to allow for customization.
 "
-call s:CreateMaps('nx', 'Comment',    'Comment', '/c')
-call s:CreateMaps('nx', 'Toggle',     'Toggle', '/<space>')
-call s:CreateMaps('nx', 'Minimal',    'Minimal', '/m')
-call s:CreateMaps('nx', 'Nested',     'Nested', '/n')
-call s:CreateMaps('n',  'ToEOL',      'To EOL', '/$')
-call s:CreateMaps('nx', 'Invert',     'Invert', '/i')
-call s:CreateMaps('nx', 'Sexy',       'Sexy', '/s')
-call s:CreateMaps('nx', 'Yank',       'Yank then comment', '/y')
-call s:CreateMaps('n',  'Append',     'Append', '/A')
+call s:CreateMaps('nx', 'Comment',    'Comment', 'cc')
+call s:CreateMaps('nx', 'Toggle',     'Toggle', 'c<space>')
+call s:CreateMaps('nx', 'Minimal',    'Minimal', 'cm')
+call s:CreateMaps('nx', 'Nested',     'Nested', 'cn')
+call s:CreateMaps('n',  'ToEOL',      'To EOL', 'c$')
+call s:CreateMaps('nx', 'Invert',     'Invert', 'ci')
+call s:CreateMaps('nx', 'Sexy',       'Sexy', 'cs')
+call s:CreateMaps('nx', 'Yank',       'Yank then comment', 'cy')
+call s:CreateMaps('n',  'Append',     'Append', 'cA')
 call s:CreateMaps('',   ':',          '-Sep-', '')
-call s:CreateMaps('nx', 'AlignLeft',  'Left aligned', '/l')
-call s:CreateMaps('nx', 'AlignBoth',  'Left and right aligned', '/b')
+call s:CreateMaps('nx', 'AlignLeft',  'Left aligned', 'cl')
+call s:CreateMaps('nx', 'AlignBoth',  'Left and right aligned', 'cb')
 call s:CreateMaps('',   ':',          '-Sep2-', '')
-call s:CreateMaps('nx', 'Uncomment',  'Uncomment', '/u')
-call s:CreateMaps('n',  'AltDelims',  'Switch Delimiters', '/a')
+call s:CreateMaps('nx', 'Uncomment',  'Uncomment', 'cu')
+call s:CreateMaps('n',  'AltDelims',  'Switch Delimiters', 'ca')
 call s:CreateMaps('i',  'Insert',     'Insert Comment Here', '')
 call s:CreateMaps('',   ':',          '-Sep3-', '')
 call s:CreateMaps('',   ':help NERDCommenterContents<CR>', 'Help', '')
