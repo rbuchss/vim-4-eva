@@ -1,15 +1,20 @@
-local M = {}
+local M = {
+  show_global = true,
+}
 
 function M.setup(_)
   require('vim_4_eva.pack').lazy.register({
     'which-key.nvim',
     event = 'DeferredUIEnter',
     after = function()
-      require('which-key').setup({})
+      require('which-key').setup({
+        preset = 'modern',
+      })
 
       vim.keymap.set('n', '<leader>?', function()
-        require('which-key').show({ global = false })
-      end, { desc = 'Buffer Local Keymaps (which-key)' })
+        M.show_global = not M.show_global
+        require('which-key').show({ global = M.show_global })
+      end, { desc = 'Toggle Buffer Local Keymaps (which-key)' })
     end,
   })
 end
