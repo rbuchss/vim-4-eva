@@ -28,11 +28,9 @@ set history=1000                " remember more commands and search history
 set undolevels=1000             " use many muchos levels of undo
 set undofile                    " Save undo history
 set timeoutlen=500
-set updatetime=250
+set updatetime=4000             " uses default 4s to avoid too many events
 
-if has('nvim')
-set inccommand=split            " Preview substitutions live, as you type!
-else
+if !has('nvim')
 set ttyfast                     " smoother changes for a fast terminal
                                 " for nvim is always set and option is removed
 set ttyscroll=3
