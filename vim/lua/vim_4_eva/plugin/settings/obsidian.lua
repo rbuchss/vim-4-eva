@@ -31,6 +31,7 @@ function M.setup(_)
           },
           daily_notes = {
             folder = 'Journal',
+            date_format = '%Y/%m/%d',
             default_tags = {
               'Journal',
               'daily-notes',
