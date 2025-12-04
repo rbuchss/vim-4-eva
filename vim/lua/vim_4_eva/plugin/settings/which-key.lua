@@ -8,7 +8,7 @@ function M.setup(_)
     event = 'DeferredUIEnter',
     after = function()
       require('which-key').setup({
-        preset = 'modern',
+        preset = 'helix',
       })
 
       vim.keymap.set('n', '<leader>?', function()
