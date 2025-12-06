@@ -66,6 +66,14 @@ M.filetype_callbacks = {
     require('lz.n').trigger_load('nvim-dap')
     M.loaded['nvim-dap'] = true
   end,
+  c = function()
+    -- C uses codelldb which is configured via mason-nvim-dap
+    -- No additional plugin needed, just ensure nvim-dap is loaded
+  end,
+  cpp = function()
+    -- C++ uses codelldb which is configured via mason-nvim-dap
+    -- No additional plugin needed, just ensure nvim-dap is loaded
+  end,
   go = function()
     if M.loaded['nvim-dap-go'] then
       return
@@ -447,6 +455,13 @@ function M.setup(_)
           table.insert(debuggers, 'delve')
         else
           table.insert(missing_toolchains, 'go (skipping: delve)')
+        end
+
+        -- C/C++ debugger (requires clang or gcc)
+        if vim.fn.executable('clang') == 1 or vim.fn.executable('gcc') == 1 then
+          table.insert(debuggers, 'codelldb')
+        else
+          table.insert(missing_toolchains, 'clang/gcc (skipping: codelldb)')
         end
 
         -- Notify about missing toolchains

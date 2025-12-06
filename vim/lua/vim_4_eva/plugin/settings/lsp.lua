@@ -143,6 +143,15 @@ function M.setup(_)
     table.insert(missing_toolchains, 'go (skipping: gopls, gofumpt, golangci-lint)')
   end
 
+  -- C/C++ tooling
+  if vim.fn.executable('clang') == 1 or vim.fn.executable('gcc') == 1 then
+    servers.clangd = {}
+    table.insert(formatters, 'clang-format')
+    -- Note: clangd provides linting capabilities built-in via clang-tidy integration
+  else
+    table.insert(missing_toolchains, 'clang/gcc (skipping: clangd, clang-format)')
+  end
+
   -- Notify about missing toolchains
   if #missing_toolchains > 0 then
     vim.defer_fn(function()
