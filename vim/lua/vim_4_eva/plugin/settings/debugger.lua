@@ -90,6 +90,10 @@ M.filetype_callbacks = {
     require('lz.n').trigger_load('nvim-dap-python')
     M.loaded['nvim-dap-python'] = true
   end,
+  rust = function()
+    -- Rust uses codelldb which is configured via mason-nvim-dap
+    -- No additional plugin needed, just ensure nvim-dap is loaded
+  end,
 }
 
 function M.setup(_)
@@ -457,11 +461,11 @@ function M.setup(_)
           table.insert(missing_toolchains, 'go (skipping: delve)')
         end
 
-        -- C/C++ debugger (requires clang or gcc)
-        if vim.fn.executable('clang') == 1 or vim.fn.executable('gcc') == 1 then
+        -- C/C++/Rust debugger (requires clang/gcc or rustc)
+        if vim.fn.executable('clang') == 1 or vim.fn.executable('gcc') == 1 or vim.fn.executable('rustc') == 1 then
           table.insert(debuggers, 'codelldb')
         else
-          table.insert(missing_toolchains, 'clang/gcc (skipping: codelldb)')
+          table.insert(missing_toolchains, 'clang/gcc/rustc (skipping: codelldb)')
         end
 
         -- Notify about missing toolchains

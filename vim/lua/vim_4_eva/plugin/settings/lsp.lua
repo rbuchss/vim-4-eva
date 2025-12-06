@@ -49,10 +49,6 @@ function M.setup(_)
   --  - settings (table): Override the default settings passed when initializing the server.
   --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
   local servers = {
-    -- clangd = {},
-    -- gopls = {},
-    -- pyright = {},
-    -- rust_analyzer = {},
     -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
     --
     -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -150,6 +146,15 @@ function M.setup(_)
     -- Note: clangd provides linting capabilities built-in via clang-tidy integration
   else
     table.insert(missing_toolchains, 'clang/gcc (skipping: clangd, clang-format)')
+  end
+
+  -- Rust tooling
+  if vim.fn.executable('rustc') == 1 then
+    servers.rust_analyzer = {}
+    -- Note: rustfmt comes with Rust toolchain, not installed via Mason
+    -- Note: rust-analyzer provides linting via built-in clippy integration
+  else
+    table.insert(missing_toolchains, 'rustc (skipping: rust-analyzer)')
   end
 
   -- Notify about missing toolchains
