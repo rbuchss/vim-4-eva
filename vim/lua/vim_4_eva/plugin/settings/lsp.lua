@@ -1,5 +1,18 @@
 local M = {}
 
+function M.notify(message, level)
+  level = level or vim.log.levels.WARN
+  local opts = { title = 'LSP Setup' }
+
+  local ok, fidget = pcall(require, 'fidget')
+
+  if ok and fidget.notify then
+    fidget.notify(message, level, opts)
+  else
+    vim.notify(message, level, opts)
+  end
+end
+
 function M.setup(_)
   -- Brief aside: **What is LSP?**
   --
@@ -49,8 +62,6 @@ function M.setup(_)
     -- ts_ls = {},
 
     bashls = {},
-
-    basedpyright = {},
 
     lua_ls = {
       -- cmd = { ... },
@@ -103,12 +114,44 @@ function M.setup(_)
       end,
     },
 
-    ruff = {},
-
-    ty = {},
-
     vimls = {},
   }
+
+  -- Formatters to install via Mason
+  local formatters = {}
+
+  -- Linters to install via Mason
+  local linters = {}
+
+  -- Track missing toolchains for notification
+  local missing_toolchains = {}
+
+  -- Python tooling
+  if vim.fn.executable('python3') == 1 or vim.fn.executable('python') == 1 then
+    servers.basedpyright = {}
+    table.insert(linters, 'ruff')
+  else
+    table.insert(missing_toolchains, 'python/python3 (skipping: basedpyright, ruff)')
+  end
+
+  -- Go tooling
+  if vim.fn.executable('go') == 1 then
+    servers.gopls = {}
+    table.insert(formatters, 'gofumpt')
+    table.insert(linters, 'golangci-lint')
+  else
+    table.insert(missing_toolchains, 'go (skipping: gopls, gofumpt, golangci-lint)')
+  end
+
+  -- Notify about missing toolchains
+  if #missing_toolchains > 0 then
+    vim.defer_fn(function()
+      M.notify(
+        'Missing language toolchains:\n' .. table.concat(missing_toolchains, '\n'),
+        vim.log.levels.WARN
+      )
+    end, 1000)
+  end
 
   require('vim_4_eva.pack').lazy.register({
     {
@@ -151,13 +194,19 @@ function M.setup(_)
         -- for you, so that they are available from within Neovim.
         local ensure_installed = vim.tbl_keys(servers or {})
 
-        -- vim.list_extend(ensure_installed, {
-        --   'stylua', -- Used to format Lua code
-        -- })
+        -- Add formatters and linters to the ensure_installed list
+        vim.list_extend(ensure_installed, formatters)
+        vim.list_extend(ensure_installed, linters)
 
         require('mason-tool-installer').setup({
           ensure_installed = ensure_installed,
         })
+
+        -- Manually trigger installation since we load after VimEnter
+        -- This compensates for missing the VimEnter autocmd that mason-tool-installer sets up
+        vim.defer_fn(function()
+          require('mason-tool-installer').check_install()
+        end, 100)
       end,
     },
     {
