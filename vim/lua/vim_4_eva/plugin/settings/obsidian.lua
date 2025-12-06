@@ -38,6 +38,30 @@ function M.setup(_)
             },
             workdays_only = false,
           },
+          frontmatter = {
+            func = function(note)
+              -- Check if this is a daily note by looking at the path
+              local path_str = tostring(note.path)
+              if path_str:match('Journal/(%d%d%d%d)/(%d%d)/(%d%d)%.md') then
+                -- Extract date from path and set as ID
+                local year, month, day = path_str:match('Journal/(%d%d%d%d)/(%d%d)/(%d%d)%.md')
+                note.id = year .. '-' .. month .. '-' .. day
+              end
+
+              -- Add extra tags from environment variable (CSV format)
+              local extra_tags = os.getenv('OBSIDIAN_DAILY_NOTE_EXTRA_TAGS')
+              if extra_tags then
+                for tag in extra_tags:gmatch('[^,]+') do
+                  note:add_tag(tag:match('^%s*(.-)%s*$'))  -- trim whitespace
+                end
+              end
+
+              return require('obsidian.builtin').frontmatter(note)
+            end,
+          },
+          ui = {
+            enable = true,
+          },
         }
       )
     end,
