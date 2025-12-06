@@ -50,6 +50,8 @@ function M.setup(_)
 
     bashls = {},
 
+    basedpyright = {},
+
     lua_ls = {
       -- cmd = { ... },
       -- filetypes = { ... },
@@ -100,6 +102,10 @@ function M.setup(_)
         )
       end,
     },
+
+    ruff = {},
+
+    ty = {},
 
     vimls = {},
   }
