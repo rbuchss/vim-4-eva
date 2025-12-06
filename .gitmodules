@@ -199,3 +199,6 @@
 [submodule "vim/pack/nvim/opt/telescope-ui-select.nvim"]
 	path = vim/pack/nvim/opt/telescope-ui-select.nvim
 	url = ../../nvim-telescope/telescope-ui-select.nvim.git
+[submodule "vim/pack/nvim/opt/nvim-dap-go"]
+	path = vim/pack/nvim/opt/nvim-dap-go
+	url = ../../leoluz/nvim-dap-go.git

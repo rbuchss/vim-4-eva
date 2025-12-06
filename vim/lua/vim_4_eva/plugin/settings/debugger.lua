@@ -6,6 +6,19 @@ local M = {
   single_element_position = 'bottom',
 }
 
+function M.notify(message, level)
+  level = level or vim.log.levels.WARN
+  local opts = { title = 'Debugger Setup' }
+
+  local ok, fidget = pcall(require, 'fidget')
+
+  if ok and fidget.notify then
+    fidget.notify(message, level, opts)
+  else
+    vim.notify(message, level, opts)
+  end
+end
+
 -- Helper function to switch layouts
 -- layout_nums can be a single number or a table of numbers
 M.switch_layout = function(layout_nums)
@@ -52,6 +65,14 @@ M.filetype_callbacks = {
 
     require('lz.n').trigger_load('nvim-dap')
     M.loaded['nvim-dap'] = true
+  end,
+  go = function()
+    if M.loaded['nvim-dap-go'] then
+      return
+    end
+
+    require('lz.n').trigger_load('nvim-dap-go')
+    M.loaded['nvim-dap-go'] = true
   end,
   python = function()
     if M.loaded['nvim-dap-python'] then
@@ -410,6 +431,34 @@ function M.setup(_)
         local dap = require('dap')
         local dapui = require('dapui')
 
+        -- Build ensure_installed list based on available language toolchains
+        local debuggers = {}
+        local missing_toolchains = {}
+
+        -- Python debugger (requires python)
+        if vim.fn.executable('python3') == 1 or vim.fn.executable('python') == 1 then
+          table.insert(debuggers, 'debugpy')
+        else
+          table.insert(missing_toolchains, 'python/python3 (skipping: debugpy)')
+        end
+
+        -- Go debugger (requires go)
+        if vim.fn.executable('go') == 1 then
+          table.insert(debuggers, 'delve')
+        else
+          table.insert(missing_toolchains, 'go (skipping: delve)')
+        end
+
+        -- Notify about missing toolchains
+        if #missing_toolchains > 0 then
+          vim.defer_fn(function()
+            M.notify(
+              'Missing language toolchains:\n' .. table.concat(missing_toolchains, '\n'),
+              vim.log.levels.WARN
+            )
+          end, 1000)
+        end
+
         require('mason-nvim-dap').setup {
           -- Makes a best effort to setup the various debuggers with
           -- reasonable debug configurations
@@ -419,12 +468,8 @@ function M.setup(_)
           -- see mason-nvim-dap README for more information
           handlers = {},
 
-          -- You'll need to check that you have the required things installed
-          -- online, please don't ask me how to install them :)
-          ensure_installed = {
-            -- Update this to ensure that you have the debuggers for the langs you want
-            'debugpy',
-          },
+          -- Only install debuggers for languages that are available
+          ensure_installed = debuggers,
         }
 
         -- Dap UI setup
@@ -591,6 +636,20 @@ function M.setup(_)
 
         require('dap-python').setup(find_python_path())
       end,
+    },
+    {
+      'nvim-dap-go',
+      lazy = true,
+      after = function()
+        -- Install golang specific config
+        require('dap-go').setup {
+          delve = {
+            -- On Windows delve must be run attached or it crashes.
+            -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
+            detached = vim.fn.has 'win32' == 0,
+          },
+        }
+      end
     },
   })
 end
