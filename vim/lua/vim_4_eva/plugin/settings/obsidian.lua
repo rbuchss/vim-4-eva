@@ -33,7 +33,6 @@ function M.setup(_)
             folder = 'Journal',
             date_format = '%Y/%m/%d',
             default_tags = {
-              'Journal',
               'daily-notes',
             },
             workdays_only = false,
