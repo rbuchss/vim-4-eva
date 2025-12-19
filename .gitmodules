@@ -202,3 +202,6 @@
 [submodule "vim/pack/nvim/opt/nvim-dap-go"]
 	path = vim/pack/nvim/opt/nvim-dap-go
 	url = ../../leoluz/nvim-dap-go.git
+[submodule "vim/pack/nvim/opt/markdown-preview.nvim"]
+	path = vim/pack/nvim/opt/markdown-preview.nvim
+	url = ../../iamcco/markdown-preview.nvim.git
