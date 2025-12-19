@@ -7,3 +7,9 @@ endif
 if has('mouse_sgr') && !has('nvim')
   set ttymouse=sgr
 endif
+
+" Disable horizontal scrolling with mouse
+noremap <ScrollWheelLeft> <Nop>
+noremap <ScrollWheelRight> <Nop>
+inoremap <ScrollWheelRight> <Nop>
+inoremap <ScrollWheelLeft> <Nop>
