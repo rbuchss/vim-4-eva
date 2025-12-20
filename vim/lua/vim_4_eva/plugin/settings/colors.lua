@@ -27,6 +27,10 @@ function M.setup(_)
         'catppuccin-macchiato',
         'catppuccin-mocha',
       },
+      after = function()
+        -- Optional: setup can be called for customization, works with defaults too
+        require('catppuccin').setup({})
+      end,
     },
     {
       'kanagawa.nvim',
@@ -36,6 +40,10 @@ function M.setup(_)
         'kanagawa-lotus',
         'kanagawa-wave',
       },
+      after = function()
+        -- Optional: setup not required if defaults are acceptable
+        require('kanagawa').setup({})
+      end,
     },
     {
       'tokyonight.nvim',
@@ -46,6 +54,10 @@ function M.setup(_)
         'tokyonight-night',
         'tokyonight-storm',
       },
+      after = function()
+        -- Optional: setup not required, but must be called BEFORE colorscheme if customizing
+        require('tokyonight').setup({})
+      end,
     },
     {
       'rose-pine.nvim',
@@ -55,6 +67,10 @@ function M.setup(_)
         'rose-pine-main',
         'rose-pine-moon',
       },
+      after = function()
+        -- Optional: setup not required if using defaults
+        require('rose-pine').setup({})
+      end,
     },
     {
       'nightfox.nvim',
@@ -67,24 +83,40 @@ function M.setup(_)
         'nordfox',
         'terafox',
       },
+      after = function()
+        -- Optional: setup not required if using defaults
+        require('nightfox').setup({})
+      end,
     },
     {
       'nordic.nvim',
       colorscheme = {
         'nordic',
       },
+      after = function()
+        -- Optional: setup not required, but recommended for customization
+        require('nordic').setup({})
+      end,
     },
     {
       'everforest.nvim',
       colorscheme = {
         'everforest',
       },
+      after = function()
+        -- Optional: setup not required if using defaults
+        require('everforest').setup({})
+      end,
     },
     {
       'vscode.nvim',
       colorscheme = {
         'vscode',
       },
+      after = function()
+        -- Optional: setup not required but allows customization
+        require('vscode').setup({})
+      end,
     },
     {
       'sonokai.nvim',
@@ -98,6 +130,10 @@ function M.setup(_)
         'cyberdream',
         'cyberdream-light',
       },
+      after = function()
+        -- Optional: setup not required but recommended for configuration
+        require('cyberdream').setup({})
+      end,
     },
     {
       'vim-moonfly-colors',
@@ -111,12 +147,20 @@ function M.setup(_)
         'dracula',
         'dracula-soft',
       },
+      after = function()
+        -- Optional: setup must be called BEFORE colorscheme if customizing
+        require('dracula').setup({})
+      end,
     },
     {
       'nord.nvim',
       colorscheme = {
         'nord',
       },
+      after = function()
+        -- Optional: setup not required if using defaults
+        require('nord').setup({})
+      end,
     },
     {
       'gruvbox-material',
@@ -134,6 +178,10 @@ function M.setup(_)
         'material-oceanic',
         'material-palenight',
       },
+      after = function()
+        -- Optional: setup not required but recommended for customization
+        require('material').setup({})
+      end,
     },
     {
       'solarized-osaka.nvim',
@@ -141,6 +189,10 @@ function M.setup(_)
         'solarized-osaka',
         'solarized-osaka-day',
       },
+      after = function()
+        -- Optional: setup must be called BEFORE colorscheme if customizing
+        require('solarized-osaka').setup({})
+      end,
     },
     {
       'onedarkpro.nvim',
@@ -151,6 +203,10 @@ function M.setup(_)
         'onelight',
         'vaporwave',
       },
+      after = function()
+        -- Optional: setup not required if using defaults
+        require('onedarkpro').setup({})
+      end,
     },
     {
       'github-nvim-theme',
@@ -167,6 +223,10 @@ function M.setup(_)
         'github_light_high_contrast',
         'github_light_tritanopia'
       },
+      after = function()
+        -- Optional: setup not required but allows customization and caching
+        require('github-theme').setup({})
+      end,
     },
     {
       'oxocarbon.nvim',
@@ -188,6 +248,11 @@ function M.setup(_)
         'bamboo-multiplex',
         'bamboo-vulgaris',
       },
+      after = function()
+        -- Required: setup and load must be called for bamboo.nvim
+        require('bamboo').setup({})
+        require('bamboo').load()
+      end,
     },
     {
       'edge',
