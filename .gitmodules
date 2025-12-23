@@ -205,3 +205,6 @@
 [submodule "vim/pack/nvim/opt/markdown-preview.nvim"]
 	path = vim/pack/nvim/opt/markdown-preview.nvim
 	url = ../../iamcco/markdown-preview.nvim.git
+[submodule "vim/pack/nvim/opt/conform.nvim"]
+	path = vim/pack/nvim/opt/conform.nvim
+	url = ../../stevearc/conform.nvim.git
