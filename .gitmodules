@@ -115,9 +115,6 @@
 [submodule "vim/pack/nvim/opt/lz.n"]
 	path = vim/pack/nvim/opt/lz.n
 	url = ../../lumen-oss/lz.n.git
-[submodule "vim/pack/nvim/opt/claude-code.nvim"]
-	path = vim/pack/nvim/opt/claude-code.nvim
-	url = ../../greggh/claude-code.nvim.git
 [submodule "vim/pack/nvim/opt/nvim-dap-python"]
 	path = vim/pack/nvim/opt/nvim-dap-python
 	url = ../../mfussenegger/nvim-dap-python.git
@@ -208,3 +205,9 @@
 [submodule "vim/pack/nvim/opt/conform.nvim"]
 	path = vim/pack/nvim/opt/conform.nvim
 	url = ../../stevearc/conform.nvim.git
+[submodule "vim/pack/nvim/opt/claudecode.nvim"]
+	path = vim/pack/nvim/opt/claudecode.nvim
+	url = ../../coder/claudecode.nvim.git
+[submodule "vim/pack/nvim/opt/snacks.nvim"]
+	path = vim/pack/nvim/opt/snacks.nvim
+	url = ../../folke/snacks.nvim.git
