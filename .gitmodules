@@ -48,7 +48,7 @@
 [submodule "vim/pack/nvim/opt/nvim-treesitter"]
 	path = vim/pack/nvim/opt/nvim-treesitter
 	url = ../../nvim-treesitter/nvim-treesitter.git
-	branch = master
+	branch = main
 [submodule "vim/pack/vim/opt/vim-polyglot"]
 	path = vim/pack/vim/opt/vim-polyglot
 	url = ../../sheerun/vim-polyglot.git
