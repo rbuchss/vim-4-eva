@@ -5,21 +5,23 @@ local error_cache = {}
 
 function M.is_commented(bufnr, lang, predicate)
   local ok, result = pcall(function()
-    local parsers = require('nvim-treesitter.parsers')
     local ts = require('vim.treesitter')
 
-    if not parsers.has_parser(lang) then
-      error('No parser available for language: ' .. lang)
+    -- Resolve filetype to parser language, e.g. sh -> bash
+    local language = ts.language.get_lang(lang) or lang
+
+    local parser = ts.get_parser(bufnr, language)
+    if not parser then
+      error('No parser available for language: ' .. language)
     end
 
-    local parser = parsers.get_parser(bufnr)
     local tree = parser:parse()[1]
     local root = tree:root()
 
-    local query = ts.query.parse(lang, '(comment) @comment')
+    local query = ts.query.parse(language, '(comment) @comment')
 
     if not query then
-      error('Failed to parse query for language: ' .. lang)
+      error('Failed to parse query for language: ' .. language)
     end
 
     for _, node in query:iter_captures(root, bufnr) do
@@ -49,6 +51,11 @@ function M.is_commented(bufnr, lang, predicate)
   return result
 end
 
+--- Check if a line in a buffer is a treesitter comment
+--- @param bufnr number Buffer number
+--- @param lang string Filetype or language of the buffer
+--- @param line number Zero-indexed line number
+--- @return boolean True if the line contains a comment
 function M.is_line_commented(bufnr, lang, line)
   return M.is_commented(bufnr, lang, function(start_row, start_col, end_row, end_col)
     if line >= start_row and line <= end_row then
@@ -57,6 +64,12 @@ function M.is_line_commented(bufnr, lang, line)
   end)
 end
 
+--- Check if a position in a buffer is inside a treesitter comment
+--- @param bufnr number Buffer number
+--- @param lang string Filetype or language of the buffer
+--- @param line number Zero-indexed line number
+--- @param col number Zero-indexed column number
+--- @return boolean True if the position is inside a comment
 function M.is_position_commented(bufnr, lang, line, col)
   return M.is_commented(bufnr, lang, function(start_row, start_col, end_row, end_col)
     -- Check if position is within the comment range

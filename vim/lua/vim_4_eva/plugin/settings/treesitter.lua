@@ -40,7 +40,6 @@ local M = {
     'ruby',
     'rust',
     'terraform',
-    'tmux',
     'toml',
     'tsv',
     'typescript',
@@ -49,6 +48,7 @@ local M = {
     'xml',
     'yaml',
   },
+  -- Parsers to never install or warn about, e.g. { 'bash' }
   ignore_install = {},
 }
 
@@ -66,44 +66,62 @@ local function notify(msg, level, opts)
   end
 end
 
+-- Set while the ensure_installed install pass kicked off at startup is still
+-- running, so checks don't warn about parsers that are being installed right
+-- now. Checked languages are memoized because the parser catalogs only change
+-- on install or :TSUpdate; both reset when the install pass finishes.
+local install_in_progress = false
+local checked = {}
+
+--- Attach highlighting to every open file buffer and return their filetypes
+local function attach_open_buffers()
+  local filetypes = {}
+
+  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.bo[bufnr].buftype == '' and vim.bo[bufnr].filetype ~= '' then
+      pcall(vim.treesitter.start, bufnr)
+      filetypes[#filetypes + 1] = vim.bo[bufnr].filetype
+    end
+  end
+
+  return filetypes
+end
+
 function M.setup(_)
+  -- Register aliased filetypes to parser languages (e.g. sh -> bash) up
+  -- front, before nvim-treesitter loads, so treesitter consumers (like the
+  -- ALE comment checks) work during startup.
+  vim.treesitter.language.register('bash', 'sh')
+
   require('vim_4_eva.pack').lazy.register({
     'nvim-treesitter',
     event = 'DeferredUIEnter',
     after = function()
-      -- Make sure that all installed parsers are updated to the latest version via :TSUpdate
+      -- Make sure that all installed parsers are updated to the latest
+      -- version via :TSUpdate
       -- TODO: make this not happen every load possibly with some debouncing.
       --
-      -- For now , just disabling and relying on manually running this.
-      --
-      -- Note that if enabled with auto_install=true this errors with using the same tmp dirs.
+      -- For now, just disabling and relying on manually running this.
       --
       -- vim.cmd.TSUpdate()
 
-      require('nvim-treesitter.configs').setup({
-        -- A list of parser names, or 'all' (the listed parsers MUST always be installed)
-        ensure_installed = M.ensure_installed,
+      -- Install missing parsers from ensure_installed (checks pause while
+      -- the install pass runs)
+      M.install_missing_parsers()
 
-        -- Install parsers asynchronously (only applied to `ensure_installed`)
-        sync_install = false,
+      -- Enable treesitter highlighting on file buffers.
+      local highlight_group = vim.api.nvim_create_augroup('TreesitterHighlight', { clear = true })
 
-        -- Automatically install missing parsers when entering buffer
-        -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-        auto_install = false,
-
-        -- List of parsers to ignore installing (or 'all')
-        ignore_install = M.ignore_install,
-
-        highlight = {
-          enable = true,
-
-          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-          -- Using this option may slow down your editor, and you may see some duplicate highlights.
-          -- Instead of true it can also be a list of languages
-          additional_vim_regex_highlighting = false,
-        },
+      vim.api.nvim_create_autocmd('FileType', {
+        group = highlight_group,
+        callback = function(args)
+          -- vim.treesitter.start errors when the buffer has no parser
+          pcall(vim.treesitter.start, args.buf)
+        end,
       })
+
+      -- Attach to buffers already open when the plugin loads
+      attach_open_buffers()
 
       -- Set up autocommand to check for missing parsers when opening files
       local augroup = vim.api.nvim_create_augroup('TreesitterParserCheck', { clear = true })
@@ -138,45 +156,105 @@ function M.setup(_)
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
     --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   })
 end
 
 --- Find missing treesitter parsers
---- @param languages table List of language parsers to check
+--- @param languages table List of filetypes or languages to check
 --- @param ignore_list table? List of languages to ignore
---- @return table List of missing parser names
+--- @return table List of missing parser language names
 function M.find_missing_parsers(languages, ignore_list)
-  local parsers = require('nvim-treesitter.parsers')
-  local parser_configs = parsers.get_parser_configs()
-  local missing = {}
-  local ignored = {}
+  local nvt = require('nvim-treesitter')
+  local available = {}
 
-  -- Create a set of ignored languages for fast lookup
-  for _, lang in ipairs(ignore_list or {}) do
-    ignored[lang] = true
+  for _, lang in ipairs(nvt.get_available()) do
+    available[lang] = true
   end
 
-  for _, lang in ipairs(languages) do
-    -- Only check if nvim-treesitter actually supports this language
-    local is_supported = parser_configs[lang] ~= nil
-    local has_parser = parsers.has_parser(lang)
+  local installed = {}
 
-    if is_supported and not ignored[lang] and not has_parser then
-      table.insert(missing, lang)
+  for _, lang in ipairs(nvt.get_installed()) do
+    installed[lang] = true
+  end
+
+  -- Create a set of ignored languages for fast lookup, resolving filetypes
+  -- the same way as the languages below so an ignore entry like 'sh' also
+  -- covers its parser language 'bash'
+  local ignored = {}
+
+  for _, lang in ipairs(ignore_list or {}) do
+    local language = vim.treesitter.language.get_lang(lang) or lang
+    ignored[language] = true
+  end
+
+  local missing = {}
+
+  for _, lang in ipairs(languages) do
+    -- Resolve filetype to parser language, e.g. sh -> bash
+    local language = vim.treesitter.language.get_lang(lang) or lang
+
+    -- Only report languages nvim-treesitter actually supports
+    if available[language] and not ignored[language] and not installed[language] then
+      table.insert(missing, language)
     end
   end
 
   return missing
 end
 
+--- Install missing parsers from ensure_installed, respecting ignore_install
+--- (already installed parsers are skipped). Parser checks pause while the
+--- install pass runs; when it finishes, open buffers are highlighted and
+--- their parsers re-checked.
+function M.install_missing_parsers()
+  local missing = M.find_missing_parsers(M.ensure_installed, M.ignore_install)
+
+  if #missing == 0 then
+    return
+  end
+
+  install_in_progress = true
+
+  -- install() runs async and returns a Task. Once it finishes, resume
+  -- parser checks, then highlight and re-check buffers that were open
+  -- while parsers were still building.
+  require('nvim-treesitter').install(missing):await(function()
+    install_in_progress = false
+    checked = {}
+    M.check_installed_parsers(attach_open_buffers(), M.ignore_install)
+  end)
+end
+
 --- Check if required treesitter parsers are installed and warn about missing ones
 --- @param languages table List of language parsers to check
 --- @param ignore_list table? List of languages to ignore
 function M.check_installed_parsers(languages, ignore_list)
-  local missing = M.find_missing_parsers(languages, ignore_list)
+  -- Don't warn about parsers that are installing right now
+  if install_in_progress then
+    return
+  end
+
+  -- Only check each language once; the parser catalogs only change on
+  -- install or :TSUpdate. Resolve filetypes so aliases like 'sh' and 'bash'
+  -- count as one language.
+  local to_check = {}
+
+  for _, lang in ipairs(languages) do
+    local language = vim.treesitter.language.get_lang(lang) or lang
+
+    if not checked[language] then
+      checked[language] = true
+      to_check[#to_check + 1] = language
+    end
+  end
+
+  if #to_check == 0 then
+    return
+  end
+
+  local missing = M.find_missing_parsers(to_check, ignore_list)
 
   if #missing > 0 then
     notify(
