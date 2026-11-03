@@ -157,10 +157,6 @@ function M.setup(_)
       colorscheme = {
         'nord',
       },
-      after = function()
-        -- Optional: setup not required if using defaults
-        require('nord').setup({})
-      end,
     },
     {
       'gruvbox-material',
