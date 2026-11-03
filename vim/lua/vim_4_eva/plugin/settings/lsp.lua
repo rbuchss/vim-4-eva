@@ -239,25 +239,23 @@ function M.setup(_)
         --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
         local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-        -- Initialize mason-lspconfig, specifying servers to auto-install
+        -- Broadcast the blink.cmp capabilities to every server ('*' is
+        -- merged into each config), then apply any per-server overrides
+        -- from the servers table above on top of the defaults that
+        -- nvim-lspconfig ships in its lsp/ configs.
+        vim.lsp.config('*', { capabilities = capabilities })
+
+        for server_name, server_config in pairs(servers) do
+          vim.lsp.config(server_name, server_config)
+        end
+
+        -- Initialize mason-lspconfig. Servers are installed via
+        -- mason-tool-installer, and automatic_enable (scoped to the servers
+        -- table) enables the installed ones now and any still to come as
+        -- mason installs them.
         require('mason-lspconfig').setup({
           ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-          automatic_installation = false,
-          handlers = {
-            function(server_name)
-              local server = servers[server_name] or {}
-              -- This handles overriding only values explicitly passed
-              -- by the server configuration above. Useful when disabling
-              -- certain features of an LSP (for example, turning off formatting for ts_ls)
-              server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-
-              -- TODO: consider migrating this to this new method:
-              --
-              --    vim.lsp.config(server_name, server)
-              --
-              require('lspconfig')[server_name].setup(server)
-            end,
-          },
+          automatic_enable = vim.tbl_keys(servers),
         })
       end,
     },
