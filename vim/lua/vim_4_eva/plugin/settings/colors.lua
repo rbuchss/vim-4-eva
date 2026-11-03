@@ -103,10 +103,6 @@ function M.setup(_)
       colorscheme = {
         'everforest',
       },
-      after = function()
-        -- Optional: setup not required if using defaults
-        require('everforest').setup({})
-      end,
     },
     {
       'vscode.nvim',
