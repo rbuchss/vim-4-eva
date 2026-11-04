@@ -7,8 +7,12 @@ let g:mapleader = ' '         " change the mapleader from \ to <space>
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
+" nvim gets its highlighting from treesitter, and `syntax on` during init
+" breaks BufReadPre and friends for the first CLI-opened file on nvim 0.12.
 if &t_Co > 2 || has('gui_running')
-  syntax on
+  if !has('nvim')
+    syntax on
+  endif
   set hlsearch
 endif
 
