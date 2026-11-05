@@ -1,5 +1,5 @@
 function! vim_4_eva#hub#BrowseFile() abort
-  let l:branch = fugitive#head(7)
+  let l:branch = FugitiveHead(7)
   if empty(l:branch)
     echo 'ERROR file not in a git repo'
   else

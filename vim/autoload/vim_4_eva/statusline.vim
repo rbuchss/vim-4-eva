@@ -40,7 +40,10 @@ function! vim_4_eva#statusline#GitBranch(len = 7)
   endif
 
   " Get either branch name or commit id with full 40 bytes
-  let head = fugitive#head(-1)
+  let head = FugitiveHead(0)
+  if empty(head)
+    let head = FugitiveHead(-1)
+  endif
 
   if empty(head)
     return ''
