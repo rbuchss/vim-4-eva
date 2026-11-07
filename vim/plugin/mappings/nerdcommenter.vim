@@ -11,7 +11,7 @@ function! s:CreateMaps(modes, target, desc, combo)
     " Build up a map command like
     " 'noremap <silent> <plug>NERDCommenterComment :call NERDComment("n", "Comment")'
     let plug = '<plug>NERDCommenter' . a:target
-    let plug_start = 'noremap <silent> ' . plug . ' :call NERDComment("'
+    let plug_start = 'noremap <silent> ' . plug . ' :call nerdcommenter#Comment("'
     let plug_end = '", "' . a:target . '")<cr>'
     " Build up a menu command like
     " 'menu <silent> comment.Comment<Tab>\\cc <plug>NERDCommenterComment'

@@ -21,7 +21,7 @@ function! ext#ale#syntax#IsLineCommented(
     "
     " TODO: allow for this to be injectable?
     "
-    return NERDCommentIsLineCommented(a:line)
+    return nerdcommenter#IsLineCommented(a:line)
 endfunction
 
 function! ext#ale#syntax#IsPositionCommented(
@@ -49,5 +49,5 @@ function! ext#ale#syntax#IsPositionCommented(
     "
     " TODO: allow for this to be injectable?
     "
-    return NERDCommentIsLineCommented(a:line)
+    return nerdcommenter#IsLineCommented(a:line)
 endfunction
