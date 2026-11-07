@@ -16,7 +16,9 @@ if &t_Co > 2 || has('gui_running')
   set hlsearch
 endif
 
-filetype plugin on
+" Enable file type detection, filetype plugins and indent files, so that
+" 'cindent' is on in C files, language-dependent indenting works, etc.
+filetype plugin indent on
 set encoding=utf-8
 set autoindent                  " always set autoindenting on
 set breakindent                 " Enable break indent
