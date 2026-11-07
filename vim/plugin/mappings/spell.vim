@@ -1,3 +1,5 @@
-" TODO make lang switchable
 " toggle spell check
-map <leader>st :setlocal spell! spelllang=en_us<CR>
+nmap <leader>st :setlocal spell!<CR>
+
+" switch the spell language for this buffer
+nmap <silent> <leader>sl :call vim_4_eva#spell#SwitchLanguage()<CR>
