@@ -12,8 +12,25 @@ function M.setup(_)
     },
     {
       'telescope.nvim',
-      -- TODO: make this triggered by key stroke?
-      event = 'DeferredUIEnter',
+      -- Loaded on the first key press below, after() sets up the real
+      -- mappings that the replayed key press lands on.
+      keys = {
+        { '<leader>sh', desc = '[S]earch [H]elp' },
+        { '<leader>sk', desc = '[S]earch [K]eymaps' },
+        { '<leader>sf', desc = '[S]earch [F]iles' },
+        { '<leader>sF', desc = '[S]earch all [F]iles (incl. gitignored)' },
+        { '<leader>ss', desc = '[S]earch [S]elect Telescope' },
+        { '<leader>sw', desc = '[S]earch current [W]ord' },
+        { '<leader>sg', desc = '[S]earch by [G]rep' },
+        { '<leader>sG', desc = '[S]earch by [G]rep (incl. gitignored)' },
+        { '<leader>sd', desc = '[S]earch [D]iagnostics' },
+        { '<leader>sr', desc = '[S]earch [R]esume' },
+        { '<leader>s.', desc = '[S]earch Recent Files ("." for repeat)' },
+        { '<leader>sb', desc = '[S]earch [B]uffers' },
+        { '<leader>sm', desc = '[S]earch [M]arks' },
+        { '<leader>s/', desc = '[S]earch [/] Fuzzily in current buffer' },
+        { '<leader>so', desc = '[S]earch in [O]pen Files' },
+      },
       before = function()
         require('lz.n').trigger_load({
           'plenary.nvim',
