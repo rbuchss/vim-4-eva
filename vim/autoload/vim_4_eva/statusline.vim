@@ -97,12 +97,13 @@ function! vim_4_eva#statusline#Modified()
   return ''
 endfunction
 
+" NOTE: This gets updated async with ale
 function! vim_4_eva#statusline#Indentation()
   if &filetype =~# s:filetypes_with_no_lightline
     return ''
   endif
 
-  return StatuslineTabWarning()
+  return ext#ale#handlers#mixed_indentation#statusline()
 endfunction
 
 " NOTE: This gets updated async with ale

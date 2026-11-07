@@ -90,7 +90,11 @@ function! ext#ale#handlers#trailing_whitespace#Handle(buffer, lines) abort
 endfunction
 
 function! ext#ale#handlers#trailing_whitespace#statusline() abort
-    let l:status = b:ale_handlers_trailing_whitespace_statusline
+    let l:status = get(
+    \   b:,
+    \   'ale_handlers_trailing_whitespace_statusline',
+    \   v:null
+    \)
 
     if l:status is v:null
         return ''

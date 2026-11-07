@@ -103,7 +103,11 @@ function! ext#ale#handlers#long_line#Handle(buffer, lines) abort
 endfunction
 
 function! ext#ale#handlers#long_line#statusline() abort
-    let l:long_line_statusline = b:ale_handlers_long_line_statusline
+    let l:long_line_statusline = get(
+    \   b:,
+    \   'ale_handlers_long_line_statusline',
+    \   v:null
+    \)
 
     if l:long_line_statusline is v:null
         return ''
