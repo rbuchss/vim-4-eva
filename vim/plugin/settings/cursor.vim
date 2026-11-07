@@ -1,7 +1,5 @@
 " change cursor shape between modes
 if mutagen#is_os('windows')
-  " " TODO revert cursor on exit
-  " "   vintage not supported ...
   " " https://github.com/microsoft/terminal/issues/1604
   " " CSI Ps SP q
   " " Set cursor style (DECSCUSR), VT520.
@@ -17,11 +15,8 @@ if mutagen#is_os('windows')
   let &t_SI .= "\<CSI>5 q"
   let &t_SR .= "\<CSI>4 q"
   let &t_EI .= "\<CSI>0 q"
-  " autocmd VimLeave * let &t_me="\<CSI>0 q"
-  " NOTE this does not work
-  " let &t_SI = "\<Esc>[6 q"
-  " let &t_SR = "\<Esc>[4 q"
-  " let &t_EI = "\<Esc>[2 q"
+  " revert the cursor to the terminal default on exit
+  let &t_te .= "\<CSI>0 q"
 elseif mutagen#is_os('darwin') || mutagen#is_os('linux')
   if exists('$TMUX')
     let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
