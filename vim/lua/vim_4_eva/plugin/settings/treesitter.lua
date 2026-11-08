@@ -73,6 +73,32 @@ end
 local install_in_progress = false
 local checked = {}
 
+-- Update installed parsers at most once a week. The revision check is local
+-- (installed parsers vs the lockfile inside the nvim-treesitter submodule),
+-- so the pass only builds anything after the submodule has been bumped.
+local UPDATE_COOLDOWN = 7 * 24 * 60 * 60
+
+local last_update_file = vim.fn.stdpath('state') .. '/nvim-treesitter-last-update'
+
+local function seconds_since_last_update()
+  local file = io.open(last_update_file, 'r')
+  if not file then
+    return math.huge
+  end
+
+  local timestamp = tonumber(file:read('*l') or '')
+  file:close()
+  return timestamp and os.time() - timestamp or math.huge
+end
+
+local function record_last_update()
+  local file = io.open(last_update_file, 'w')
+  if file then
+    file:write(tostring(os.time()))
+    file:close()
+  end
+end
+
 --- Attach highlighting to every open file buffer and return their filetypes
 local function attach_open_buffers()
   local filetypes = {}
@@ -97,13 +123,9 @@ function M.setup(_)
     'nvim-treesitter',
     event = 'DeferredUIEnter',
     after = function()
-      -- Make sure that all installed parsers are updated to the latest
-      -- version via :TSUpdate
-      -- TODO: make this not happen every load possibly with some debouncing.
-      --
-      -- For now, just disabling and relying on manually running this.
-      --
-      -- vim.cmd.TSUpdate()
+      -- Make sure that all installed parsers are updated to the lockfile
+      -- revisions, throttled to a weekly pass
+      M.update_installed_parsers()
 
       -- Install missing parsers from ensure_installed (checks pause while
       -- the install pass runs)
@@ -224,6 +246,22 @@ function M.install_missing_parsers()
     install_in_progress = false
     checked = {}
     M.check_installed_parsers(attach_open_buffers(), M.ignore_install)
+  end)
+end
+
+--- Update installed parsers to the revisions pinned in the nvim-treesitter
+--- lockfile, at most once per UPDATE_COOLDOWN. The cooldown timestamp is
+--- only recorded when the pass completes, so a crashed run retries on the
+--- next load instead of waiting out the cooldown.
+function M.update_installed_parsers()
+  if seconds_since_last_update() < UPDATE_COOLDOWN then
+    return
+  end
+
+  require('nvim-treesitter').update():await(function(err)
+    if not err then
+      record_last_update()
+    end
   end)
 end
 
