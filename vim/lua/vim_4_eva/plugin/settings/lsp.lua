@@ -73,14 +73,19 @@ function M.setup(_)
         },
       },
       on_init = function(client)
-        local join = vim.fs.joinpath
-        local path = client.workspace_folders[1].name
+        -- workspace_folders is nil when the file has no project root, e.g. a
+        -- standalone script outside any root markers; there is no project
+        -- local config to check in that case
+        if client.workspace_folders then
+          local join = vim.fs.joinpath
+          local path = client.workspace_folders[1].name
 
-        -- Don't do anything if there is project local config
-        if vim.uv.fs_stat(join(path, '.luarc.json'))
-          or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
-        then
-          return
+          -- Don't do anything if there is project local config
+          if vim.uv.fs_stat(join(path, '.luarc.json'))
+            or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
+          then
+            return
+          end
         end
 
         local nvim_settings = {
