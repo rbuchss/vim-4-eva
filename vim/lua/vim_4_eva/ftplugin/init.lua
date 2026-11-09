@@ -1,4 +1,5 @@
 local M = {
+  available = {},
   module_cache = {},
   verbose = false,
 }
@@ -6,6 +7,18 @@ local M = {
 function M.setup(config)
   if config.verbose then
     M.verbose = true
+  end
+
+  -- Register the available ftplugin modules up front, so FileType events for
+  -- filetypes without a module resolve with a table lookup instead of a
+  -- require that walks package.path on every event. init.lua is the loader
+  -- itself, not a per-filetype module.
+  for _, file in ipairs(vim.api.nvim_get_runtime_file('lua/vim_4_eva/ftplugin/*.lua', true)) do
+    local name = file:match('([^/]+)%.lua$')
+
+    if name ~= 'init' then
+      M.available[name] = true
+    end
   end
 
   local ftplugin_group = vim.api.nvim_create_augroup(
@@ -31,28 +44,18 @@ function M.load_ftplugin(filetype, config)
     return
   end
 
+  if not M.available[filetype] then
+    M.notify('No ftplugin found for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
+    return
+  end
+
   M.notify('Cache-miss - Try load ftplugin for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
 
-  -- TODO: consider registering available modules to speed this up?
-  --
-  -- For example this now tries to require all any filetype as a module - E.g:
-  --
-  --   Try ftplugin for lua: vim_4_eva.ftplugin.lua
-  --   Found ftplugin for lua: vim_4_eva.ftplugin.lua
-  --   Found in cache - Skip ftplugin for lua: vim_4_eva.ftplugin.lua
-  --   Found in cache - Skip ftplugin for lua: vim_4_eva.ftplugin.lua
-  --   Try ftplugin for fidget: vim_4_eva.ftplugin.fidget
-  --   No ftplugin found for fidget: vim_4_eva.ftplugin.fidget
-  --   Try ftplugin for blink-cmp-menu: vim_4_eva.ftplugin.blink-cmp-menu
-  --   No ftplugin found for blink-cmp-menu: vim_4_eva.ftplugin.blink-cmp-menu
-  --   Try ftplugin for vim: vim_4_eva.ftplugin.vim
-  --   No ftplugin found for vim: vim_4_eva.ftplugin.vim
-  --
   local ok, module = pcall(require, module_name)
 
   if not ok then
-    M.notify('No ftplugin found for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
-    return -- Module doesn't exist, skip silently
+    M.notify('Error loading ftplugin for ' .. filetype .. ': ' .. module, vim.log.levels.ERROR)
+    return
   end
 
   M.notify('Found ftplugin for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
