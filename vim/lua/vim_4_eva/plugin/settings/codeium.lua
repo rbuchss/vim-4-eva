@@ -7,6 +7,14 @@ local M = {
 
 function M.setup(_)
   require('vim_4_eva.plugin.settings.ai').register_provider(M.codeium_provider)
+
+  -- Register the blink.cmp source here so it is available when blink.cmp
+  -- loads; it stays disabled until the AI provider is enabled
+  require('vim_4_eva.plugin.settings.blink'):register_provider('codeium', {
+    name = 'Codeium',
+    module = 'codeium.blink',
+    async = true,
+  })
 end
 
 function M.codeium_provider:setup()
