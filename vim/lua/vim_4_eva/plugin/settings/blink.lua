@@ -3,8 +3,8 @@ local M = {
   _providers = {},
 }
 
--- TODO: allow these to be changed via g vars or the setup function.
-local kind_icons = {
+-- Completion kind icons, overridable via g:vim_4_eva_blink_kind_icons
+local kind_icons = vim.tbl_deep_extend('force', {
   -- LLM Provider icons
   claude = '󰋦',
   openai = '󱢆',
@@ -15,10 +15,10 @@ local kind_icons = {
   Ollama = '󰳆',
   ['Llama.cpp'] = '󰳆',
   Deepseek = ''
-}
+}, vim.g.vim_4_eva_blink_kind_icons or {})
 
--- TODO: allow these to be changed via g vars or the setup function.
-local source_icons = {
+-- Completion source icons, overridable via g:vim_4_eva_blink_source_icons
+local source_icons = vim.tbl_deep_extend('force', {
   minuet = '󱗻',
   orgmode = '',
   otter = '󰼁',
@@ -36,7 +36,7 @@ local source_icons = {
   codeium = '󰩂',
   -- FALLBACK
   fallback = '󰜚',
-}
+}, vim.g.vim_4_eva_blink_source_icons or {})
 
 function M.setup(_)
   require('vim_4_eva.pack').lazy.register({
