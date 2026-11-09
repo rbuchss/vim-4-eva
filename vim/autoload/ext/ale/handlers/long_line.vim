@@ -47,12 +47,7 @@ function! ext#ale#handlers#long_line#Handle(buffer, lines) abort
 
     " Used to disable this check if setting is unlimited <= 0
     if l:max_length <= 0
-        " TODO: make this injectable?
-        call ext#ale#SetBufferVar(
-        \   a:buffer,
-        \   'handlers_long_line_statusline',
-        \   v:null
-        \)
+        call ext#ale#handlers#SetStatusline(a:buffer, 'long_line', v:null)
         return l:output
     endif
 
@@ -84,34 +79,15 @@ function! ext#ale#handlers#long_line#Handle(buffer, lines) abort
         endif
     endfor
 
-    " TODO: make this injectable?
-    if empty(l:output)
-        call ext#ale#SetBufferVar(
-        \   a:buffer,
-        \   'handlers_long_line_statusline',
-        \   v:null
-        \)
-    else
-        call ext#ale#SetBufferVar(
-        \   a:buffer,
-        \   'handlers_long_line_statusline',
-        \   '󰌑 ' . len(l:output)
-        \)
-    endif
+    call ext#ale#handlers#SetStatusline(
+    \   a:buffer,
+    \   'long_line',
+    \   empty(l:output) ? v:null : '󰌑 ' . len(l:output)
+    \)
 
     return l:output
 endfunction
 
 function! ext#ale#handlers#long_line#statusline() abort
-    let l:long_line_statusline = get(
-    \   b:,
-    \   'ale_handlers_long_line_statusline',
-    \   v:null
-    \)
-
-    if l:long_line_statusline is v:null
-        return ''
-    endif
-
-    return l:long_line_statusline
+    return ext#ale#handlers#GetStatusline('long_line')
 endfunction
