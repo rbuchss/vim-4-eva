@@ -2,8 +2,16 @@ local M = {
   providers = {},
 }
 
--- TODO: allow this to configure/register providers
-function M.setup(_)
+--- Register AI providers from the config's ai section, e.g.
+---   { ai = { providers = { my_provider } } }
+--- Providers are tables with name, setup, teardown, and status fields, like
+--- the codeium provider.
+function M.setup(config)
+  config = config or {}
+
+  for _, provider in ipairs(config.ai and config.ai.providers or {}) do
+    M.register_provider(provider)
+  end
 end
 
 function M.set_provider(provider)
