@@ -1,6 +1,5 @@
 local M = {}
 
--- TODO: allow this to configure/register providers
 function M.setup(_)
   local ai = require('vim_4_eva.plugin.settings.ai')
 
