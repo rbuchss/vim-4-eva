@@ -1,18 +1,28 @@
 local M = {}
 
--- TODO: allow configs to be used here.
--- For example status_symbols, etc.
---
-function M.setup(_)
+-- Statusline config, provided via setup(). The statusline section can
+-- override the default symbols below, e.g.
+--   { statusline = { status_symbols = { enabled = '*' } } }
+local config = {}
+
+-- Default symbols for each provider state in the ai_status component
+local default_status_symbols = {
+  error = '❌',
+  disabled = '🙈',
+  logged_out = '🚫',
+  enabled = '🤖',
+}
+
+function M.setup(user_config)
+  config = user_config or {}
 end
 
 function M.ai_status()
-  local status_symbols = {
-    error = '❌',
-    disabled = '🙈',
-    logged_out = '🚫',
-    enabled = '🤖',
-  }
+  local status_symbols = vim.tbl_deep_extend(
+    'force',
+    default_status_symbols,
+    (config.statusline or {}).status_symbols or {}
+  )
 
   local ai = require('vim_4_eva.plugin.settings.ai')
   local provider = vim.g.ai_provider
