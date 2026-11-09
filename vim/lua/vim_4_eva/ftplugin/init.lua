@@ -1,12 +1,19 @@
 local M = {
   available = {},
   module_cache = {},
+  -- Minimum message level that surfaces without verbose mode; messages below
+  -- it are only shown when verbose is set
+  notify_level = vim.log.levels.ERROR,
   verbose = false,
 }
 
 function M.setup(config)
   if config.verbose then
     M.verbose = true
+  end
+
+  if config.notify_level then
+    M.notify_level = config.notify_level
   end
 
   -- Register the available ftplugin modules up front, so FileType events for
@@ -74,8 +81,7 @@ function M.load_ftplugin(filetype, config)
 end
 
 function M.notify(message, level, opts)
-  -- TODO: allow any levels above ERROR or some config?
-  if M.verbose or level == vim.log.levels.ERROR then
+  if M.verbose or (level or vim.log.levels.INFO) >= M.notify_level then
     vim.notify(message, level, opts)
   end
 end
