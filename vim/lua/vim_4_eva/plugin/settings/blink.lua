@@ -1,19 +1,6 @@
 local M = {
   _sources = { 'lsp', 'path', 'snippets', 'buffer' }, -- lazydev will be added when it loads
-  -- TODO: allow providers to add be added out of this module to decouple this.
-  _providers = {
-    lazydev = {
-      module = 'lazydev.integrations.blink',
-      score_offset = 100,
-      _enabled = false, -- Disabled by default, will be enabled when lazydev loads
-    },
-    codeium = {
-      name = 'Codeium',
-      module = 'codeium.blink',
-      async = true,
-      _enabled = false,
-    },
-  },
+  _providers = {},
 }
 
 -- TODO: allow these to be changed via g vars or the setup function.
@@ -57,6 +44,9 @@ function M.setup(_)
       'blink.cmp',
       event = 'DeferredUIEnter',
       after = function()
+        -- Build the provider configs at load time, after every settings module
+        -- has had a chance to register its own providers
+        M.config.sources.providers = M:providers()
         require('blink.cmp').setup(M.config)
       end,
     },
@@ -76,6 +66,16 @@ function M:remove_source(source)
     function(s) return s ~= source end,
     self._sources
   )
+end
+
+--- Register a completion provider from outside this module, e.g. from a
+--- provider's own settings module. opts is the blink.cmp source provider
+--- config (module, name, async, score_offset, ...). Providers start
+--- disabled; enable_provider activates them.
+function M:register_provider(provider, opts)
+  self._providers[provider] = vim.tbl_deep_extend('force', opts or {}, {
+    _enabled = false,
+  })
 end
 
 function M:enable_provider(provider)
@@ -195,7 +195,8 @@ M.config = {
   -- elsewhere in your config, without redefining it, due to `opts_extend`
   sources = {
     default = M.sources,
-    providers = M:providers(),
+    -- providers is built at blink.cmp load time, after every settings module
+    -- has had a chance to register its own providers
   },
 
   -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
