@@ -125,6 +125,9 @@ function M.setup(_)
   -- Track missing toolchains for notification
   local missing_toolchains = {}
 
+  -- Markdown tooling
+  table.insert(formatters, 'markdownlint')
+
   -- Python tooling
   if vim.fn.executable('python3') == 1 or vim.fn.executable('python') == 1 then
     servers.basedpyright = {}
