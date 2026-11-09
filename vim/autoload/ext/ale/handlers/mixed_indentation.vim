@@ -41,10 +41,9 @@ function! ext#ale#handlers#mixed_indentation#Handle(buffer, lines) abort
 
     " Used to disable this check if buffer is not modifiable
     if !ext#ale#handlers#mixed_indentation#IsBufferModifiable(a:buffer)
-        " TODO: make this injectable?
-        call ext#ale#SetBufferVar(
+        call ext#ale#handlers#SetStatusline(
         \   a:buffer,
-        \   'handlers_mixed_indentation_statusline',
+        \   'mixed_indentation',
         \   v:null
         \)
         return l:output
@@ -109,30 +108,15 @@ function! ext#ale#handlers#mixed_indentation#Handle(buffer, lines) abort
         \})
     endfor
 
-    " TODO: make this injectable?
-    if empty(l:output)
-        call ext#ale#SetBufferVar(
-        \   a:buffer,
-        \   'handlers_mixed_indentation_statusline',
-        \   v:null
-        \)
-    else
-        call ext#ale#SetBufferVar(
-        \   a:buffer,
-        \   'handlers_mixed_indentation_statusline',
-        \   l:statusline_warning . ' ' . len(l:output)
-        \)
-    endif
+    call ext#ale#handlers#SetStatusline(
+    \   a:buffer,
+    \   'mixed_indentation',
+    \   empty(l:output) ? v:null : l:statusline_warning . ' ' . len(l:output)
+    \)
 
     return l:output
 endfunction
 
 function! ext#ale#handlers#mixed_indentation#statusline() abort
-    let l:status = get(b:, 'ale_handlers_mixed_indentation_statusline', v:null)
-
-    if l:status is v:null
-        return ''
-    endif
-
-    return l:status
+    return ext#ale#handlers#GetStatusline('mixed_indentation')
 endfunction
