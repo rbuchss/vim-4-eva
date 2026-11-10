@@ -1,0 +1,9 @@
+---
+# Custom std for selene: the `vim` global from neovim. Referenced by
+# selene.toml as std = "vim". Everything under vim.* is treated as any
+# (neovim's API is too dynamic to type here); the rest of the Lua std
+# and all generic lints still apply.
+base: lua51
+globals:
+  vim:
+    any: true

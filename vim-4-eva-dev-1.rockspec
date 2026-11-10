@@ -18,6 +18,7 @@ dependencies = {
 
 test_dependencies = {
   "vusted >= 2.5.3",
+  "luacov >= 0.17.0",
 }
 
 test = {

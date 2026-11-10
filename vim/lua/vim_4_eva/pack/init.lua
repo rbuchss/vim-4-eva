@@ -35,11 +35,7 @@ function M.lazy.register(items)
   local normalized_items = M.lazy.normalize(items)
 
   for name, config in pairs(normalized_items) do
-    local merged_config = vim.tbl_deep_extend(
-      'force',
-      M.lazy.packages[name] or {},
-      config
-    )
+    local merged_config = vim.tbl_deep_extend('force', M.lazy.packages[name] or {}, config)
 
     M.lazy.packages[name] = merged_config
   end
@@ -118,7 +114,6 @@ function M.lazy.normalize(items)
     if item_type == 'string' then
       -- String spec: wrap in table for consistency
       normalized[item] = { item }
-
     elseif item_type == 'table' then
       local key = item[1]
 
@@ -152,7 +147,6 @@ function M.lazy.normalize(items)
         end
         normalized[key] = item
       end
-
     else
       -- Invalid type
       vim.notify(

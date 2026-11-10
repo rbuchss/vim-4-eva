@@ -1,0 +1,8 @@
+-- Count coverage for this repo's own code only. Without this config luacov
+-- reports on every chunk the specs load, including busted, penlight, and the
+-- nvim runtime, which drowns out the repo numbers.
+return {
+  include = {
+    "vim/lua/",
+  },
+}

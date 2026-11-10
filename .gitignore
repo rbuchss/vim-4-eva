@@ -5,3 +5,8 @@
 /lua
 /lua_modules
 /.luarocks
+
+# coverage output
+/coverage
+/luacov.report.out
+/luacov.stats.out

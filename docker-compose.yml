@@ -1,0 +1,22 @@
+services:
+  tester:
+    build:
+      context: .
+      target: vim-4-eva-tester-local
+    working_dir: /cyberdyne
+    # No network needed - the test suite is hermetic: vusted, themis, luacov,
+    # and covimerage need no egress, and image pulls happen at build time.
+    # Skipping the bridge network sidesteps Docker pool exhaustion on
+    # long-lived hosts and any clash with VPN routes. For real egress, remove
+    # this line to use the default bridge (portable to Linux and macOS);
+    # network_mode: host is only a clean swap on Linux - on macOS it needs
+    # Docker Desktop 4.34+ and a manual settings toggle.
+    network_mode: none
+    volumes:
+      - .:/cyberdyne
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
+    environment:
+      TERM: ${TERM:-}

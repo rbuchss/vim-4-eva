@@ -28,10 +28,8 @@ function M.setup(config)
     end
   end
 
-  local ftplugin_group = vim.api.nvim_create_augroup(
-    'vim_4_eva#lua#ftplugin_loader',
-    { clear = true }
-  )
+  local ftplugin_group =
+    vim.api.nvim_create_augroup('vim_4_eva#lua#ftplugin_loader', { clear = true })
 
   vim.api.nvim_create_autocmd('FileType', {
     group = ftplugin_group,
@@ -47,7 +45,10 @@ function M.load_ftplugin(filetype, config)
 
   -- Skip if the module is already loaded.
   if M.module_cache[module_name] then
-    M.notify('Cache-hit - Skip ftplugin for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
+    M.notify(
+      'Cache-hit - Skip ftplugin for ' .. filetype .. ': ' .. module_name,
+      vim.log.levels.TRACE
+    )
     return
   end
 
@@ -56,7 +57,10 @@ function M.load_ftplugin(filetype, config)
     return
   end
 
-  M.notify('Cache-miss - Try load ftplugin for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
+  M.notify(
+    'Cache-miss - Try load ftplugin for ' .. filetype .. ': ' .. module_name,
+    vim.log.levels.TRACE
+  )
 
   local ok, module = pcall(require, module_name)
 
@@ -73,7 +77,10 @@ function M.load_ftplugin(filetype, config)
     if not setup_ok or err then
       M.notify('Error in ftplugin setup for ' .. filetype .. ': ' .. err, vim.log.levels.ERROR)
     else
-      M.notify('Success in ftplugin setup for ' .. filetype .. ': ' .. module_name, vim.log.levels.TRACE)
+      M.notify(
+        'Success in ftplugin setup for ' .. filetype .. ': ' .. module_name,
+        vim.log.levels.TRACE
+      )
       -- Add module to the cache to skip load for the same filetype.
       M.module_cache[module_name] = true
     end

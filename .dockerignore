@@ -1,0 +1,10 @@
+coverage
+docs
+*.md
+.claude
+.DS_Store
+lua_modules
+.luarocks
+.epsilon
+__context__
+*.diff
