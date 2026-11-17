@@ -62,6 +62,4 @@ WORKDIR /github/workspace
 
 COPY --chown=${USER}:${GROUP} . .
 
-# The referenced entrypoint is not on this branch yet; it arrives with the
-# .github/ CI wiring, making this stage build-only until then.
 ENTRYPOINT ["./.github/actions/run-make/entrypoint.sh"]
