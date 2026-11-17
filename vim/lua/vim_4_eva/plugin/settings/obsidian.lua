@@ -51,7 +51,7 @@ function M.setup(_)
               local extra_tags = os.getenv('OBSIDIAN_DAILY_NOTE_EXTRA_TAGS')
               if extra_tags then
                 for tag in extra_tags:gmatch('[^,]+') do
-                  note:add_tag(tag:match('^%s*(.-)%s*$'))  -- trim whitespace
+                  note:add_tag(tag:match('^%s*(.-)%s*$')) -- trim whitespace
                 end
               end
 

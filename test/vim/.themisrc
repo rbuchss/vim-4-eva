@@ -1,0 +1,11 @@
+" Load the command helper with assert functions.
+" This enables Assert, Throws, Fail, Skip, and TODO commands,
+" plus named assertions like Equals(), True(), Match(), etc.
+call themis#helper('command').with(themis#helper('assert'))
+
+" Enable vim profiling when $VIM_PROFILE_FILE is set.
+" covimerage parses this output to generate coverage data.
+if !empty($VIM_PROFILE_FILE)
+  execute 'profile start ' . $VIM_PROFILE_FILE
+  profile! file vim/**
+endif

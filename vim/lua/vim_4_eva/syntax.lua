@@ -38,10 +38,10 @@ function M.is_commented(bufnr, lang, predicate)
 
   if not ok then
     -- Only show error once per language
-    local error_key = lang .. ":" .. tostring(result)
+    local error_key = lang .. ':' .. tostring(result)
 
     if not error_cache[error_key] then
-      vim.notify("Tree-sitter error in is_commented: " .. tostring(result), vim.log.levels.DEBUG)
+      vim.notify('Tree-sitter error in is_commented: ' .. tostring(result), vim.log.levels.DEBUG)
       error_cache[error_key] = true
     end
 
@@ -57,7 +57,7 @@ end
 --- @param line number Zero-indexed line number
 --- @return boolean True if the line contains a comment
 function M.is_line_commented(bufnr, lang, line)
-  return M.is_commented(bufnr, lang, function(start_row, start_col, end_row, end_col)
+  return M.is_commented(bufnr, lang, function(start_row, _start_col, end_row, _end_col)
     if line >= start_row and line <= end_row then
       return true
     end

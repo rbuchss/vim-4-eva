@@ -1,0 +1,6 @@
+std = "vim"
+
+[lints]
+# The lazy.nvim plugin spec style mixes a list of plugin names with keys
+# ({ 'plugin', lazy = true }), which is inherently a mixed table.
+mixed_table = "allow"

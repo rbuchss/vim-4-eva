@@ -1,0 +1,92 @@
+Describe mutagen
+  Before all
+    " Ensure autoload path includes our vim/ directory
+    let &runtimepath = getcwd() . '/vim,' . &runtimepath
+  End
+
+  Describe #derive_os
+    It returns linux on Linux
+      " In the Docker container, uname returns Linux
+      let result = mutagen#derive_os()
+      Assert Equals(result, 'linux')
+    End
+  End
+
+  Describe #os
+    Before each
+      " Reset cached value
+      if exists('g:mutagen_os')
+        unlet g:mutagen_os
+      endif
+    End
+
+    It caches the result in g:mutagen_os
+      call mutagen#os()
+      Assert Truthy(exists('g:mutagen_os'))
+    End
+
+    It returns the cached value on subsequent calls
+      let g:mutagen_os = 'test-os'
+      Assert Equals(mutagen#os(), 'test-os')
+    End
+  End
+
+  Describe #is_os
+    Before each
+      if exists('g:mutagen_os')
+        unlet g:mutagen_os
+      endif
+    End
+
+    It returns true for matching OS
+      let g:mutagen_os = 'linux'
+      Assert True(mutagen#is_os('linux'))
+    End
+
+    It returns false for non-matching OS
+      let g:mutagen_os = 'linux'
+      Assert False(mutagen#is_os('darwin'))
+    End
+  End
+
+  Describe #derive_vim_home
+    Before each
+      if exists('g:mutagen_os')
+        unlet g:mutagen_os
+      endif
+    End
+
+    It returns ~/.vim for linux
+      let g:mutagen_os = 'linux'
+      Assert Equals(mutagen#derive_vim_home(), $HOME . '/.vim')
+    End
+
+    It returns ~/.vim for darwin
+      let g:mutagen_os = 'darwin'
+      Assert Equals(mutagen#derive_vim_home(), $HOME . '/.vim')
+    End
+
+    It returns ~/vimfiles for windows
+      let g:mutagen_os = 'windows'
+      Assert Equals(mutagen#derive_vim_home(), $HOME . '/vimfiles')
+    End
+
+    It returns empty string for unknown OS
+      let g:mutagen_os = 'unknown'
+      Assert Equals(mutagen#derive_vim_home(), '')
+    End
+  End
+
+  Describe #getcwd
+    Before each
+      if exists('g:mutagen_os')
+        unlet g:mutagen_os
+      endif
+    End
+
+    It returns getcwd() on linux
+      let g:mutagen_os = 'linux'
+      Assert Equals(mutagen#getcwd(), getcwd())
+    End
+  End
+End

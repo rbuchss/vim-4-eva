@@ -1,0 +1,20 @@
+# vint runs with the Google style guide policies the repo doesn't follow
+# disabled. Error-severity policies (unused variables, autocmds without a
+# group, and the like) stay on.
+policies:
+  # Double-quoted strings are fine.
+  ProhibitUnnecessaryDoubleQuote:
+    enabled: false
+  # == and =~ are used unanchored.
+  ProhibitEqualTildeOperator:
+    enabled: false
+  # A few autoload helpers (syntax.vim, util.vim, motion.vim) omit the abort
+  # attribute.
+  ProhibitNoAbortFunction:
+    enabled: false
+  # No scriptencoding declarations.
+  ProhibitMissingScriptEncoding:
+    enabled: false
+  # Colorschemes read `version` without the v: prefix.
+  ProhibitImplicitScopeBuiltinVariable:
+    enabled: false

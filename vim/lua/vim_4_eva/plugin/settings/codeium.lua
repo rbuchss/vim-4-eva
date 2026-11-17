@@ -22,18 +22,18 @@ function M.codeium_provider:setup()
     vim.cmd.packadd('windsurf.nvim')
 
     require('codeium').setup({
-       -- We disable auto registering the cmp source since we are using blink.cmp.
-       enable_cmp_source = false,
-       virtual_text = {
-         -- We use blink.cmp to show virtual text so we disable it here.
-         -- Disabling this means that we also get less info with the statusline.
-         -- Such as the number of completions available, waiting for the api response, etc.
-         -- However, basic server status such as auth are still shown in the statusline.
-         -- This also means that the keybindings for accepting completions
-         -- is handled by blink.cmp.
-         --
-         enabled = false,
-       }
+      -- We disable auto registering the cmp source since we are using blink.cmp.
+      enable_cmp_source = false,
+      virtual_text = {
+        -- We use blink.cmp to show virtual text so we disable it here.
+        -- Disabling this means that we also get less info with the statusline.
+        -- Such as the number of completions available, waiting for the api response, etc.
+        -- However, basic server status such as auth are still shown in the statusline.
+        -- This also means that the keybindings for accepting completions
+        -- is handled by blink.cmp.
+        --
+        enabled = false,
+      },
     })
 
     -- For the custom status line to work we need to set using_status_line = true
@@ -51,10 +51,9 @@ function M.codeium_provider:setup()
 
   require('vim_4_eva.plugin.settings.blink'):enable_provider('codeium')
 
-  vim.keymap.set('n', '<leader>aW',
-    function()
-      vim.cmd('Codeium Chat')
-    end, { desc = 'Codeium Chat' })
+  vim.keymap.set('n', '<leader>aW', function()
+    vim.cmd('Codeium Chat')
+  end, { desc = 'Codeium Chat' })
 end
 
 function M.codeium_provider:teardown()

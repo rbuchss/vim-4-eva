@@ -213,7 +213,7 @@ function M.setup(_)
         'github_light_colorblind',
         'github_light_default',
         'github_light_high_contrast',
-        'github_light_tritanopia'
+        'github_light_tritanopia',
       },
       after = function()
         -- Optional: setup not required but allows customization and caching
@@ -321,11 +321,7 @@ function M.notify(name)
     local paths = vim.fn.globpath(vim.o.runtimepath, pat, true, true)
 
     if #paths > 0 then
-      message = string.format(
-        '%s\npaths: %s',
-        message,
-        vim.inspect(paths)
-      )
+      message = string.format('%s\npaths: %s', message, vim.inspect(paths))
       break
     end
   end

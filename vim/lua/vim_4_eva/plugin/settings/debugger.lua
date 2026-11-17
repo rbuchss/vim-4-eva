@@ -26,7 +26,7 @@ M.switch_layout = function(layout_nums)
 
   -- Normalize to table
   if type(layout_nums) ~= 'table' then
-    layout_nums = {layout_nums}
+    layout_nums = { layout_nums }
   end
 
   -- Close all currently open layouts
@@ -139,7 +139,8 @@ function M.setup(_)
     <leader>de           - Evaluate Expression (normal/visual mode)
     <leader>dk           - Stack Frame Up
     <leader>dj           - Stack Frame Down
-  ]]--
+  ]]
+  --
 
   local map = function(keys, func, desc, mode)
     mode = mode or 'n'
@@ -166,246 +167,129 @@ function M.setup(_)
     end
   end
 
-  map(
-    {'<leader>dc', '<F5>'},
-    function()
-      require('dap').continue()
-    end,
-    'Run/Continue'
-  )
+  map({ '<leader>dc', '<F5>' }, function()
+    require('dap').continue()
+  end, 'Run/Continue')
 
-  map(
-    {'<leader>dC', '<S-F5>'},
-    function()
-      require('dap').run_last()
-    end,
-    'Run Last'
-  )
+  map({ '<leader>dC', '<S-F5>' }, function()
+    require('dap').run_last()
+  end, 'Run Last')
 
-  map(
-    {'<leader>dT', '<C-F5>'},
-    function()
-      require('dap').terminate()
-    end,
-    'Terminate'
-  )
+  map({ '<leader>dT', '<C-F5>' }, function()
+    require('dap').terminate()
+  end, 'Terminate')
 
-  map(
-    {'<leader>dR', '<M-F5>'},
-    function()
-      require('dap').restart()
-    end,
-    'Restart'
-  )
+  map({ '<leader>dR', '<M-F5>' }, function()
+    require('dap').restart()
+  end, 'Restart')
 
-  map(
-    '<leader>dt',
-    function()
-      require('dap').run_to_cursor()
-    end,
-    'Run to Cursor'
-  )
+  map('<leader>dt', function()
+    require('dap').run_to_cursor()
+  end, 'Run to Cursor')
 
-  map(
-    '<leader>dp',
-    function()
-      require('dap').pause()
-    end,
-    'Pause'
-  )
+  map('<leader>dp', function()
+    require('dap').pause()
+  end, 'Pause')
 
-  map(
-    '<leader>de',
-    function()
-      require('dapui').eval()
-    end,
-    'Evaluate Expression',
-    {'n', 'v'}
-  )
+  map('<leader>de', function()
+    require('dapui').eval()
+  end, 'Evaluate Expression', { 'n', 'v' })
 
-  map(
-    '<leader>dk',
-    function()
-      require('dap').up()
-    end,
-    'Stack Frame Up'
-  )
+  map('<leader>dk', function()
+    require('dap').up()
+  end, 'Stack Frame Up')
 
-  map(
-    '<leader>dj',
-    function()
-      require('dap').down()
-    end,
-    'Stack Frame Down'
-  )
+  map('<leader>dj', function()
+    require('dap').down()
+  end, 'Stack Frame Down')
 
-  map(
-    {'<leader>dur', '<F8>'},
-    function()
-      M.switch_layout(3)
-    end,
-    'Toggle REPL'
-  )
+  map({ '<leader>dur', '<F8>' }, function()
+    M.switch_layout(3)
+  end, 'Toggle REPL')
 
-  map(
-    {'<leader>dus', '<S-F8>'},
-    function()
-      M.switch_layout(1)
-    end,
-    'Toggle Scopes'
-  )
+  map({ '<leader>dus', '<S-F8>' }, function()
+    M.switch_layout(1)
+  end, 'Toggle Scopes')
 
-  map(
-    {'<leader>duc', '<C-F8>'},
-    function()
-      M.switch_layout(2)
-    end,
-    'Toggle Console'
-  )
+  map({ '<leader>duc', '<C-F8>' }, function()
+    M.switch_layout(2)
+  end, 'Toggle Console')
 
-  map(
-    {'<leader>dub', '<M-F8>'},
-    function()
-      M.switch_layout(4)
-    end,
-    'Toggle Breakpoints'
-  )
+  map({ '<leader>dub', '<M-F8>' }, function()
+    M.switch_layout(4)
+  end, 'Toggle Breakpoints')
 
-  map(
-    {'<leader>duk', '<C-S-F8>'},
-    function()
-      M.switch_layout(5)
-    end,
-    'Toggle Stacks'
-  )
+  map({ '<leader>duk', '<C-S-F8>' }, function()
+    M.switch_layout(5)
+  end, 'Toggle Stacks')
 
-  map(
-    {'<leader>duw', '<M-C-F8>'},
-    function()
-      M.switch_layout(6)
-    end,
-    'Toggle Watches'
-  )
+  map({ '<leader>duw', '<M-C-F8>' }, function()
+    M.switch_layout(6)
+  end, 'Toggle Watches')
 
-  map(
-    {'<leader>dui', '<M-S-F8>'},
-    function()
-      M.switch_layout({7, 8})
-    end,
-    'Toggle Classic UI'
-  )
+  map({ '<leader>dui', '<M-S-F8>' }, function()
+    M.switch_layout({ 7, 8 })
+  end, 'Toggle Classic UI')
 
   -- Floating window variants (80% of screen)
   local float_opts = {
     width = math.floor(vim.o.columns * 0.8),
     height = math.floor(vim.o.lines * 0.8),
     enter = true,
-    position = "center",
+    position = 'center',
   }
 
-  map(
-    '<leader>duS',
-    function()
-      require('dapui').float_element('scopes', float_opts)
-    end,
-    'Float Scopes'
-  )
+  map('<leader>duS', function()
+    require('dapui').float_element('scopes', float_opts)
+  end, 'Float Scopes')
 
-  map(
-    '<leader>duC',
-    function()
-      require('dapui').float_element('console', float_opts)
-    end,
-    'Float Console'
-  )
+  map('<leader>duC', function()
+    require('dapui').float_element('console', float_opts)
+  end, 'Float Console')
 
-  map(
-    '<leader>duR',
-    function()
-      require('dapui').float_element('repl', float_opts)
-    end,
-    'Float REPL'
-  )
+  map('<leader>duR', function()
+    require('dapui').float_element('repl', float_opts)
+  end, 'Float REPL')
 
-  map(
-    '<leader>duB',
-    function()
-      require('dapui').float_element('breakpoints', float_opts)
-    end,
-    'Float Breakpoints'
-  )
+  map('<leader>duB', function()
+    require('dapui').float_element('breakpoints', float_opts)
+  end, 'Float Breakpoints')
 
-  map(
-    '<leader>duK',
-    function()
-      require('dapui').float_element('stacks', float_opts)
-    end,
-    'Float Stacks'
-  )
+  map('<leader>duK', function()
+    require('dapui').float_element('stacks', float_opts)
+  end, 'Float Stacks')
 
-  map(
-    '<leader>duW',
-    function()
-      require('dapui').float_element('watches', float_opts)
-    end,
-    'Float Watches'
-  )
+  map('<leader>duW', function()
+    require('dapui').float_element('watches', float_opts)
+  end, 'Float Watches')
 
-  map(
-    {'<leader>db', '<F9>'},
-    function()
-      require('dap').toggle_breakpoint()
-    end,
-    'Toggle Breakpoint'
-  )
+  map({ '<leader>db', '<F9>' }, function()
+    require('dap').toggle_breakpoint()
+  end, 'Toggle Breakpoint')
 
-  map(
-    {'<leader>dB', '<S-F9>'},
-    function()
-      require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
-    end,
-    'Set Breakpoint'
-  )
+  map({ '<leader>dB', '<S-F9>' }, function()
+    require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
+  end, 'Set Breakpoint')
 
-  map(
-    {'<leader>dl', '<C-F9>'},
-    function()
-      require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
-    end,
-    'Set Log Point Breakpoint'
-  )
+  map({ '<leader>dl', '<C-F9>' }, function()
+    require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+  end, 'Set Log Point Breakpoint')
 
-  map(
-    '<leader>dX',
-    function()
-      require('dap').clear_breakpoints()
-    end,
-    'Clear All Breakpoints'
-  )
+  map('<leader>dX', function()
+    require('dap').clear_breakpoints()
+  end, 'Clear All Breakpoints')
 
-  map(
-    {'<leader>do', '<F10>'},
-    function()
-      require('dap').step_over()
-    end,
-    'Step Over'
-  )
+  map({ '<leader>do', '<F10>' }, function()
+    require('dap').step_over()
+  end, 'Step Over')
 
-  map(
-    {'<leader>di', '<F11>'},
-    function()
-      require('dap').step_into()
-    end,
-    'Step Into'
-  )
+  map({ '<leader>di', '<F11>' }, function()
+    require('dap').step_into()
+  end, 'Step Into')
 
-  map(
-    {'<leader>dO', '<F12>'},
-    function()
-      require('dap').step_out()
-    end,
-    'Step Out'
-  )
+  map({ '<leader>dO', '<F12>' }, function()
+    require('dap').step_out()
+  end, 'Step Out')
 
   require('vim_4_eva.pack').lazy.register({
     {
@@ -462,7 +346,11 @@ function M.setup(_)
         end
 
         -- C/C++/Rust debugger (requires clang/gcc or rustc)
-        if vim.fn.executable('clang') == 1 or vim.fn.executable('gcc') == 1 or vim.fn.executable('rustc') == 1 then
+        if
+          vim.fn.executable('clang') == 1
+          or vim.fn.executable('gcc') == 1
+          or vim.fn.executable('rustc') == 1
+        then
           table.insert(debuggers, 'codelldb')
         else
           table.insert(missing_toolchains, 'clang/gcc/rustc (skipping: codelldb)')
@@ -478,7 +366,7 @@ function M.setup(_)
           end, 1000)
         end
 
-        require('mason-nvim-dap').setup {
+        require('mason-nvim-dap').setup({
           -- Makes a best effort to setup the various debuggers with
           -- reasonable debug configurations
           automatic_installation = false,
@@ -489,7 +377,7 @@ function M.setup(_)
 
           -- Only install debuggers for languages that are available
           ensure_installed = debuggers,
-        }
+        })
 
         -- Dap UI setup
         -- For more information, see |:help nvim-dap-ui|
@@ -632,7 +520,7 @@ function M.setup(_)
             '.venv/bin/python',
             'venv/bin/python',
             '.venv/Scripts/python.exe', -- Windows
-            'venv/Scripts/python.exe',  -- Windows
+            'venv/Scripts/python.exe', -- Windows
           }
 
           for _, pattern in ipairs(venv_patterns) do
@@ -661,14 +549,14 @@ function M.setup(_)
       lazy = true,
       after = function()
         -- Install golang specific config
-        require('dap-go').setup {
+        require('dap-go').setup({
           delve = {
             -- On Windows delve must be run attached or it crashes.
             -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-            detached = vim.fn.has 'win32' == 0,
+            detached = vim.fn.has('win32') == 0,
           },
-        }
-      end
+        })
+      end,
     },
   })
 end

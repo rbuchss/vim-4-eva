@@ -8,13 +8,13 @@ function M.setup(_)
       local builtin = require('statuscol.builtin')
 
       require('statuscol').setup({
-        setopt = true,         -- Whether to set the 'statuscolumn' option, may be set to false for those who
+        setopt = true, -- Whether to set the 'statuscolumn' option, may be set to false for those who
         -- want to use the click handlers in their own 'statuscolumn': _G.Sc[SFL]a().
         -- Although I recommend just using the segments field below to build your
         -- statuscolumn to benefit from the performance optimizations in this plugin.
         -- builtin.lnumfunc number string options
-        thousands = false,     -- or line number thousands separator string ('.' / ',')
-        relculright = false,   -- whether to right-align the cursor line number with 'relativenumber' set
+        thousands = false, -- or line number thousands separator string ('.' / ',')
+        relculright = false, -- whether to right-align the cursor line number with 'relativenumber' set
         -- Builtin 'statuscolumn' options
         -- Lua table with 'filetype' values for which 'statuscolumn' will be unset
         ft_ignore = { 'netrw', 'nerdtree' },
@@ -37,7 +37,7 @@ function M.setup(_)
               maxwidth = 1,
               auto = true,
             },
-            click = 'v:lua.ScSa'
+            click = 'v:lua.ScSa',
           },
           {
             sign = {
@@ -45,18 +45,18 @@ function M.setup(_)
               maxwidth = 1,
               auto = true,
             },
-            click = 'v:lua.ScSa'
+            click = 'v:lua.ScSa',
           },
           {
             sign = {
-              name = { 'Signature_*', },
+              name = { 'Signature_*' },
               maxwidth = 1,
               auto = true,
             },
           },
           {
             sign = {
-              name = { 'Dap*', },
+              name = { 'Dap*' },
               maxwidth = 1,
               auto = true,
             },
@@ -79,19 +79,19 @@ function M.setup(_)
             text = { ' ' },
           },
         },
-        clickmod = 'c',         -- modifier used for certain actions in the builtin clickhandlers:
+        clickmod = 'c', -- modifier used for certain actions in the builtin clickhandlers:
         -- 'a' for Alt, 'c' for Ctrl and 'm' for Meta.
-        clickhandlers = {       -- builtin click handlers, keys are pattern matched
-          Lnum                    = builtin.lnum_click,
-          FoldClose               = builtin.foldclose_click,
-          FoldOpen                = builtin.foldopen_click,
-          FoldOther               = builtin.foldother_click,
-          DapBreakpointRejected   = builtin.toggle_breakpoint,
-          DapBreakpoint           = builtin.toggle_breakpoint,
-          DapBreakpointCondition  = builtin.toggle_breakpoint,
-          ['diagnostic.*signs']   = builtin.diagnostic_click,
-          ['todo*']               = builtin.diagnostic_click,
-          gitsigns                = builtin.gitsigns_click,
+        clickhandlers = { -- builtin click handlers, keys are pattern matched
+          Lnum = builtin.lnum_click,
+          FoldClose = builtin.foldclose_click,
+          FoldOpen = builtin.foldopen_click,
+          FoldOther = builtin.foldother_click,
+          DapBreakpointRejected = builtin.toggle_breakpoint,
+          DapBreakpoint = builtin.toggle_breakpoint,
+          DapBreakpointCondition = builtin.toggle_breakpoint,
+          ['diagnostic.*signs'] = builtin.diagnostic_click,
+          ['todo*'] = builtin.diagnostic_click,
+          gitsigns = builtin.gitsigns_click,
         },
       })
     end,

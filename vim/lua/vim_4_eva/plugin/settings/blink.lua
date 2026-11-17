@@ -14,7 +14,7 @@ local kind_icons = vim.tbl_deep_extend('force', {
   Openrouter = '󱂇',
   Ollama = '󰳆',
   ['Llama.cpp'] = '󰳆',
-  Deepseek = ''
+  Deepseek = '',
 }, vim.g.vim_4_eva_blink_kind_icons or {})
 
 -- Completion source icons, overridable via g:vim_4_eva_blink_source_icons
@@ -62,10 +62,9 @@ function M:add_source(source)
 end
 
 function M:remove_source(source)
-  self._sources = vim.tbl_filter(
-    function(s) return s ~= source end,
-    self._sources
-  )
+  self._sources = vim.tbl_filter(function(s)
+    return s ~= source
+  end, self._sources)
 end
 
 --- Register a completion provider from outside this module, e.g. from a
@@ -112,7 +111,7 @@ end
 function M:providers()
   local providers = {}
 
-  for key, value in pairs(self._providers) do
+  for key in pairs(self._providers) do
     providers[key] = self:provider(key)
   end
 

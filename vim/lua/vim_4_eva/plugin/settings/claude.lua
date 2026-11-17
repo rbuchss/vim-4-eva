@@ -139,7 +139,8 @@ function M.setup(_)
               -- Prefer repo root; fallback to file's directory
               local cwd = (
                 require('claudecode.cwd').git_root(ctx.file_dir or ctx.cwd)
-                or ctx.file_dir or ctx.cwd
+                or ctx.file_dir
+                or ctx.cwd
               )
 
               notify(
@@ -166,9 +167,8 @@ function M.setup(_)
         -- Find Claude terminal windows, optionally filtered by tabpage
         local function find_claude_terminal_wins(tabpage)
           local wins = {}
-          local win_list = tabpage
-              and vim.api.nvim_tabpage_list_wins(tabpage)
-              or vim.api.nvim_list_wins()
+          local win_list = tabpage and vim.api.nvim_tabpage_list_wins(tabpage)
+            or vim.api.nvim_list_wins()
 
           for _, win in ipairs(win_list) do
             local buf = vim.api.nvim_win_get_buf(win)
