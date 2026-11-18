@@ -1,0 +1,41 @@
+name: Lua Run Make
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Make target to run
+        required: true
+        default: test
+        type: choice
+        options:
+        - test
+        - test-vim
+        - lint
+        - lint-lua
+        - lint-vim
+        - format-check
+        - guards
+      with_coverage:
+        type: boolean
+        default: false
+
+jobs:
+  run_make_job:
+    runs-on: ubuntu-latest
+    name: Manually Run Quality Check Task
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Run Make Target
+        uses: ./.github/actions/run-make
+        id: run-make
+        with:
+          target: ${{ inputs.target }}
+          # make test and make guards always chain the PR coverage report, which
+          # needs a resolvable base; a dispatch has no PR context, so pin both
+          # ends to the dispatched sha for an empty range.
+          base_sha: ${{ github.sha }}
+          head_sha: ${{ github.sha }}
+          with_coverage: ${{ inputs.with_coverage }}

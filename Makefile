@@ -120,8 +120,6 @@ compose-debug:
 # GitHub Actions targets
 ################################################################################
 
-# .github/workflows is not on this branch yet; it arrives with the CI wiring,
-# so act has nothing to dispatch until then.
 ## Run GitHub Actions workflow locally via act (linux/amd64)
 .PHONY: act-test
 act-test:

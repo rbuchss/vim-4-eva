@@ -1,0 +1,19 @@
+name: Vim Lint
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint_vim_job:
+    runs-on: ubuntu-latest
+    name: Run Vim Lint Check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Run Vint
+        uses: ./.github/actions/run-make
+        with:
+          target: lint-vim
+          with_coverage: false
