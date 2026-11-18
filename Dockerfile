@@ -57,7 +57,8 @@ FROM vim-4-eva-tester-base AS vim-4-eva-tester-github-actions
 ARG USER
 ARG GROUP
 
-# Set working directory for GitHub Actions
+# Set working directory for GitHub Actions (even though GH docs recommend not to,
+# we need it so the relative ENTRYPOINT below resolves)
 WORKDIR /github/workspace
 
 COPY --chown=${USER}:${GROUP} . .

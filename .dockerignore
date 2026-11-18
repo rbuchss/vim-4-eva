@@ -5,6 +5,8 @@ docs
 .DS_Store
 lua_modules
 .luarocks
+lua
+luarocks
 .epsilon
 __context__
 *.diff
