@@ -290,6 +290,11 @@ function luacov::all_files {
     return 1
   fi
 
+  if [[ ! -f "${report_file}" ]]; then
+    >&2 echo "ERROR: coverage report not found at '${report_file}'. Run 'make compose-test' first."
+    return 1
+  fi
+
   while IFS=' ' read -r file _total_lines _covered_lines percent_covered; do
     local relative_file="${file#"${repo_root}"/}"
     printf '%s%%\t%s\n' "${percent_covered}" "${relative_file}"
@@ -343,10 +348,11 @@ function luacov::generate_pull_request_comment {
   )"
 
   local coverage_report_temp_output
-  coverage_report_temp_output="$(mktemp /tmp/vim-4-eva-coverage-report.XXXXXXXXXX)"
+  if ! coverage_report_temp_output="$(mktemp /tmp/vim-4-eva-coverage-report.XXXXXXXXXX)"; then
+    >&2 echo "ERROR: failed to create a temp file for the coverage report"
+    return 1
+  fi
 
-  # A failed staging write fails the report; a failed mktemp fails here too,
-  # since the redirect to its empty result cannot be opened.
   if ! luacov::format_pull_request_comment \
     "${base_sha}" \
     "${head_sha}" \
