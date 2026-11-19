@@ -128,6 +128,9 @@ function M.setup(_)
   -- Markdown tooling
   table.insert(formatters, 'markdownlint')
 
+  -- Lua tooling
+  table.insert(formatters, 'stylua')
+
   -- Python tooling
   if vim.fn.executable('python3') == 1 or vim.fn.executable('python') == 1 then
     servers.basedpyright = {}
