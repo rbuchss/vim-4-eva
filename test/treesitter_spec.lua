@@ -3,6 +3,9 @@ describe('treesitter', function()
   local mock_nvt
   local original_notify
   local original_get_lang
+  local original_executable
+  local original_system
+  local cli_stub
 
   before_each(function()
     -- Reset module cache
@@ -41,6 +44,34 @@ describe('treesitter', function()
     original_notify = vim.notify
     vim.notify = function() end  -- stub out notifications
 
+    -- Stub the tree-sitter CLI probe (default: a usable CLI, so the
+    -- install/update paths run even though the CI container ships no
+    -- tree-sitter binary). Tests override cli_stub fields to simulate
+    -- missing or broken CLIs.
+    cli_stub = { present = true, code = 0, stdout = 'tree-sitter 0.27.1\n', stderr = '' }
+
+    original_executable = vim.fn.executable
+    vim.fn.executable = function(name)
+      if name == 'tree-sitter' then
+        return cli_stub.present and 1 or 0
+      end
+      return original_executable(name)
+    end
+
+    original_system = vim.system
+    vim.system = function(cmd, opts)
+      cli_stub.probe_cmd = cmd
+      cli_stub.probe_opts = opts
+      return {
+        wait = function()
+          if cli_stub.throw then
+            error(cli_stub.throw)
+          end
+          return { code = cli_stub.code, stdout = cli_stub.stdout, stderr = cli_stub.stderr }
+        end,
+      }
+    end
+
     -- Load treesitter module
     treesitter = require('vim_4_eva.plugin.settings.treesitter')
   end)
@@ -49,6 +80,17 @@ describe('treesitter', function()
     -- Restore vim.notify and get_lang
     vim.notify = original_notify
     vim.treesitter.language.get_lang = original_get_lang
+    vim.fn.executable = original_executable
+    vim.system = original_system
+
+    -- Pin the probe contract: the only vim.system caller in these specs is
+    -- the module's CLI probe, so if it ran it must have probed --version
+    -- with a positive timeout
+    if cli_stub.probe_cmd then
+      assert.are.same({ 'tree-sitter', '--version' }, cli_stub.probe_cmd)
+      local timeout = (cli_stub.probe_opts or {}).timeout
+      assert.is_true(type(timeout) == 'number' and timeout > 0)
+    end
 
     -- Clean up preloaded modules
     package.preload['nvim-treesitter'] = nil
@@ -328,6 +370,181 @@ describe('treesitter', function()
       treesitter.check_installed_parsers({ 'bash' }, {})
 
       assert.equals(1, notify_count)
+    end)
+  end)
+
+  describe('tree-sitter CLI guard', function()
+    it('should skip the install pass with one warning when the CLI is missing', function()
+      cli_stub.present = false
+
+      local warnings = {}
+      vim.notify = function(msg, level, opts)
+        warnings[#warnings + 1] = { msg = msg, level = level, opts = opts }
+      end
+
+      local called = false
+      mock_nvt.install = function()
+        called = true
+      end
+
+      treesitter.install_missing_parsers()
+
+      assert.is_false(called)
+      assert.equals(1, #warnings)
+      assert.is_not_nil(warnings[1].msg:match('tree%-sitter'))
+      assert.is_not_nil(warnings[1].msg:match(':checkhealth'))
+      assert.equals(vim.log.levels.WARN, warnings[1].level)
+      assert.equals('nvim-treesitter', warnings[1].opts.title)
+    end)
+
+    it('should report the first failing stderr line when the CLI cannot run', function()
+      cli_stub.code = 1
+      cli_stub.stderr = 'version GLIBC_2.39 not found\nsecond line noise'
+
+      local warnings = {}
+      vim.notify = function(msg)
+        warnings[#warnings + 1] = msg
+      end
+
+      local called = false
+      mock_nvt.install = function()
+        called = true
+      end
+
+      treesitter.install_missing_parsers()
+
+      assert.is_false(called)
+      assert.equals(1, #warnings)
+      assert.is_not_nil(warnings[1]:match('GLIBC'))
+      assert.is_nil(warnings[1]:find('noise', 1, true))
+    end)
+
+    it('should treat a failing probe command as unusable', function()
+      cli_stub.throw = 'spawn failed'
+
+      local warnings = {}
+      vim.notify = function(msg)
+        warnings[#warnings + 1] = msg
+      end
+
+      treesitter.install_missing_parsers()
+
+      assert.equals(1, #warnings)
+      assert.is_not_nil(warnings[1]:match('failed to run'))
+    end)
+
+    it('should warn once across passes and never update without a CLI', function()
+      cli_stub.present = false
+
+      local warnings = 0
+      vim.notify = function()
+        warnings = warnings + 1
+      end
+
+      local updated = false
+      mock_nvt.update = function()
+        updated = true
+        return { await = function() end }
+      end
+
+      treesitter.update_installed_parsers()
+      treesitter.install_missing_parsers()
+      treesitter.install_missing_parsers()
+
+      assert.is_false(updated)
+      assert.equals(1, warnings)
+    end)
+
+    it('should probe the CLI only once per session', function()
+      local system_calls = 0
+      local stub_system = vim.system
+      vim.system = function(cmd, opts)
+        system_calls = system_calls + 1
+        return stub_system(cmd, opts)
+      end
+
+      mock_nvt.update = function()
+        return { await = function() end }
+      end
+      mock_nvt.install = function()
+        return { await = function() end }
+      end
+
+      treesitter.update_installed_parsers()
+      treesitter.install_missing_parsers()
+      treesitter.install_missing_parsers()
+      treesitter.check_installed_parsers({ 'awk' }, {})
+
+      assert.equals(1, system_calls)
+    end)
+
+    it('should not advise installing parsers when the CLI is unusable', function()
+      cli_stub.present = false
+
+      local notifications = {}
+      vim.notify = function(msg)
+        notifications[#notifications + 1] = msg
+      end
+
+      treesitter.check_installed_parsers({ 'awk', 'lua' }, {})
+
+      assert.equals(0, #notifications)
+    end)
+
+    it('should run the install pass when the CLI is usable', function()
+      treesitter.ensure_installed = { 'lua' }
+
+      local install_args = nil
+      mock_nvt.install = function(langs)
+        install_args = langs
+        return { await = function() end }
+      end
+
+      treesitter.install_missing_parsers()
+
+      assert.are.same({ 'lua' }, install_args)
+    end)
+
+    it('should report the exit code when the CLI fails silently', function()
+      cli_stub.code = 124
+      cli_stub.stdout = ''
+
+      local warnings = {}
+      vim.notify = function(msg)
+        warnings[#warnings + 1] = msg
+      end
+
+      local called = false
+      mock_nvt.install = function()
+        called = true
+      end
+
+      treesitter.install_missing_parsers()
+
+      assert.is_false(called)
+      assert.equals(1, #warnings)
+      assert.is_not_nil(warnings[1]:match('exit code 124'))
+    end)
+
+    it('should report no version output when the CLI prints nothing', function()
+      cli_stub.code = 0
+      cli_stub.stdout = ''
+
+      local warnings = {}
+      vim.notify = function(msg)
+        warnings[#warnings + 1] = msg
+      end
+
+      local called = false
+      mock_nvt.install = function()
+        called = true
+      end
+
+      treesitter.install_missing_parsers()
+
+      assert.is_false(called)
+      assert.equals(1, #warnings)
+      assert.is_not_nil(warnings[1]:match('no version output'))
     end)
   end)
 end)

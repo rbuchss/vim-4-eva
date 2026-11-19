@@ -66,6 +66,77 @@ local function notify(msg, level, opts)
   end
 end
 
+-- tree-sitter CLI state, memoized once per session. Installing and updating
+-- parsers shells out to `tree-sitter build` (and `tree-sitter generate` for
+-- some parsers), and without a usable CLI every parser in the pass errors
+-- individually. Probing --version rather than just checking executable()
+-- also catches a binary that exists but cannot run, like a glibc mismatch
+-- or a mise shim with no version set.
+local cli_checked = false
+local cli_problem --- @type string? why the CLI is unusable, nil once checked and usable
+local cli_warned = false
+
+--- Probe the tree-sitter CLI once per session
+--- @return string? problem description, nil when the CLI is usable
+local function tree_sitter_cli_problem()
+  if not cli_checked then
+    cli_checked = true
+
+    if vim.fn.executable('tree-sitter') ~= 1 then
+      cli_problem = 'not found on PATH'
+    else
+      local ok, result = pcall(function()
+        return vim.system({ 'tree-sitter', '--version' }, { timeout = 2000 }):wait()
+      end)
+
+      if not ok or result.code ~= 0 or vim.trim(result.stdout or '') == '' then
+        local detail
+
+        if not ok then
+          detail = 'failed to run'
+        elseif vim.trim(result.stderr or '') ~= '' then
+          detail = (vim.trim(result.stderr):gsub('\n.*', ''))
+        elseif result.code ~= 0 then
+          detail = 'exit code ' .. result.code
+        else
+          detail = 'no version output'
+        end
+
+        cli_problem = 'not usable (' .. detail .. ')'
+      end
+    end
+  end
+
+  return cli_problem
+end
+
+--- Gate the install and update passes on a usable tree-sitter CLI, warning
+--- once per session instead of erroring once per parser
+--- @return boolean true when the CLI is usable
+local function ensure_tree_sitter_cli()
+  local problem = tree_sitter_cli_problem()
+
+  if not problem then
+    return true
+  end
+
+  if not cli_warned then
+    cli_warned = true
+    notify(
+      string.format(
+        'tree-sitter CLI %s; skipping parser install/update. '
+          .. 'Install it with your package manager, e.g. `mise use -g tree-sitter`, '
+          .. 'and restart Neovim. See :checkhealth nvim-treesitter.',
+        problem
+      ),
+      vim.log.levels.WARN,
+      { title = 'nvim-treesitter' }
+    )
+  end
+
+  return false
+end
+
 -- Set while the ensure_installed install pass kicked off at startup is still
 -- running, so checks don't warn about parsers that are being installed right
 -- now. Checked languages are memoized because the parser catalogs only change
@@ -231,6 +302,10 @@ end
 --- install pass runs; when it finishes, open buffers are highlighted and
 --- their parsers re-checked.
 function M.install_missing_parsers()
+  if not ensure_tree_sitter_cli() then
+    return
+  end
+
   local missing = M.find_missing_parsers(M.ensure_installed, M.ignore_install)
 
   if #missing == 0 then
@@ -251,9 +326,15 @@ end
 
 --- Update installed parsers to the revisions pinned in the nvim-treesitter
 --- lockfile, at most once per UPDATE_COOLDOWN. The cooldown timestamp is
---- only recorded when the pass completes, so a crashed run retries on the
---- next load instead of waiting out the cooldown.
+--- only recorded when the pass completes, and a pass skipped because the
+--- tree-sitter CLI is unusable records nothing either, so both a crashed
+--- run and a CLI-less machine retry on the next load instead of waiting
+--- out the cooldown.
 function M.update_installed_parsers()
+  if not ensure_tree_sitter_cli() then
+    return
+  end
+
   if seconds_since_last_update() < UPDATE_COOLDOWN then
     return
   end
@@ -271,6 +352,13 @@ end
 function M.check_installed_parsers(languages, ignore_list)
   -- Don't warn about parsers that are installing right now
   if install_in_progress then
+    return
+  end
+
+  -- Stay silent while the tree-sitter CLI is unusable: the session warning
+  -- from the install/update pass already said why, and the :TSInstall
+  -- advice below would just error per parser again
+  if tree_sitter_cli_problem() then
     return
   end
 
