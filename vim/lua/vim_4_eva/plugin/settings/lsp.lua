@@ -125,8 +125,13 @@ function M.setup(_)
   -- Track missing toolchains for notification
   local missing_toolchains = {}
 
-  -- Markdown tooling
-  table.insert(formatters, 'markdownlint')
+  -- Node tooling
+  if vim.fn.executable('node') == 1 then
+    table.insert(formatters, 'markdownlint')
+    table.insert(formatters, 'prettierd')
+  else
+    table.insert(missing_toolchains, 'node (skipping: markdownlint, prettierd)')
+  end
 
   -- Lua tooling
   table.insert(formatters, 'stylua')
